@@ -1,4 +1,6 @@
-This is the repository for submission and analysis runs and results
+This repository is supposed to contain working code,
+scripts, etc related to the Neuroglycerin entry for
+the NDSB competition.
 
 Ensure that neukrill-net-tools is installed by doing one of the following
 (editable/develop install so you can edit the code without needing to reload 
