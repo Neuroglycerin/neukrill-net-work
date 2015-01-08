@@ -23,21 +23,16 @@ def parse_train_data():
     settings = utils.parse_settings('settings.json')
 
     # get all training file paths and class names
-    train_data_file_names = {}
-    for name in glob.glob(os.path.join(settings['train_data_dir'], '*', '')):
-        split_name = name.split('/')
-        class_name = split_name[-2]
-        image_names = glob.glob(os.path.join(name, '*.jpg'))
-        train_data_file_names.update({class_name: image_names})
+    image_fname_dict = gather_images(settings['train_data_dir'])
 
     # as images are different sizes rescale all images to 25x25 when reading into matrix
     train_data = []
     train_labels = []
     class_label_list = []
     class_index = 0
-    for class_name in train_data_file_names.keys():
+    for class_name in image_fname_dict.keys():
         print("class: {0} of 120: {1}".format(class_index, class_name))
-        image_fpaths = train_data_file_names[class_name]
+        image_fpaths = image_fname_dict[class_name]
         num_image = len(image_fpaths)
         image_array = np.zeros((num_image, 625))
 
@@ -61,6 +56,19 @@ def parse_train_data():
     print(class_label_list)
 
     return X_train, y_train, class_label_list
+
+def gather_images(image_directory):
+    """Taking a data directory, will gather all files images and 
+    return a dictionary of class_name: image_names"""
+    image_fname_dict = {}
+    # loop over the images, updating dictionary
+    for name in glob.glob(os.path.join(image_directory, '*', '')):
+        split_name = name.split('/')
+        class_name = split_name[-2]
+        image_names = glob.glob(os.path.join(name, '*.jpg'))
+        image_fname_dict.update({class_name: image_names})
+
+    return image_fname_dict
 
 def main():
     X, y, class_label_list = parse_train_data()
