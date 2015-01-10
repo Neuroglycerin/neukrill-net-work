@@ -25,30 +25,10 @@ def parse_train_data():
     # get all training file paths and class names
     image_fname_dict = gather_images(settings['train_data_dir'])
 
-    # as images are different sizes rescale all images to 25x25 when reading into matrix
-    train_data = []
-    train_labels = []
-    class_label_list = []
-    class_index = 0
-    for class_name in image_fname_dict.keys():
-        print("class: {0} of 120: {1}".format(class_index, class_name))
-        image_fpaths = image_fname_dict[class_name]
-        num_image = len(image_fpaths)
-        image_array = np.zeros((num_image, 625))
-
-        class_label_list.append(class_name)
-        for index in range(num_image):
-            image = skimage.io.imread(image_fpaths[index])
-            #image_ratio = get_minor_major_ratio(image)
-
-            resized_image = skimage.transform.resize(image, (25,25))
-            image_vector = resized_image.ravel()
-            image_array[index,] = image_vector
-            array_labels = num_image * [class_name]
-
-        class_index += 1
-        train_data.append(image_array)
-        train_labels = train_labels + array_labels
+    # as images are different sizes rescale 
+    # all images to 48x48 when reading into matrix
+    processing = lambda image: skimage.transform.resize(image, (48,48))
+    train_data, train_labels = load_images(image_fname_dict, processing=processing)
 
     X_train = np.vstack(train_data)
     y_train = np.array(train_labels)
