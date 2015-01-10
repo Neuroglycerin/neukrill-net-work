@@ -28,7 +28,7 @@ def parse_train_data():
     # as images are different sizes rescale 
     # all images to 48x48 when reading into matrix
     processing = lambda image: skimage.transform.resize(image, (48,48))
-    train_data, train_labels = load_images(image_fname_dict, processing=processing)
+    train_data, train_labels = utils.load_images(image_fname_dict, processing=processing)
 
     X_train = np.vstack(train_data)
     y_train = np.array(train_labels)
