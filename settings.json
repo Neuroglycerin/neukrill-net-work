@@ -2,6 +2,7 @@
     "data_dir": [
         "/home/fin/data",
         "/home/gavin/Documents/ndsb"
+        "data"
     ],
     "classes": [
         "acantharia_protist",
