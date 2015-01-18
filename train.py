@@ -7,6 +7,7 @@ import glob
 import os
 import neukrill_net.utils as utils
 import neukrill_net.image_processing as image_processing
+import neukrill_net.augment as augment
 
 import sklearn.preprocessing
 import sklearn.ensemble
@@ -23,7 +24,10 @@ def main():
     # get all training file paths and class names
     image_fname_dict = settings.image_fnames
 
-    processing = lambda image: image_processing.resize(image, (48,48))
+    # this should be parsed from json, but hardcoded for now
+    augment_settings = {'resize':(48,48),'rotate':4}
+
+    processing = augment.augmentation_wrapper(augment_settings)
 
     X, y = utils.load_data(image_fname_dict, classes=settings.classes,
                            processing=processing)
