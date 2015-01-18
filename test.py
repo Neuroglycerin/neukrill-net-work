@@ -15,7 +15,7 @@ def main():
 
     image_fname_dict = settings.image_fnames
 
-    processing = lambda image: image_processing.resize(image, (48,48))
+    processing = lambda image: image_processing.resize_image(image, (48,48))
 
     X, names = utils.load_data(image_fname_dict, processing=processing,
                                verbose=True)
