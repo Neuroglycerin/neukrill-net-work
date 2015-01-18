@@ -23,7 +23,7 @@ def main():
     # get all training file paths and class names
     image_fname_dict = settings.image_fnames
 
-    processing = lambda image: image_processing.resize(image, (48,48))
+    processing = lambda image: image_processing.resize_image(image, (48,48))
 
     X, y = utils.load_data(image_fname_dict, classes=settings.classes,
                            processing=processing)
