@@ -1,7 +1,7 @@
 {
     "data_dir": [
         "/home/fin/data",
-        "/home/gavin/Documents/ndsb"
+        "/home/gavin/Documents/ndsb",
         "data"
     ],
     "classes": [
