@@ -58,3 +58,6 @@ data
 
 # ignore notebook checkpoints
 notebooks/ipynb_checkpoints
+
+# ignore submission csvs
+submission.*
