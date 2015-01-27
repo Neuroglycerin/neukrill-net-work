@@ -31,11 +31,10 @@ References:
     - textbooks: "Pattern Recognition and Machine Learning" -
                  Christopher M. Bishop, section 4.3.2
 
+Modified by Gavin Gray to work with Python 3.
 """
 __docformat__ = 'restructedtext en'
 
-import cPickle
-import gzip
 import os
 import sys
 import time
@@ -45,6 +44,7 @@ import numpy
 import theano
 import theano.tensor as T
 
+import sklearn.datasets
 
 class LogisticRegression(object):
     """Multi-class Logistic Regression Class
@@ -166,7 +166,7 @@ class LogisticRegression(object):
             raise NotImplementedError()
 
 
-def load_data(dataset):
+def load_data():
     ''' Loads the dataset
 
     :type dataset: string
@@ -177,41 +177,24 @@ def load_data(dataset):
     # LOAD DATA #
     #############
 
-    # Download the MNIST dataset if it is not present
-    data_dir, data_file = os.path.split(dataset)
-    if data_dir == "" and not os.path.isfile(dataset):
-        # Check if dataset is in the data directory.
-        new_path = os.path.join(
-            os.path.split(__file__)[0],
-            "..",
-            "data",
-            dataset
-        )
-        if os.path.isfile(new_path) or data_file == 'mnist.pkl.gz':
-            dataset = new_path
-
-    if (not os.path.isfile(dataset)) and data_file == 'mnist.pkl.gz':
-        import urllib
-        origin = (
-            'http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz'
-        )
-        print 'Downloading data from %s' % origin
-        urllib.urlretrieve(origin, dataset)
-
-    print '... loading data'
-
     # Load the dataset
-    f = gzip.open(dataset, 'rb')
-    train_set, valid_set, test_set = cPickle.load(f)
-    f.close()
+    train = numpy.load("/home/gavin/Documents/ndsb/mnist_train.npz")
+    test = numpy.load("/home/gavin/Documents/ndsb/mnist_train.npz")
+
+    split = int(test['arr_0'].shape[0]/2)
+
+    train_set_x,train_set_y = train['arr_0'],train['arr_1']
+    valid_set_x,valid_set_y = test['arr_0'][:split,:],test['arr_1'][:split]
+    test_set_x,test_set_y = test['arr_0'][split:,:],test['arr_1'][split:]
+
     #train_set, valid_set, test_set format: tuple(input, target)
     #input is an numpy.ndarray of 2 dimensions (a matrix)
-    #witch row's correspond to an example. target is a
+    #whose rows correspond to an example. target is a
     #numpy.ndarray of 1 dimensions (vector)) that have the same length as
     #the number of rows in the input. It should give the target
     #target to the example with the same index in the input.
 
-    def shared_dataset(data_xy, borrow=True):
+    def shared_dataset(data_x, data_y, borrow=True):
         """ Function that loads the dataset into shared variables
 
         The reason we store our dataset in shared variables is to allow
@@ -220,7 +203,7 @@ def load_data(dataset):
         is needed (the default behaviour if the data is not in a shared
         variable) would lead to a large decrease in performance.
         """
-        data_x, data_y = data_xy
+        
         shared_x = theano.shared(numpy.asarray(data_x,
                                                dtype=theano.config.floatX),
                                  borrow=borrow)
@@ -234,19 +217,18 @@ def load_data(dataset):
         # floats it doesn't make sense) therefore instead of returning
         # ``shared_y`` we will have to cast it to int. This little hack
         # lets ous get around this issue
+        print(shared_x.get_value().shape,shared_y.get_value().shape)
         return shared_x, T.cast(shared_y, 'int32')
 
-    test_set_x, test_set_y = shared_dataset(test_set)
-    valid_set_x, valid_set_y = shared_dataset(valid_set)
-    train_set_x, train_set_y = shared_dataset(train_set)
+    # flat is better than nested
+    test_set_x, test_set_y = shared_dataset(test_set_x,test_set_y)
+    valid_set_x, valid_set_y = shared_dataset(valid_set_x,valid_set_y)
+    train_set_x, train_set_y = shared_dataset(train_set_x,train_set_y)
 
-    rval = [(train_set_x, train_set_y), (valid_set_x, valid_set_y),
-            (test_set_x, test_set_y)]
-    return rval
-
+    return (test_set_x, test_set_y, 
+            valid_set_x, valid_set_y, train_set_x, train_set_y)
 
 def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
-                           dataset='mnist.pkl.gz',
                            batch_size=600):
     """
     Demonstrate stochastic gradient descent optimization of a log-linear
@@ -264,13 +246,9 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
     :type dataset: string
     :param dataset: the path of the MNIST dataset file from
                  http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz
-
     """
-    datasets = load_data(dataset)
-
-    train_set_x, train_set_y = datasets[0]
-    valid_set_x, valid_set_y = datasets[1]
-    test_set_x, test_set_y = datasets[2]
+    (test_set_x, test_set_y, valid_set_x, 
+        valid_set_y, train_set_x, train_set_y) = load_data()
 
     # compute number of minibatches for training, validation and testing
     n_train_batches = train_set_x.get_value(borrow=True).shape[0] / batch_size
@@ -280,7 +258,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
     ######################
     # BUILD ACTUAL MODEL #
     ######################
-    print '... building the model'
+    print('... building the model')
 
     # allocate symbolic variables for the data
     index = T.lscalar()  # index to a [mini]batch
@@ -345,7 +323,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
     ###############
     # TRAIN MODEL #
     ###############
-    print '... training the model'
+    print('... training the model')
     # early-stopping parameters
     patience = 5000  # look as this many examples regardless
     patience_increase = 2  # wait this much longer when a new best is
@@ -366,7 +344,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
     epoch = 0
     while (epoch < n_epochs) and (not done_looping):
         epoch = epoch + 1
-        for minibatch_index in xrange(n_train_batches):
+        for minibatch_index in range(int(n_train_batches)):
 
             minibatch_avg_cost = train_model(minibatch_index)
             # iteration number
@@ -375,7 +353,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
             if (iter + 1) % validation_frequency == 0:
                 # compute zero-one loss on validation set
                 validation_losses = [validate_model(i)
-                                     for i in xrange(n_valid_batches)]
+                                     for i in range(int(n_valid_batches))]
                 this_validation_loss = numpy.mean(validation_losses)
 
                 print(
@@ -399,7 +377,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
                     # test it on the test set
 
                     test_losses = [test_model(i)
-                                   for i in xrange(n_test_batches)]
+                                   for i in range(int(n_test_batches))]
                     test_score = numpy.mean(test_losses)
 
                     print(
@@ -427,11 +405,10 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
         )
         % (best_validation_loss * 100., test_score * 100.)
     )
-    print 'The code run for %d epochs, with %f epochs/sec' % (
-        epoch, 1. * epoch / (end_time - start_time))
-    print >> sys.stderr, ('The code for file ' +
-                          os.path.split(__file__)[1] +
-                          ' ran for %.1fs' % ((end_time - start_time)))
+    print('The code run for %d epochs, with %f epochs/sec' % (
+        epoch, 1. * epoch / (end_time - start_time)))
+    print('The code for file ' + os.path.split(__file__)[1] +
+            ' ran for %.2fm' % ((end_time - start_time) / 60.), file=sys.stderr)
 
 if __name__ == '__main__':
     sgd_optimization_mnist()
