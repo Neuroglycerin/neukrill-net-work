@@ -2,7 +2,8 @@
     "data_dir": [
         "/home/fin/data",
         "/home/gavin/Documents/ndsb",
-        "data"
+        "data",
+        "/disk/data2/neuroglycerin/neukrill-data/"
     ],
     "classes": [
         "acantharia_protist",
