@@ -323,7 +323,7 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
     print('... training')
 
     # early-stopping parameters
-    patience = 10000  # look as this many examples regardless
+    patience = 50000  # look as this many examples regardless
     patience_increase = 2  # wait this much longer when a new best is
                            # found
     improvement_threshold = 0.995  # a relative improvement of this much is
