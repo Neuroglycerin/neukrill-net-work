@@ -2,6 +2,7 @@
 
 import neukrill_net.utils as utils
 import neukrill_net.image_processing as image_processing
+import neukrill_net.augment as augment
 
 import csv
 import pickle
@@ -13,9 +14,11 @@ import os
 def main():
     settings = utils.Settings('settings.json')
 
-    image_fname_dict = settings.image_fnames
+    # this should be parsed from json, but hardcoded for now
+    augment_settings = {'resize':(48,48)}
+    processing = augment.augmentation_wrapper(augment_settings)
 
-    processing = lambda image: image_processing.resize_image(image, (48,48))
+    image_fname_dict = settings.image_fnames
 
     X, names = utils.load_data(image_fname_dict, processing=processing,
                                verbose=True)
