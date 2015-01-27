@@ -61,3 +61,6 @@ notebooks/ipynb_checkpoints
 
 # ignore submission csvs
 submission.*
+
+# ignore model files, they will end up being too large
+model.pkl
