@@ -55,3 +55,6 @@ target/
 
 # ignore the data directory
 data
+
+# ignore notebook checkpoints
+notebooks/ipynb_checkpoints
