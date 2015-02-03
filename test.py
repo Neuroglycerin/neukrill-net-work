@@ -19,15 +19,12 @@ def main():
 
     X, names = utils.load_data(image_fname_dict, processing=processing,
                                verbose=True)
-
+    
     clf = joblib.load('model.pkl')
     p = clf.predict_proba(X)
-
-    with open('submission.csv', 'w') as csv_out:
-        out_writer = csv.writer(csv_out, delimiter=',')
-        out_writer.writerow(['image'] + list(settings.classes))
-        for index in range(len(names)):
-            out_writer.writerow([names[index]] + list(p[index,]))
+    
+    utils.write_predictions('submission.csv', p, names, settings)
+    
 
 if __name__ == '__main__':
     main()
