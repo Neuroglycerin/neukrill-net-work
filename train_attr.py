@@ -57,6 +57,7 @@ def main():
         results.append(sklearn.metrics.log_loss(y[test], p))
     
     print(results)
+    print('CV average = {}'.format(np.mean(results)))
     
     # Train on the whole thing and save model for later
     clf.fit(X,y)
