@@ -20,18 +20,29 @@ import sklearn.metrics
 
 def main():
     
+    # this should be parsed from json, but hardcoded for now
+    
+    #attributes_settings = ['width','height']
+    #pkl_file = 'imsizeLR.pkl'
+    
+    #attributes_settings = ['numpixels','aspectratio']
+    #pkl_file = 'imsizeLR_alt.pkl'
+    
+    attributes_settings = ['width','height','mean','stderr','propwhite','propbool','propblack']
+    pkl_file = 'imattr1.pkl'
+    
+    # Load the settings, providing 
     settings = utils.Settings('settings.json')
     
-    # this should be parsed from json, but hardcoded for now
-    attributes_settings = ['width','height']
-    
+    # Make the wrapper function
     processing = image_processing.attributes_wrapper(attributes_settings)
     
+    # Load the training data, with the processing applied
     X, y = utils.load_data(settings.image_fnames, classes=settings.classes,
                            processing=processing)
     
+    # Encode the labels
     label_encoder = sklearn.preprocessing.LabelEncoder()
-    
     y = label_encoder.fit_transform(y)
     
     # just a dummy uniform probability classifier for working purposes
@@ -39,6 +50,7 @@ def main():
     
     #clf = sklearn.linear_model.SGDClassifier(n_jobs=-1,
     #                                         loss='log')
+    
     #clf = sklearn.ensemble.RandomForestClassifier(n_jobs=-1,
     #                                              n_estimators=100,
     #                                              verbose=1)
@@ -62,7 +74,7 @@ def main():
     # Train on the whole thing and save model for later
     clf.fit(X,y)
     
-    joblib.dump(clf, 'imsizeLR.pkl', compress=3)
+    joblib.dump(clf, pkl_file, compress=3)
 
 if __name__=='__main__':
     main()
