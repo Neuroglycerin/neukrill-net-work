@@ -21,42 +21,44 @@ import sklearn.metrics
 
 def main():
 
-    settings = utils.Settings('settings.json')
-
-    # get all training file paths and class names
-    image_fname_dict = settings.image_fnames
-
     # this should be parsed from json, but hardcoded for now
-    augment_settings = {'resize':(48,48),'rotate':4}
-
+    # augment_settings = {'resize':(48,48),'rotate':4}
+    augment_settings = {'resize':(48,48)}
+    
+    # Get global settings
+    settings = utils.Settings('settings.json')
+    
+    # Make the processing wrapper function
     processing = augment.augmentation_wrapper(augment_settings)
 
-    X, y = utils.load_data(image_fname_dict, classes=settings.classes,
+    # Load the training data, with the processing applied
+    X, y = utils.load_data(settings.image_fnames, classes=settings.classes,
                            processing=processing)
-
+    
     label_encoder = sklearn.preprocessing.LabelEncoder()
-
+    
     y = label_encoder.fit_transform(y)
-
+    
     # just a dummy uniform probability classifier for working purposes
     clf = sklearn.dummy.DummyClassifier(strategy='uniform')
-
+    
     #clf = sklearn.linear_model.SGDClassifier(n_jobs=-1,
     #                                         loss='log')
     #clf = sklearn.ensemble.RandomForestClassifier(n_jobs=-1,
     #                                              n_estimators=100,
     #                                              verbose=1)
-
+    
     cv = sklearn.cross_validation.StratifiedShuffleSplit(y)
-
+    
     results = []
     for train, test in cv:
         clf.fit(X[train], y[train])
         p = clf.predict_proba(X[test])
         results.append(sklearn.metrics.log_loss(y[test], p))
-
+    
     print(results)
-
+    print('CV average = {}'.format(np.mean(results)))
+    
     joblib.dump(clf, 'model.pkl', compress=3)
 
 if __name__=='__main__':
