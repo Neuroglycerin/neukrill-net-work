@@ -56,5 +56,18 @@ docs/_build/
 # PyBuilder
 target/
 
+<<<<<<< HEAD
+# ignore the data directory
+data
+
+# ignore notebook checkpoints
+notebooks/ipynb_checkpoints
+
+# ignore submission csvs
+submission.*
+
+# ignore model files, they will end up being too large
+model.pkl
+
 # ignore gedit temp files
 *~

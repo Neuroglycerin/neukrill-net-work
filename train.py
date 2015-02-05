@@ -18,6 +18,7 @@ import sklearn.cross_validation
 import sklearn.dummy
 from sklearn.externals import joblib
 import sklearn.metrics
+import sklearn.pipeline
 
 def main():
 
@@ -44,9 +45,12 @@ def main():
     
     #clf = sklearn.linear_model.SGDClassifier(n_jobs=-1,
     #                                         loss='log')
-    #clf = sklearn.ensemble.RandomForestClassifier(n_jobs=-1,
+    #forest = sklearn.ensemble.RandomForestClassifier(n_jobs=-1,
     #                                              n_estimators=100,
-    #                                              verbose=1)
+    #                                              verbose=1,
+    #                                              max_depth=5)
+    #scaler = sklearn.preprocessing.StandardScaler()
+    #clf = sklearn.pipeline.Pipeline((("scl",scaler),("clf",forest)))
     
     cv = sklearn.cross_validation.StratifiedShuffleSplit(y)
     
