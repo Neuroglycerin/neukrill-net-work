@@ -22,7 +22,7 @@ import sklearn.metrics
 def main():
     
     # this should be parsed from json, but hardcoded for now
-    bow_options = {'verbose':True, 'n_features_max':500, 'patch_size':31, 'clusteralgo':'kmeans', 'n_clusters':300, 'random_seed':42}
+    bow_options = {'verbose':True, 'normalise_hist':False, 'n_features_max':100, 'patch_size':15, 'clusteralgo':'kmeans', 'n_clusters':20, 'random_seed':42}
     
     # Load the settings, providing 
     settings = utils.Settings('settings.json')
@@ -41,7 +41,7 @@ def main():
     cv = sklearn.cross_validation.StratifiedShuffleSplit(y)
     
     bow = bagofwords.Bow(**bow_options)
-    sample = np.random.random_integers(0, len(rawdata)-1, size=(3000)) # Subsample so we can do this in sensible time
+    sample = np.random.random_integers(0, len(rawdata)-1, size=(1000)) # Subsample so we can do this in sensible time
     bow.build_vocabulary([rawdata[i] for i in sample])
     #bow.build_vocabulary(rawdata)
     print('Bagging words for raw training data')
@@ -59,7 +59,9 @@ def main():
         
         clf.fit(X[train], y[train])
         p = clf.predict_proba(X[test])
-        results.append(sklearn.metrics.log_loss(y[test], p))
+        res = sklearn.metrics.log_loss(y[test], p)
+        print(res)
+        results.append(res)
     
     print(results)
     print('CV average = {}'.format(np.mean(results)))
@@ -74,7 +76,7 @@ def main():
     print('Loading the raw test data')
     rawtest, names = utils.load_rawdata(settings.image_fnames)
     print('Bagging words for raw test data')
-    X2 = [bow.compute_image_bow(img) for img in rawdata]
+    X2 = [bow.compute_image_bow(img) for img in rawtest]
     X2 = np.vstack(X2)
     
     p = clf.predict_proba(X2)
