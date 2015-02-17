@@ -1,0 +1,7 @@
+{
+    "model type":"sklearn",
+    "preprocessing":{"resize":[48,48],
+                     "rotate":4},
+    "classifier":"dummy",
+    "cross validation":{}
+}

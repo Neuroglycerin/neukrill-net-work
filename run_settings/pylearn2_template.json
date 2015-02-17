@@ -1,0 +1,6 @@
+{
+    "modeltype":"pylearn2",
+    "preprocessing":{},
+    "final_shape":(),
+    "augmentation_factor":X
+}
