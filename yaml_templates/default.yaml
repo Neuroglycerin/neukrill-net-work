@@ -1,7 +1,7 @@
 !obj:pylearn2.train.Train {
     dataset: &train !obj:neukrill_net.dense_dataset.DensePNGDataset {
         settings_path: %(settings_path)s,
-        run_settings: %(run_settings)s,
+        run_settings: %(run_settings_path)s,
         training_set_mode: "train"
     },
     model: !obj:pylearn2.models.mlp.MLP {
@@ -44,12 +44,12 @@
             {
                 'valid' : !obj:neukrill_net.dense_dataset.DensePNGDataset  {
                                 settings_path: %(settings_path)s,
-                                run_settings: %(run_settings)s,
+                                run_settings: %(run_settings_path)s,
                                 training_set_mode: "validation"
                           },
                 'test'  : !obj:neukrill_net.dense_dataset.DensePNGDataset  {
                                 settings_path: %(settings_path)s,
-                                run_settings: %(run_settings)s,
+                                run_settings: %(run_settings_path)s,
                                 training_set_mode: "test"
                           }
             },
