@@ -1,7 +1,8 @@
 {
     "modeltype":"pylearn2",
+    "yaml file": "default.yaml",
     "preprocessing":{},
-    "final_shape":(),
-    "augmentation_factor":X
+    "final_shape":[],
+    "augmentation_factor":X,
     "train_split": 0.8
 }
