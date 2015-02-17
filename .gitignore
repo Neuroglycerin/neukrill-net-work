@@ -1,5 +1,24 @@
+#------------------------------------------
+# REPO DIRECTORIES AND FILES
+#------------------------------------------
+
 # ignore the data directory
 data
+
+# ignore notebook checkpoints
+notebooks/ipynb_checkpoints
+
+# ignore submission csvs
+submission*.csv
+submission*.csv.gz
+
+# ignore model files, they will end up being too large
+model.pkl
+
+
+#------------------------------------------
+# GENERIC GENERATED FILE TYPES
+#------------------------------------------
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -55,19 +74,6 @@ docs/_build/
 
 # PyBuilder
 target/
-
-<<<<<<< HEAD
-# ignore the data directory
-data
-
-# ignore notebook checkpoints
-notebooks/ipynb_checkpoints
-
-# ignore submission csvs
-submission.*
-
-# ignore model files, they will end up being too large
-model.pkl
 
 # ignore gedit temp files
 *~

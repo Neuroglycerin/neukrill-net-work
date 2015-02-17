@@ -82,7 +82,8 @@ def train_sklearn(run_settings):
         p = clf.predict_proba(X[test])
         results.append(sklearn.metrics.log_loss(y[test], p))
 
-    print(results)
+    print("Average CV: {0} +/- {1}".format(np.mean(results),
+                                    np.sqrt(np.var(results)))
 
     # before saving model check there is somewhere for it to save to
     modeldir = os.path.join(settings.data_dir,"models")
