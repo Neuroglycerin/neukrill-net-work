@@ -71,3 +71,6 @@ model.pkl
 
 # ignore gedit temp files
 *~
+
+# ignore notebook checkpoints
+notebooks/.ipynb_checkpoints
