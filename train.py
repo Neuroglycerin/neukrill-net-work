@@ -28,8 +28,12 @@ def main(run_settings_path):
     # shoehorn run_settings filename into its own dictionary (for later)
     run_settings['filename'] = os.path.split(
                                         run_settings_path)[-1].split(".")[0]
+    # and the full run settings path
+    run_settings['run_settings_path'] = os.path.abspath(run_settings_path)
     # also put the settings in there
     run_settings['settings'] = settings
+    # and the settings path, while we're at it
+    run_settings['settings_path'] = os.path.abspath('settings.json')
     if run_settings['model type'] == 'sklearn':
         train_sklearn(run_settings)
     elif run_settings['model type'] == 'pylearn2':
@@ -99,7 +103,34 @@ def train_pylearn2(run_settings):
     Function to call operations for running a pylearn2 model using
     the settings found in run_settings.
     """
-    # NOT IMPLEMENTED YET
+    import pylearn2.config
+    # unpack settings
+    settings = run_settings['settings']
+    #read the YAML settings template 
+    with open(os.path.join("yaml_templates",run_settings['yaml file'])) as y:
+        yaml_string = y.read()
+    # sub in the following things for default: settings_path, run_settings_path, 
+    # final_shape, n_classes, save_path
+    run_settings["n_classes"] = len(settings.classes)
+    modeldir = os.path.join(settings.data_dir,"models")
+    if not os.path.exists(modeldir):
+        os.mkdir(modeldir)
+    run_settings["save_path"] = os.path.join(modeldir,
+            run_settings['filename'] + ".pkl")
+    # time for some crude string parsing
+    yaml_string = yaml_string%(run_settings)
+    # write the new yaml to the data directory, in a yaml_settings subdir
+    yamldir = os.path.join(settings.data_dir,"yaml_settings")
+    if not os.path.exists(yamldir):
+        os.mkdir(yamldir)
+    yaml_path = os.path.join(yamldir,run_settings["filename"]+
+            run_settings['yaml file'].split(".")[0]+".yaml")
+    with open(yaml_path) as f:
+        f.write(yaml_string)
+    # then we load the yaml file using pylearn2
+    train = pylearn2.config.yaml_parse(yaml_path)
+    # and run the model!
+    train.main_loop()
 
 if __name__=='__main__':
     # need to argparse for run settings path
