@@ -10,6 +10,23 @@ Ensure that `neukrill-net-tools` is installed by doing one of the following (edi
 
 See the tools repo for more details.
 
+Startup Script for Theano
+=========================
+
+It's required to set some environment variables for Theano. We have a script
+for doing this (could in future ensure they're set in the Python code).
+First, make sure it's executable:
+
+```bash
+chmod +x start_script
+```
+
+Then source it ([don't run it](http://askubuntu.com/questions/53177/bash-script-to-set-environment-variables-not-working)):
+
+```bash
+source start_script
+```
+
 Main Scripts
 ============
 
