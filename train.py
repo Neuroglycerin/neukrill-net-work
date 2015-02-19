@@ -128,7 +128,7 @@ def train_pylearn2(run_settings):
     with open(yaml_path, "w") as f:
         f.write(yaml_string)
     # then we load the yaml file using pylearn2
-    train = pylearn2.config.yaml_parse.load(yaml_path)
+    train = pylearn2.config.yaml_parse.load(yaml_string)
     # and run the model!
     train.main_loop()
 
