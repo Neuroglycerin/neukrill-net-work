@@ -36,11 +36,12 @@
                 ],
     },
     algorithm: !obj:pylearn2.training_algorithms.sgd.SGD {
-        batch_size: 100,
-        learning_rate: .01,
+        learning_rate: .05,
         learning_rule: !obj:pylearn2.training_algorithms.learning_rule.Momentum {
             init_momentum: 0.5,
         },
+        train_iteration_mode: 'even_shuffled_sequential',
+        monitor_iteration_mode: 'even_sequential',
         monitoring_dataset:
             {
                 'valid' : !obj:neukrill_net.dense_dataset.DensePNGDataset  {
@@ -54,13 +55,9 @@
                                 training_set_mode: "test"
                           }
             },
-        cost: !obj:pylearn2.costs.cost.SumOfCosts { costs: [
-            !obj:pylearn2.costs.cost.MethodCost {
-                method: 'cost_from_X'
-            }, !obj:pylearn2.costs.mlp.WeightDecay {
-                coeffs: [ .00005, .00005, .00005 ]
-            }
-            ]
+        cost:  !obj:pylearn2.costs.mlp.dropout.Dropout {
+            input_include_probs: { 'h0' : .8 },
+            input_scales: { 'h0': 1. }
         },
         termination_criterion: !obj:pylearn2.termination_criteria.And {
             criteria: [
