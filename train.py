@@ -125,7 +125,7 @@ def train_pylearn2(run_settings):
         os.mkdir(yamldir)
     yaml_path = os.path.join(yamldir,run_settings["filename"]+
             run_settings['yaml file'].split(".")[0]+".yaml")
-    with open(yaml_path) as f:
+    with open(yaml_path, "w") as f:
         f.write(yaml_string)
     # then we load the yaml file using pylearn2
     train = pylearn2.config.yaml_parse(yaml_path)
