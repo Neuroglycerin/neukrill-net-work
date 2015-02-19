@@ -1,5 +1,5 @@
 {
-    "modeltype":"pylearn2",
+    "model type":"pylearn2",
     "yaml file": "default.yaml",
     "preprocessing":{},
     "final_shape":[],
