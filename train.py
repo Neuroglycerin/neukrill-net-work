@@ -26,6 +26,7 @@ def main(run_settings_path):
     settings = utils.Settings('settings.json')
     # load the run-specific settings
     run_settings = utils.load_run_settings(run_settings_path, 
+            settings,
             settings_path='settings.json')
     if run_settings['model type'] == 'sklearn':
         train_sklearn(run_settings)
