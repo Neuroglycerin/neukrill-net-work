@@ -1,6 +1,7 @@
 #execute it by typing 
 #. ./start_script
 # Courtesy of Krzysztof Geras
+# Modified by Gavin Gray
 
 hostname=`hostname`
 
