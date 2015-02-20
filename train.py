@@ -22,18 +22,11 @@ import sklearn.pipeline
 import argparse
 
 def main(run_settings_path):
+    # load the non-run-specific settings
     settings = utils.Settings('settings.json')
-    with open(run_settings_path) as rf:
-        run_settings = json.load(rf)
-    # shoehorn run_settings filename into its own dictionary (for later)
-    run_settings['filename'] = os.path.split(
-                                        run_settings_path)[-1].split(".")[0]
-    # and the full run settings path
-    run_settings['run_settings_path'] = os.path.abspath(run_settings_path)
-    # also put the settings in there
-    run_settings['settings'] = settings
-    # and the settings path, while we're at it
-    run_settings['settings_path'] = os.path.abspath('settings.json')
+    # load the run-specific settings
+    run_settings = utils.load_run_settings(run_settings_path, 
+            settings_path='settings.json')
     if run_settings['model type'] == 'sklearn':
         train_sklearn(run_settings)
     elif run_settings['model type'] == 'pylearn2':
@@ -48,7 +41,7 @@ def train_sklearn(run_settings):
     # get all training file paths and class names
     image_fname_dict = settings.image_fnames
 
-    # this should be parsed from json, but hardcoded for now
+    # now being parsed from json
     augment_settings = run_settings["preprocessing"]
 
     # build processing function
@@ -89,14 +82,9 @@ def train_sklearn(run_settings):
     print("Average CV: {0} +/- {1}".format(np.mean(results),
                                     np.sqrt(np.var(results))))
 
-    # before saving model check there is somewhere for it to save to
-    modeldir = os.path.join(settings.data_dir,"models")
-    if not os.path.exists(modeldir):
-        os.mkdir(modeldir)
     # save the model in the data directory, in a "models" subdirectory
     # with the name of the run_settings as the name of the pkl
-    picklefname = os.path.join(modeldir,run_settings['filename']+".pkl")
-    joblib.dump(clf, picklefname, compress=3)
+    joblib.dump(clf, run_settings["pickle abspath"], compress=3)
 
 def train_pylearn2(run_settings):
     """
