@@ -20,7 +20,7 @@ def main(run_settings_path):
             settings_path='settings.json')
     # HELLO BOILERPLATE
     if run_settings['model type'] == 'sklearn':
-        train_sklearn(run_settings)
+        test_sklearn(run_settings)
     elif run_settings['model type'] == 'pylearn2':
         #train_pylearn2(run_settings)
         raise NotImplementedError("Unsupported model type.")
@@ -28,7 +28,7 @@ def main(run_settings_path):
         raise NotImplementedError("Unsupported model type.")
 
 
-def train_sklearn(run_settings, verbose=False):
+def test_sklearn(run_settings, verbose=False):
     # some more boilerplate here
     # unpack settings
     settings = run_settings['settings']
