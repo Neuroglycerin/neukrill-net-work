@@ -8,7 +8,7 @@ import numpy as np
 import glob
 import os
 import neukrill_net.utils as utils
-import neukrill_net.image_processing as image_processing
+import neukrill_net.bagofwords as bagofwords
 
 import sklearn.preprocessing
 import sklearn.ensemble
@@ -35,7 +35,7 @@ def main():
     settings = utils.Settings('settings.json')
     
     # Make the wrapper function
-    processing = image_processing.attributes_wrapper(attributes_settings)
+    processing = bagofwords.attributes_wrapper(attributes_settings)
     
     # Load the training data, with the processing applied
     X, y = utils.load_data(settings.image_fnames, classes=settings.classes,
