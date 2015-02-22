@@ -81,7 +81,7 @@ def main():
     
     p = clf.predict_proba(X2)
     
-    utils.write_predictions('submission_bow_initial.csv', p, names, settings)
+    utils.write_predictions('submission_bow_initial.csv', p, names, settings.classes)
     
 
 if __name__=='__main__':

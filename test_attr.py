@@ -41,7 +41,7 @@ def main():
     clf = joblib.load(pkl_file)
     p = clf.predict_proba(X)
     
-    utils.write_predictions(out_fname, p, names, settings)
+    utils.write_predictions(out_fname, p, names, settings.classes)
     
 if __name__ == '__main__':
     main()

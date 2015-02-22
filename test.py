@@ -49,7 +49,7 @@ def train_sklearn(run_settings, verbose=False):
     clf = joblib.load(run_settings['pickle abspath'])
     p = clf.predict_proba(X)
    
-    utils.write_predictions(run_settings['submissions abspath'], p, names, settings)
+    utils.write_predictions(run_settings['submissions abspath'], p, names, settings.classes)
 
 if __name__ == '__main__':
     # copied code from train.py here instead of making a function
