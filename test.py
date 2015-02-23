@@ -39,7 +39,7 @@ def train_sklearn(run_settings, verbose=False):
 
     # parsed from json, preproc settings are dict
     augment_settings = run_settings["preprocessing"]
-    processing = augment.augmentation_wrapper(augment_settings)
+    processing = augment.augmentation_wrapper(**augment_settings)
 
     image_fname_dict = settings.image_fnames
 
@@ -50,7 +50,7 @@ def train_sklearn(run_settings, verbose=False):
     clf = joblib.load(run_settings['pickle abspath'])
     p = clf.predict_proba(X)
    
-    utils.write_predictions(run_settings['submissions abspath'], p, names, settings)
+    utils.write_predictions(run_settings['submissions abspath'], p, names, settings.classes)
 
 def test_pylearn2(run_settings, batch_size=400, verbose=False):
     # Based on the script found at:
