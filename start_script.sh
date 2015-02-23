@@ -20,7 +20,7 @@ while getopts "hc:" OPTION; do
     esac
 done
 
-if [ -z $gpu_number ]
+if [ -z "${gpu_number##*[!0-9]*}" ]
 then
     usage
     exit 1
