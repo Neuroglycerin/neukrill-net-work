@@ -3,6 +3,7 @@
 #. ./start_script
 # Courtesy of Krzysztof Geras
 # Modified by Gavin Gray
+# UI improved by Finlay Maguire
 
 usage(){ echo "./start_script.sh -c GPU_CORES"; }
 while getopts "hc:" OPTION; do
