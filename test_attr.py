@@ -2,6 +2,7 @@
 
 import neukrill_net.utils as utils
 import neukrill_net.image_processing as image_processing
+import neukrill_net.bagofwords as bagofwords
 
 import csv
 import pickle
@@ -32,7 +33,7 @@ def main():
     settings = utils.Settings('settings.json')
     
     # Make the wrapper function
-    processing = image_processing.attributes_wrapper(attributes_settings)
+    processing = bagofwords.attributes_wrapper(attributes_settings)
     
     # Load the test data, with the processing applied
     X, names = utils.load_data(settings.image_fnames, processing=processing,
@@ -41,7 +42,7 @@ def main():
     clf = joblib.load(pkl_file)
     p = clf.predict_proba(X)
     
-    utils.write_predictions(out_fname, p, names, settings)
+    utils.write_predictions(out_fname, p, names, settings.classes)
     
 if __name__ == '__main__':
     main()

@@ -46,7 +46,7 @@ def train_sklearn(run_settings):
     augment_settings = run_settings["preprocessing"]
 
     # build processing function
-    processing = augment.augmentation_wrapper(augment_settings)
+    processing = augment.augmentation_wrapper(**augment_settings)
     
     # load data as design matrix, applying processing function
     X, y = utils.load_data(image_fname_dict, classes=settings.classes,
