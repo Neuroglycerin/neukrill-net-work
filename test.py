@@ -11,6 +11,7 @@ import numpy as np
 import glob
 import os
 import argparse
+import six.moves
 
 def main(run_settings_path):
     # this should just run either function depending on the run settings
@@ -50,6 +51,67 @@ def test_sklearn(run_settings, verbose=False):
     p = clf.predict_proba(X)
    
     utils.write_predictions(run_settings['submissions abspath'], p, names, settings.classes)
+
+def test_pylearn2(run_settings, batch_size=400, verbose=False):
+    # Based on the script found at:
+    #   https://github.com/zygmuntz/pylearn2-practice/blob/master/predict.py
+  
+    import pylearn2.utils
+    import pylearn2.config
+    import neukrill_net.dense_dataset
+    import theano.tensor
+    import theano.function
+
+    # first load the model
+    model = pylearn2.utils.serial.load(run_settings['pickle abspath'])
+
+    # then load the dataset
+    dataset = neukrill_net.dense_dataset.DensePNGDataset(
+            settings_path=run_settings['settings_path'],
+            run_settings=run_settings['run_settings_path'],
+            train_or_predict='predict')
+    
+    # then set batches:
+    model.set_batch_size(batch_size)
+            
+    # then check batch size
+    m = dataset.X.shape[0]
+    # see how much extra we're going to have
+    extra = batch_size - m%batch_size
+    # check that worked
+    assert (m+extra)%batch_size == 0
+
+    # if we have extra, then we're going to have to pad with zeros
+    # this might be a problem, with the massive array we're going 
+    # to end up with
+    if extra > 0:
+        dataset.X = np.concatenate((dataset.X, 
+            np.zeros((extra, dataset.X.shape[1]), dtype=dataset.X.dtype)), 
+            axis=0)
+
+        #then check that worked:
+        assert dataset.X.shape[0]%batch_size == 0
+
+    import pdb
+    # make a function to perform the forward propagation in our network
+    X = model.get_input_space().make_batch_theano()
+    Y = model.fprop(X)
+    f = theano.function([X],Y)
+
+    # didn't want to use xrange explicitly
+    for i in six.moves.range(dataset.X.shape[0]/batch_size):
+        # grab a row
+        x_arg = dataset.X[i*batch_size:(i+1)*batch_size,:]
+        # check if we're dealing with images:
+        if X.ndim > 2:
+            # if so redefine to topological view
+            x_arg = dataset.get_topological_view(x_arg)
+        # and append the resulting value to y
+        y.append(f(x_arg.astype(X.dtype)))
+        pdb.set_trace()
+
+    
+
 
 if __name__ == '__main__':
     # copied code from train.py here instead of making a function
