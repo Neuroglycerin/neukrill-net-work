@@ -1,6 +1,6 @@
 {
     "model type":"pylearn2",
-    "yaml file": "deep_test.yaml",
+    "yaml file": "alexnet_based_deeper.yaml",
     "preprocessing":{"resize":[128,128]},
     "final_shape":[128,128],
     "augmentation_factor":1,
