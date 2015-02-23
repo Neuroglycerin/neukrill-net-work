@@ -24,7 +24,7 @@ def main(run_settings_path):
         test_sklearn(run_settings)
     elif run_settings['model type'] == 'pylearn2':
         #train_pylearn2(run_settings)
-        raise NotImplementedError("Unsupported model type.")
+        test_pylearn2(run_settings)
     else:
         raise NotImplementedError("Unsupported model type.")
 
@@ -59,8 +59,11 @@ def test_pylearn2(run_settings, batch_size=400, verbose=False):
     import pylearn2.utils
     import pylearn2.config
     import neukrill_net.dense_dataset
-    import theano.tensor
-    import theano.function
+    import theano
+    import theano
+
+    # unpack settings
+    settings = run_settings['settings']
 
     # first load the model
     model = pylearn2.utils.serial.load(run_settings['pickle abspath'])
@@ -69,17 +72,17 @@ def test_pylearn2(run_settings, batch_size=400, verbose=False):
     dataset = neukrill_net.dense_dataset.DensePNGDataset(
             settings_path=run_settings['settings_path'],
             run_settings=run_settings['run_settings_path'],
-            train_or_predict='predict')
+            train_or_predict='test')
     
     # then set batches:
     model.set_batch_size(batch_size)
             
     # then check batch size
-    m = dataset.X.shape[0]
+    N_images = dataset.X.shape[0]
     # see how much extra we're going to have
-    extra = batch_size - m%batch_size
+    extra = batch_size - N_images%batch_size
     # check that worked
-    assert (m+extra)%batch_size == 0
+    assert (N_images+extra)%batch_size == 0
 
     # if we have extra, then we're going to have to pad with zeros
     # this might be a problem, with the massive array we're going 
@@ -92,14 +95,15 @@ def test_pylearn2(run_settings, batch_size=400, verbose=False):
         #then check that worked:
         assert dataset.X.shape[0]%batch_size == 0
 
-    import pdb
     # make a function to perform the forward propagation in our network
     X = model.get_input_space().make_batch_theano()
     Y = model.fprop(X)
     f = theano.function([X],Y)
 
+    # initialise our results array
+    y = np.zeros((N_images, len(settings.classes)))
     # didn't want to use xrange explicitly
-    for i in six.moves.range(dataset.X.shape[0]/batch_size):
+    for i in six.moves.range((dataset.X.shape[0]/batch_size)-1):
         # grab a row
         x_arg = dataset.X[i*batch_size:(i+1)*batch_size,:]
         # check if we're dealing with images:
@@ -107,11 +111,13 @@ def test_pylearn2(run_settings, batch_size=400, verbose=False):
             # if so redefine to topological view
             x_arg = dataset.get_topological_view(x_arg)
         # and append the resulting value to y
-        y.append(f(x_arg.astype(X.dtype)))
-        pdb.set_trace()
+        # don't understand why I have to transpose here, but I do
+        y[i*batch_size:(i+1)*batch_size,:] = (f(x_arg.astype(X.dtype).T))
 
-    
+    # at this point the ordering of the columns is __probably wrong__
 
+    # then write our results to csv 
+    utils.write_predictions(run_settings['submissions abspath'], y, dataset.names, settings.classes)
 
 if __name__ == '__main__':
     # copied code from train.py here instead of making a function
