@@ -21,21 +21,21 @@ import sklearn.metrics
 import sklearn.pipeline
 import argparse
 
-def main(run_settings_path):
+def main(run_settings_path, verbose=False, force=False):
     # load the non-run-specific settings
     settings = utils.Settings('settings.json')
     # load the run-specific settings
     run_settings = utils.load_run_settings(run_settings_path, 
             settings,
-            settings_path='settings.json')
+            settings_path='settings.json', force=force)
     if run_settings['model type'] == 'sklearn':
-        train_sklearn(run_settings)
+        train_sklearn(run_settings, verbose=verbose, force=force)
     elif run_settings['model type'] == 'pylearn2':
-        train_pylearn2(run_settings)
+        train_pylearn2(run_settings, verbose=verbose, force=force)
     else:
         raise NotImplementedError("Unsupported model type.")
 
-def train_sklearn(run_settings):
+def train_sklearn(run_settings, verbose=False, force=False):
     # unpack settings
     settings = run_settings['settings']
 
@@ -87,7 +87,7 @@ def train_sklearn(run_settings):
     # with the name of the run_settings as the name of the pkl
     joblib.dump(clf, run_settings["pickle abspath"], compress=3)
 
-def train_pylearn2(run_settings):
+def train_pylearn2(run_settings, verbose=False, force=False):
     """
     Function to call operations for running a pylearn2 model using
     the settings found in run_settings.
@@ -129,5 +129,11 @@ if __name__=='__main__':
     parser.add_argument('run_settings', metavar='run_settings', type=str, 
             nargs='?', default=os.path.join("run_settings","default.json"),
             help="Path to run settings json file.")
+    # add force option 
+    parser.add_argument('-f', action="store_true", help="Force overwrite of"
+                        " model files/submission csvs/anything else.")
+    # add verbose option
+    parser.add_argument('-v', action="store_true", help="Run verbose.")
+
     args = parser.parse_args()
-    main(args.run_settings)
+    main(args.run_settings,verbose=args.v,force=arg.f)
