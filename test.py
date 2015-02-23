@@ -38,7 +38,7 @@ def train_sklearn(run_settings, verbose=False):
 
     # parsed from json, preproc settings are dict
     augment_settings = run_settings["preprocessing"]
-    processing = augment.augmentation_wrapper(augment_settings)
+    processing = augment.augmentation_wrapper(**augment_settings)
 
     image_fname_dict = settings.image_fnames
 
