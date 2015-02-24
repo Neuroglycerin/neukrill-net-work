@@ -1,7 +1,9 @@
 {
     "model type":"sklearn",
     "preprocessing":{"resize":[48,48],
-                     "rotate":4},
+                     "rotate":4,
+                     "rotate_is_resizable":False
+    },
     "classifier":"dummy",
     "cross validation":{}
 }
