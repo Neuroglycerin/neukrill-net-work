@@ -1,9 +1,31 @@
 {
-    "model type":"sklearn",
-    "preprocessing":{"resize":[48,48],
-                     "rotate":4,
-                     "rotate_is_resizable":False
-    },
     "classifier":"dummy",
-    "cross validation":{}
+    "cross validation":{},
+    "crossval results":[
+        4.79579054559676,
+        4.7957905455967564,
+        4.7957905455967564,
+        4.79579054559676,
+        4.7957905455967591,
+        4.7957905455967591,
+        4.7957905455967582,
+        4.7957905455967564,
+        4.7957905455967547,
+        4.7957905455967591
+    ],
+    "filename":"default",
+    "model type":"sklearn",
+    "modeldir":"/home/gavin/Documents/ndsb/models",
+    "pickle abspath":"/home/gavin/Documents/ndsb/models/default.pkl",
+    "preprocessing":{
+        "resize":[
+            48,
+            48
+        ],
+        "rotate":4,
+        "rotate_is_resizable":0
+    },
+    "run_settings_path":"/home/gavin/repositories/neukrill-net-work/run_settings/default.json",
+    "settings_path":"/home/gavin/repositories/neukrill-net-work/settings.json",
+    "submissions abspath":"/home/gavin/Documents/ndsb/submissions/default.csv"
 }
