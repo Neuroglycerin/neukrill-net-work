@@ -1,7 +1,31 @@
+#!/bin/bash
 #execute it by typing 
 #. ./start_script
 # Courtesy of Krzysztof Geras
 # Modified by Gavin Gray
+# UI improved by Finlay Maguire
+
+usage(){ echo "./start_script.sh -c GPU_CORES"; }
+while getopts "hc:" OPTION; do
+    case $OPTION in
+        h) 
+            usage
+            exit 1
+            ;;
+        c) gpu_number=$OPTARG
+            ;;
+        *)
+            usage
+            exit 1
+            ;;
+    esac
+done
+
+if [ -z "${gpu_number##*[!0-9]*}" ]
+then
+    usage
+    exit 1
+fi
 
 hostname=`hostname`
 
