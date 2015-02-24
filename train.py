@@ -141,4 +141,4 @@ if __name__=='__main__':
     parser.add_argument('-v', action="store_true", help="Run verbose.")
 
     args = parser.parse_args()
-    main(args.run_settings,verbose=args.v,force=arg.f)
+    main(args.run_settings,verbose=args.v,force=args.f)
