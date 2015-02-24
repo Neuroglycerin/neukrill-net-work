@@ -120,6 +120,8 @@ def train_pylearn2(run_settings, verbose=False, force=False):
     train = pylearn2.config.yaml_parse.load(yaml_string)
     # and run the model!
     train.main_loop()
+    import pdb
+    pdb.set_trace()
 
 if __name__=='__main__':
     # need to argparse for run settings path
