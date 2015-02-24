@@ -114,8 +114,6 @@ def test_pylearn2(run_settings, batch_size=400, verbose=False):
         # don't understand why I have to transpose here, but I do
         y[i*batch_size:(i+1)*batch_size,:] = (f(x_arg.astype(X.dtype).T))
 
-    # at this point the ordering of the columns is __probably wrong__
-
     # then write our results to csv 
     utils.write_predictions(run_settings['submissions abspath'], y, dataset.names, settings.classes)
 
