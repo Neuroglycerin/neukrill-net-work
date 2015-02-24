@@ -88,8 +88,12 @@ def train_sklearn(run_settings, verbose=False, force=False):
     joblib.dump(clf, run_settings["pickle abspath"], compress=3)
 
     # store the raw log loss results back in the run settings json
-    with open(run_settings['run_settings_path']) as f:
-        json.dump(f, run_settings, separators=(',',':'), indent=4, 
+    with open(run_settings['run_settings_path'], 'w') as f:
+        # have to remove the settings structure, can't serialise it
+        del run_settings['settings']
+        # and add the results
+        run_settings["crossval results"] = results
+        json.dump(run_settings, f, separators=(',',':'), indent=4, 
                                                     sort_keys=True)
 
 def train_pylearn2(run_settings, verbose=False, force=False):
