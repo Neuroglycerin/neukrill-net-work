@@ -87,6 +87,11 @@ def train_sklearn(run_settings, verbose=False, force=False):
     # with the name of the run_settings as the name of the pkl
     joblib.dump(clf, run_settings["pickle abspath"], compress=3)
 
+    # store the raw log loss results back in the run settings json
+    with open(run_settings['run_settings_path']) as f:
+        json.dump(f, run_settings, separators=(',',':'), indent=4, 
+                                                    sort_keys=True)
+
 def train_pylearn2(run_settings, verbose=False, force=False):
     """
     Function to call operations for running a pylearn2 model using
