@@ -7,7 +7,7 @@
 
 usage_1(){ echo "./start_script.sh GPU_CORES"; }
 
-gpu_number=$1
+export gpu_number=$1
 
 if [ -z "${gpu_number##*[!0-9]*}" ]
 then
