@@ -24,7 +24,7 @@ chmod +x start_script
 Then source it ([don't run it](http://askubuntu.com/questions/53177/bash-script-to-set-environment-variables-not-working)):
 
 ```bash
-source start_script
+source start_script <gpu number 0-3>
 ```
 
 Main Scripts
