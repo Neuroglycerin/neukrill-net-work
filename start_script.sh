@@ -31,7 +31,6 @@ hostname=`hostname`
 
 if [ $hostname = "stonesoup.inf.ed.ac.uk" ]; then
     echo "detected stonesoup, applying config"
-	gpu_number=0
 	export LD_LIBRARY_PATH="/opt/cuda-5.0.35/lib;/opt/cuda-5.0.35/lib64"
 	export CUDA_ROOT="/opt/cuda-5.0.35"
 	export THEANO_FLAGS="device=gpu`echo -n $gpu_number`,floatX=float32,base_compiledir=~/.theano/stonesoup`echo -n $gpu_number`"
