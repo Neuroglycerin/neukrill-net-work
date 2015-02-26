@@ -16,9 +16,11 @@ import six.moves
 def main(run_settings_path):
     # this should just run either function depending on the run settings
     settings = utils.Settings('settings.json')
+    # test script won't overwrite the pickle, so always force load
     run_settings = utils.load_run_settings(run_settings_path, 
             settings,
-            settings_path='settings.json')
+            settings_path='settings.json',
+            force=True)
     # HELLO BOILERPLATE
     if run_settings['model type'] == 'sklearn':
         test_sklearn(run_settings)
