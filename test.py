@@ -13,7 +13,7 @@ import os
 import argparse
 import six.moves
 
-def main(run_settings_path):
+def main(run_settings_path, verbose=False):
     # this should just run either function depending on the run settings
     settings = utils.Settings('settings.json')
     # test script won't overwrite the pickle, so always force load
@@ -23,10 +23,10 @@ def main(run_settings_path):
             force=True)
     # HELLO BOILERPLATE
     if run_settings['model type'] == 'sklearn':
-        test_sklearn(run_settings)
+        test_sklearn(run_settings, verbose=verbose)
     elif run_settings['model type'] == 'pylearn2':
         #train_pylearn2(run_settings)
-        test_pylearn2(run_settings)
+        test_pylearn2(run_settings, verbose=verbose)
     else:
         raise NotImplementedError("Unsupported model type.")
 
@@ -52,9 +52,10 @@ def test_sklearn(run_settings, verbose=False):
     clf = joblib.load(run_settings['pickle abspath'])
     p = clf.predict_proba(X)
    
-    utils.write_predictions(run_settings['submissions abspath'], p, names, settings.classes)
+    utils.write_predictions(run_settings['submissions abspath'], p, 
+            names, settings.classes)
 
-def test_pylearn2(run_settings, batch_size=400, verbose=False):
+def test_pylearn2(run_settings, batch_size=4075, verbose=False):
     # Based on the script found at:
     #   https://github.com/zygmuntz/pylearn2-practice/blob/master/predict.py
   
@@ -68,9 +69,13 @@ def test_pylearn2(run_settings, batch_size=400, verbose=False):
     settings = run_settings['settings']
 
     # first load the model
+    if verbose:
+        print("Loading model...")
     model = pylearn2.utils.serial.load(run_settings['pickle abspath'])
 
     # then load the dataset
+    if verbose:
+        print("Loading data...")
     dataset = neukrill_net.dense_dataset.DensePNGDataset(
             settings_path=run_settings['settings_path'],
             run_settings=run_settings['run_settings_path'],
@@ -98,6 +103,8 @@ def test_pylearn2(run_settings, batch_size=400, verbose=False):
         assert dataset.X.shape[0]%batch_size == 0
 
     # make a function to perform the forward propagation in our network
+    if verbose:
+        print("Compiling Theano function...")
     X = model.get_input_space().make_batch_theano()
     Y = model.fprop(X)
     f = theano.function([X],Y)
@@ -105,7 +112,10 @@ def test_pylearn2(run_settings, batch_size=400, verbose=False):
     # initialise our results array
     y = np.zeros((N_images, len(settings.classes)))
     # didn't want to use xrange explicitly
-    for i in six.moves.range((dataset.X.shape[0]/batch_size)-1):
+    n_batches = dataset.X.shape[0]/batch_size
+    for i in six.moves.range(n_batches-1):
+        if verbose:
+            print("Processing batch {0} of {1}".format(i,n_batches))
         # grab a row
         x_arg = dataset.X[i*batch_size:(i+1)*batch_size,:]
         # check if we're dealing with images:
@@ -116,18 +126,41 @@ def test_pylearn2(run_settings, batch_size=400, verbose=False):
         # don't understand why I have to transpose here, but I do
         y[i*batch_size:(i+1)*batch_size,:] = (f(x_arg.astype(X.dtype).T))
 
+    # stupidest solution to augmentation problem
+    # just collapse adjacent predictions until we
+    # have the right number
+    if len(dataset.names) < y.shape[0]:
+        y_collapsed = np.zeros((len(dataset.names),y.shape[1]))
+        augmentation_factor = int(y.shape[0]/len(dataset.names))
+        # collapse every <augmentation_factor> predictions by averaging
+        for i,(low,high) in enumerate(zip(six.moves.range(0,
+                        y.shape[0]-augmentation_factor, augmentation_factor),
+                        six.moves.range(augmentation_factor,y.shape[0],
+                                                    augmentation_factor))):
+            # confused yet?
+            import pdb
+            pdb.set_trace()
+            # slice from low to high and take average down columns
+            y_collapsed[i,:] = np.mean(y[low:high,:], axis=0)
+        y = y_collapsed
+
     # then write our results to csv 
-    utils.write_predictions(run_settings['submissions abspath'], y, dataset.names, settings.classes)
+    if verbose:
+        print("Writing csv")
+    utils.write_predictions(run_settings['submissions abspath'], y, 
+            dataset.names, settings.classes)
 
 if __name__ == '__main__':
     # copied code from train.py here instead of making a function
     # because this code may diverge
     # need to argparse for run settings path
-    parser = argparse.ArgumentParser(description='Train a model and store a'
+    parser = argparse.ArgumentParser(description='Train a model and store a '
                                                  'pickled model file.')
     # nargs='?' will look for a single argument but failover to default
     parser.add_argument('run_settings', metavar='run_settings', type=str, 
             nargs='?', default=os.path.join("run_settings","default.json"),
             help="Path to run settings json file.")
+    # add verbose option
+    parser.add_argument('-v', action="store_true", help="Run verbose.")
     args = parser.parse_args()
-    main(args.run_settings)
+    main(args.run_settings, verbose=args.v)
