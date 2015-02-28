@@ -134,7 +134,7 @@ if __name__ == '__main__':
     # copied code from train.py here instead of making a function
     # because this code may diverge
     # need to argparse for run settings path
-    parser = argparse.ArgumentParser(description='Train a model and store a'
+    parser = argparse.ArgumentParser(description='Train a model and store a '
                                                  'pickled model file.')
     # nargs='?' will look for a single argument but failover to default
     parser.add_argument('run_settings', metavar='run_settings', type=str, 
