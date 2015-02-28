@@ -52,7 +52,8 @@ def test_sklearn(run_settings, verbose=False):
     clf = joblib.load(run_settings['pickle abspath'])
     p = clf.predict_proba(X)
    
-    utils.write_predictions(run_settings['submissions abspath'], p, names, settings.classes)
+    utils.write_predictions(run_settings['submissions abspath'], p, 
+            names, settings.classes)
 
 def test_pylearn2(run_settings, batch_size=4075, verbose=False):
     # Based on the script found at:
@@ -128,7 +129,8 @@ def test_pylearn2(run_settings, batch_size=4075, verbose=False):
     # then write our results to csv 
     if verbose:
         print("Writing csv")
-    utils.write_predictions(run_settings['submissions abspath'], y, dataset.names, settings.classes)
+    utils.write_predictions(run_settings['submissions abspath'], y, 
+            dataset.names, settings.classes)
 
 if __name__ == '__main__':
     # copied code from train.py here instead of making a function
