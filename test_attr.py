@@ -2,7 +2,7 @@
 
 import neukrill_net.utils as utils
 import neukrill_net.image_processing as image_processing
-import neukrill_net.bagofwords as bagofwords
+import neukrill_net.highlevelfeatures as highlevelfeatures
 
 import csv
 import pickle
@@ -33,7 +33,7 @@ def main():
     settings = utils.Settings('settings.json')
     
     # Make the wrapper function
-    processing = bagofwords.attributes_wrapper(attributes_settings)
+    processing = highlevelfeatures.attributes_wrapper(attributes_settings)
     
     # Load the test data, with the processing applied
     X, names = utils.load_data(settings.image_fnames, processing=processing,
