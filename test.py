@@ -126,6 +126,24 @@ def test_pylearn2(run_settings, batch_size=4075, verbose=False):
         # don't understand why I have to transpose here, but I do
         y[i*batch_size:(i+1)*batch_size,:] = (f(x_arg.astype(X.dtype).T))
 
+    # stupidest solution to augmentation problem
+    # just collapse adjacent predictions until we
+    # have the right number
+    if len(dataset.names) < y.shape[0]:
+        y_collapsed = np.zeros((len(dataset.names),y.shape[1]))
+        augmentation_factor = int(y.shape[0]/len(dataset.names))
+        # collapse every <augmentation_factor> predictions by averaging
+        for i,(low,high) in enumerate(zip(six.moves.range(0,
+                        y.shape[0]-augmentation_factor, augmentation_factor),
+                        six.moves.range(augmentation_factor,y.shape[0],
+                                                    augmentation_factor))):
+            # confused yet?
+            import pdb
+            pdb.set_trace()
+            # slice from low to high and take average down columns
+            y_collapsed[i,:] = np.mean(y[low:high,:], axis=0)
+        y = y_collapsed
+
     # then write our results to csv 
     if verbose:
         print("Writing csv")
