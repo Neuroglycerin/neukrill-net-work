@@ -9,7 +9,7 @@ import glob
 import os
 import neukrill_net.utils as utils
 import neukrill_net.image_processing as image_processing
-import neukrill_net.bagofwords as bagofwords
+import neukrill_net.highlevelfeatures as highlevelfeatures
 
 import sklearn.preprocessing
 import sklearn.ensemble
@@ -22,7 +22,14 @@ import sklearn.metrics
 def main():
     
     # this should be parsed from json, but hardcoded for now
-    bow_options = {'verbose':True, 'normalise_hist':False, 'n_features_max':100, 'patch_size':15, 'clusteralgo':'kmeans', 'n_clusters':20, 'random_seed':42}
+    bow_options = { 'verbose': True,
+                    'normalise_hist': False,
+                    'n_features_max': 100,
+                    'patch_size': 15,
+                    'clusteralgo': 'kmeans',
+                    'n_clusters': 20,
+                    'random_seed': 42
+                  }
     
     # Load the settings, providing 
     settings = utils.Settings('settings.json')
@@ -40,24 +47,24 @@ def main():
     
     cv = sklearn.cross_validation.StratifiedShuffleSplit(y)
     
-    bow = bagofwords.Bow(**bow_options)
+    bow = highlevelfeatures.BagOfWords(**bow_options)
     sample = np.random.random_integers(0, len(rawdata)-1, size=(1000)) # Subsample so we can do this in sensible time
-    bow.build_vocabulary([rawdata[i] for i in sample])
-    #bow.build_vocabulary(rawdata)
+    bow.fit([rawdata[i] for i in sample])
+    #bow.fit(rawdata)
     print('Bagging words for raw training data')
-    X = [bow.compute_image_bow(img) for img in rawdata]
-    X = np.vstack(X)
+    X = bow.extractfeatures(rawdata)
+    X = np.squeeze(X)
     
     # Try cross-validating
     print('Cross-validating')
     results = []
     for train, test in cv:
         # Make a new BOW encoding
-        #bow = bagofwords.Bow(**bow_options)
-        #bow.build_vocabulary([rawdata[i] for i in train])
-        #X = [bow.compute_image_bow(img) for img in rawdata]
+        #bow = highlevelfeatures.BagOfWords(**bow_options)
+        #bow.fit([rawdata[i] for i in train])
+        #X = bow.extractfeatures(rawdata)
         
-        clf.fit(X[train], y[train])
+        clf.fit(X[train,:], y[train])
         p = clf.predict_proba(X[test])
         res = sklearn.metrics.log_loss(y[test], p)
         print(res)
@@ -67,17 +74,17 @@ def main():
     print('CV average = {}'.format(np.mean(results)))
     
     # Train on the whole thing and save model for later
-    #bow = bagofwords.Bow(**bow_options)
-    #bow.build_vocabulary(rawdata)
-    #X = [bow.compute_image_bow(img) for img in rawdata]
+    #bow = highlevelfeatures.BagOfWords(**bow_options)
+    #bow.fit(rawdata)
+    #X = bow.extractfeatures(rawdata)
     
     clf.fit(X,y)
     
     print('Loading the raw test data')
     rawtest, names = utils.load_rawdata(settings.image_fnames)
     print('Bagging words for raw test data')
-    X2 = [bow.compute_image_bow(img) for img in rawtest]
-    X2 = np.vstack(X2)
+    X2 = X = bow.extractfeatures(rawdata)
+    X2 = np.squeeze(X2)
     
     p = clf.predict_proba(X2)
     
