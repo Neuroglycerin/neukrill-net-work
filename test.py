@@ -138,13 +138,14 @@ def test_pylearn2(run_settings, batch_size=4075, verbose=False):
         augmentation_factor = int(y.shape[0]/len(dataset.names))
         # collapse every <augmentation_factor> predictions by averaging
         for i,(low,high) in enumerate(zip(range(0,
-                        y.shape[0]-augmentation_factor, augmentation_factor),
-                        range(augmentation_factor,y.shape[0],
+                        y.shape[0], augmentation_factor),
+                    range(augmentation_factor,y.shape[0]+augmentation_factor,
                                                     augmentation_factor))):
             # confused yet?
-            pdb.set_trace()
             # slice from low to high and take average down columns
             y_collapsed[i,:] = np.mean(y[low:high,:], axis=0)
+        import pdb
+        pdb.set_trace()
         y = y_collapsed
 
     # then write our results to csv 
