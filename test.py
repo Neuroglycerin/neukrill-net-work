@@ -94,6 +94,9 @@ def test_pylearn2(run_settings, batch_size=4075, verbose=False):
     # this might be a problem, with the massive array we're going 
     # to end up with
     if extra > 0:
+        if verbose:
+            print("Extra detected, padding dataset with"
+                    " zeros for batch processing")
         dataset.X = np.concatenate((dataset.X, 
             np.zeros((extra, dataset.X.shape[1]), dtype=dataset.X.dtype)), 
             axis=0)
@@ -114,7 +117,7 @@ def test_pylearn2(run_settings, batch_size=4075, verbose=False):
     n_batches = int(dataset.X.shape[0]/batch_size)
     for i in range(n_batches):
         if verbose:
-            print("Processing batch {0} of {1}".format(i,n_batches))
+            print("Processing batch {0} of {1}".format(i+1,n_batches))
         # grab a row
         x_arg = dataset.X[i*batch_size:(i+1)*batch_size,:]
         # check if we're dealing with images:
