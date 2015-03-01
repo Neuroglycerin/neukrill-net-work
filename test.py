@@ -111,8 +111,8 @@ def test_pylearn2(run_settings, batch_size=4075, verbose=False):
     # initialise our results array
     y = np.zeros((N_images, len(settings.classes)))
     # didn't want to use xrange explicitly
-    n_batches = dataset.X.shape[0]/batch_size
-    for i in six.moves.range(n_batches-1):
+    n_batches = int(dataset.X.shape[0]/batch_size)
+    for i in range(n_batches):
         if verbose:
             print("Processing batch {0} of {1}".format(i,n_batches))
         # grab a row
@@ -132,9 +132,9 @@ def test_pylearn2(run_settings, batch_size=4075, verbose=False):
         y_collapsed = np.zeros((len(dataset.names),y.shape[1]))
         augmentation_factor = int(y.shape[0]/len(dataset.names))
         # collapse every <augmentation_factor> predictions by averaging
-        for i,(low,high) in enumerate(zip(six.moves.range(0,
+        for i,(low,high) in enumerate(zip(range(0,
                         y.shape[0]-augmentation_factor, augmentation_factor),
-                        six.moves.range(augmentation_factor,y.shape[0],
+                        range(augmentation_factor,y.shape[0],
                                                     augmentation_factor))):
             # confused yet?
             pdb.set_trace()
