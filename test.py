@@ -86,7 +86,7 @@ def test_pylearn2(run_settings, batch_size=4075, verbose=False):
     # then check batch size
     N_images = dataset.X.shape[0]
     # see how much extra we're going to have
-    extra = batch_size - N_images%batch_size
+    extra = N_images%batch_size
     # check that worked
     assert (N_images+extra)%batch_size == 0
 
@@ -97,6 +97,8 @@ def test_pylearn2(run_settings, batch_size=4075, verbose=False):
         if verbose:
             print("Extra detected, padding dataset with"
                     " zeros for batch processing")
+            import pdb
+            pdb.set_trace()
         dataset.X = np.concatenate((dataset.X, 
             np.zeros((extra, dataset.X.shape[1]), dtype=dataset.X.dtype)), 
             axis=0)
