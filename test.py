@@ -63,7 +63,6 @@ def test_pylearn2(run_settings, batch_size=4075, verbose=False):
     import pylearn2.config
     import neukrill_net.dense_dataset
     import theano
-    import theano
 
     # unpack settings
     settings = run_settings['settings']
@@ -138,6 +137,7 @@ def test_pylearn2(run_settings, batch_size=4075, verbose=False):
                         six.moves.range(augmentation_factor,y.shape[0],
                                                     augmentation_factor))):
             # confused yet?
+            pdb.set_trace()
             # slice from low to high and take average down columns
             y_collapsed[i,:] = np.mean(y[low:high,:], axis=0)
         y = y_collapsed
