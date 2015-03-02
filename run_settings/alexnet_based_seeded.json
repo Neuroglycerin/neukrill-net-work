@@ -1,0 +1,8 @@
+{
+    "model type":"pylearn2",
+    "yaml file": "alexnet_based.yaml",
+    "preprocessing":{"resize":[48,48]},
+    "final_shape":[48,48],
+    "augmentation_factor":1,
+    "train_split": 0.8
+}
