@@ -14,6 +14,8 @@ import theano
 import neukrill_net.dense_dataset
 import neukrill_net.utils
 import sklearn.metrics
+import argparse
+import os
 
 def check_score(run_settings_path, verbose=False):
     """
@@ -24,7 +26,8 @@ def check_score(run_settings_path, verbose=False):
     if verbose:
         print("Loading settings..")
     settings = neukrill_net.utils.Settings("settings.json")
-    run_settings = neukrill_net.utils.load_run_settings(run_settings_path)
+    run_settings = neukrill_net.utils.load_run_settings(run_settings_path, 
+            settings, force=True)
     
     # load the model
     if verbose:
