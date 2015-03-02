@@ -110,13 +110,9 @@
              }
              ]
         },
-        termination_criterion: !obj:pylearn2.termination_criteria.And {
-            criteria: [
-                !obj:pylearn2.termination_criteria.EpochCounter {
+        termination_criterion: !obj:pylearn2.termination_criteria.EpochCounter {
                     max_epochs: 50
                 },
-            ]
-        }
     },
     extensions: [
         !obj:pylearn2.training_algorithms.learning_rule.MomentumAdjustor {
