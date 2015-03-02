@@ -154,5 +154,5 @@
         }
     ],
     save_path: '%(alt_picklepath)s',
-	save_freq: 1
+    save_freq: 1
 }
