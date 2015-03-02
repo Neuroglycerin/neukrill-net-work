@@ -106,11 +106,8 @@ def train_pylearn2(run_settings, verbose=False, force=False):
     # sub in the following things for default: settings_path, run_settings_path, 
     # final_shape, n_classes, save_path
     run_settings["n_classes"] = len(settings.classes)
-    modeldir = os.path.join(settings.data_dir,"models")
-    if not os.path.exists(modeldir):
-        os.mkdir(modeldir)
-    run_settings["save_path"] = os.path.join(modeldir,
-            run_settings['filename'] + ".pkl")
+    # legacy rename, to make sure it's in there
+    run_settings["save_path"] = run_settings['pickle abspath']
     # time for some crude string parsing
     yaml_string = yaml_string%(run_settings)
     # write the new yaml to the data directory, in a yaml_settings subdir
