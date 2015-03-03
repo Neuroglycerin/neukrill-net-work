@@ -157,5 +157,5 @@
         }
     ],
     save_path: '%(save_path)s.recent',
-	save_freq: 1
+    save_freq: 1
 }

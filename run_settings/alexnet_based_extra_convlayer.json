@@ -1,0 +1,30 @@
+{
+    "augmentation_factor":8,
+    "filename":"alexnet_based_norm_global_8aug",
+    "final_shape":[
+        48,
+        48
+    ],
+    "model type":"pylearn2",
+    "modeldir":"/disk/scratch/neuroglycerin/models",
+    "pickle abspath":"/disk/scratch/neuroglycerin/models/alexnet_based_norm_global_8aug.pkl",
+    "preprocessing":{
+        "flip":1,
+        "normalise":{
+            "global_or_pixel":"global",
+            "mu":0.95484909797345896,
+            "sigma":0.14445522859064192
+        },
+        "resize":[
+            48,
+            48
+        ],
+        "rotate":4,
+        "rotate_is_resizable":0
+    },
+    "run_settings_path":"/afs/inf.ed.ac.uk/user/s11/s1145806/Documents/git/neukrill-net-work/run_settings/alexnet_based_norm_global_8aug.json",
+    "settings_path":"/afs/inf.ed.ac.uk/user/s11/s1145806/Documents/git/neukrill-net-work/settings.json",
+    "submissions abspath":"/disk/scratch/neuroglycerin/submissions/alexnet_based_norm_global_8aug.csv",
+    "train_split":0.8,
+    "yaml file":"alexnet_based_extra_convlayer.yaml"
+}
