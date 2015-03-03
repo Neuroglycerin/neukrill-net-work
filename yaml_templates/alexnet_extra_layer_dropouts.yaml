@@ -95,19 +95,19 @@
         cost: !obj:pylearn2.costs.cost.SumOfCosts { costs: [ 
             !obj:pylearn2.costs.mlp.dropout.Dropout {
                 input_include_probs: {
-                    h1 : 1.,
-                    h2 : 1.,
-                    h3 : 1.,
-                    h4 : 1.,
-                    h5 : 1.,
+                    h1 : %(convlayer_dropout)s,
+                    h2 : %(convlayer_dropout)s,
+                    h3 : %(convlayer_dropout)s,
+                    h4 : %(convlayer_dropout)s,
+                    h5 : %(last_convlayer_dropout)s,
                     h6 : 0.5
                 },
                 input_scales: {
-                    h1 : 1.,
-                    h2 : 1.,
-                    h3 : 1.,
-                    h4 : 1.,
-                    h5 : 1.,
+                    h1 : %(convlayer_scale)s,
+                    h2 : %(convlayer_scale)s,
+                    h3 : %(convlayer_scale)s,
+                    h4 : %(convlayer_scale)s,
+                    h5 : %(last_convlayer_scale)s,
                     h6 : 2.
                 }
              },

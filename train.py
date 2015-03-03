@@ -118,6 +118,8 @@ def train_pylearn2(run_settings, verbose=False, force=False):
             run_settings['yaml file'].split(".")[0]+".yaml")
     with open(yaml_path, "w") as f:
         f.write(yaml_string)
+    # save json file
+    utils.save_run_settings(run_settings)
     # then we load the yaml file using pylearn2
     train = pylearn2.config.yaml_parse.load(yaml_string)
     # and run the model!

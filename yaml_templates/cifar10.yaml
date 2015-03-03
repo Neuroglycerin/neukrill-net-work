@@ -80,10 +80,11 @@
         monitor_iteration_mode: 'even_sequential',
         monitoring_dataset:
             {
-                'test' : !obj:neukrill_net.dense_dataset.DensePNGDataset  {
+                'train' : *train,
+                'valid' : !obj:neukrill_net.dense_dataset.DensePNGDataset  {
                                 settings_path: %(settings_path)s,
                                 run_settings: %(run_settings_path)s,
-                                training_set_mode: "test"
+                                training_set_mode: "validation"
                 }
             },
         cost: !obj:pylearn2.costs.mlp.dropout.Dropout {
@@ -106,7 +107,7 @@
             decay_factor: .01
         },
         !obj:pylearn2.train_extensions.best_params.MonitorBasedSaveBest {
-            channel_name: test_y_misclass,
+            channel_name: valid_objective,
             save_path: '%(save_path)s'
         }
     ]
