@@ -156,6 +156,6 @@
             channel_name: valid_y_misclass
         }
     ],
-    save_path: '%(save_path)s.recent',
+    save_path: '%(alt_picklepath)s',
     save_freq: 1
 }
