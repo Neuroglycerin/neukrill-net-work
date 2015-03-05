@@ -9,7 +9,6 @@
                 scale: %(scale)s,
                 scale_asym: %(scale_asym)s,
                 shunt: %(shunt)s,
-                shear: %(shear)s,
                 noise: %(noise)s
             },
         settings_path: %(settings_path)s,
