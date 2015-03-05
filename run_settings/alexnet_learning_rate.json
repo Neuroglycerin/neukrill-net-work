@@ -1,17 +1,19 @@
 {
+    "alt_picklepath":"/disk/scratch/neuroglycerin/models/alexnet_learning_rate_recent.pkl",
     "augmentation_factor":1,
-    "filename":"alexnet_based_norm_global",
+    "filename":"alexnet_learning_rate",
     "final_shape":[
         48,
         48
     ],
     "model type":"pylearn2",
     "modeldir":"/disk/scratch/neuroglycerin/models",
-    "pickle abspath":"/disk/scratch/neuroglycerin/models/alexnet_based_norm_global.pkl",
+    "n_classes":121,
+    "pickle abspath":"/disk/scratch/neuroglycerin/models/alexnet_learning_rate.pkl",
     "preprocessing":{
         "normalise":{
             "global_or_pixel":"global",
-            "mu":0.95484930335157181,
+            "mu":0.9548493033515718,
             "sigma":0.14445529387189857
         },
         "resize":[
@@ -19,9 +21,10 @@
             48
         ]
     },
-    "run_settings_path":"/afs/inf.ed.ac.uk/user/s08/s0805516/repos/neukrill-net-work/run_settings/alexnet_based_norm_global.json",
-    "settings_path":"/afs/inf.ed.ac.uk/user/s08/s0805516/repos/neukrill-net-work/settings.json",
-    "submissions abspath":"/disk/scratch/neuroglycerin/submissions/alexnet_based_norm_global.csv",
+    "run_settings_path":"/afs/inf.ed.ac.uk/user/s13/s1320903/Neuroglycerin/neukrill-net-work/run_settings/alexnet_learning_rate.json",
+    "save_path":"/disk/scratch/neuroglycerin/models/alexnet_learning_rate.pkl",
+    "settings_path":"/afs/inf.ed.ac.uk/user/s13/s1320903/Neuroglycerin/neukrill-net-work/settings.json",
+    "submissions abspath":"/disk/scratch/neuroglycerin/submissions/alexnet_learning_rate.csv",
     "train_split":0.8,
     "yaml file":"alexnet_learning_rate.yaml"
 }
