@@ -25,9 +25,8 @@ def calculate_stats(run_settings_path, verbose=False):
             settings, force=True)
 
     # set mu and sigma if they exist to non-values
-    if 'mu' in run_settings['preprocessing'].get('normalise',{}):
-        run_settings['preprocessing']['normalise']['mu'] = 0.0
-        run_settings['preprocessing']['normalise']['sigma'] = 1.0
+    run_settings['preprocessing']['normalise']['mu'] = 0.0
+    run_settings['preprocessing']['normalise']['sigma'] = 1.0
 
     # format the YAML file
     if verbose:
