@@ -24,6 +24,11 @@ def calculate_stats(run_settings_path, verbose=False):
     run_settings = neukrill_net.utils.load_run_settings(run_settings_path, 
             settings, force=True)
 
+    # set mu and sigma if they exist to non-values
+    if 'mu' in run_settings['preprocessing'].get('normalise',{}):
+        run_settings['preprocessing']['normalise']['mu'] = 0.0
+        run_settings['preprocessing']['normalise']['sigma'] = 1.0
+
     # format the YAML file
     if verbose:
         print("Substituting YAML settings...")
@@ -36,28 +41,46 @@ def calculate_stats(run_settings_path, verbose=False):
 
     # pick a good batch size
     batch_size = 1000
-    N = len(dataset.X)
+    N = len(train.dataset.X)
     while N%batch_size != 0:
         batch_size += 1
+    if verbose:
+        print("Chosen {0} batch size.".format(batch_size))
 
     # get an iterator
     iterator = train.dataset.iterator(batch_size=batch_size)
 
     # iterate over an epoch, calculating the mean and variance
-    mu = 0
+    # (actually calculate a bunch of means and variances, but
+    # it's _approximately_ correct)
     variances = []
-    invN = 1./N
-    for batch in iterator:
-        mu += invN*np.sum(batch)
+    mus = []
+    invNpixels = None
+    if verbose:
+        i = 1
+        print("Processing batches:")
+    for batch,y in iterator:
+        mus.append(np.mean(batch)) 
         variances.append(np.var(batch))
+        if verbose:
+            print("    Batch {0} of {1}: mean {2}"
+                " variance {3}".format(i,iterator.num_batches,mus[-1],variances[-1]))
+            i += 1
     variance = np.mean(variances)
-    sigma = np.sqrt(variance)
+    # have to enforce floats
+    sigma = float(np.sqrt(variance))
+    mu = float(np.mean(mus))
 
+    if verbose:
+        print("Pixels have mu {0} and sigma {1}.".format(mu,sigma))
+        print("Writing results to json.")
     # write the results back into the settings file
     if 'normalise' in run_settings['preprocessing']:
-        if run_settings['global_or_pixel'] == 'pixel':
+        if run_settings.get('global_or_pixel','global') == 'pixel':
             raise NotImplementedError("No significant gains seen from" 
                     " pixelwise so not implemented.")
+        else:
+            run_settings['preprocessing']['normalise']['global_or_pixel'] = 'global'
         run_settings['preprocessing']['normalise']['mu'] = mu
         run_settings['preprocessing']['normalise']['sigma'] = sigma
     else:
