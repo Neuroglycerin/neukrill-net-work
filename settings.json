@@ -3,9 +3,9 @@
         "/home/fin/data",
         "/home/gavin/Documents/ndsb",
         "/media/dragos/6c25c80a-cce2-4fc8-97ae-fdc11725c266/Projects/Neuroglycerine/NDSB/neukrill-net-work/data",
-        "data",
-        "/disk/data2/neuroglycerin/neukrill-data/",
-        "/disk/scratch/neuroglycerin"
+        "/disk/data2/neuroglycerin/neukrill-data",
+        "/disk/scratch/neuroglycerin",
+        "data"
     ],
     "classes": [
         "acantharia_protist",
