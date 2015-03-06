@@ -72,7 +72,7 @@ def check_score(run_settings_path, verbose=False):
         x_arg = dataset.X[i*batch_size:(i+1)*batch_size,:]
         if X.ndim > 2:
             x_arg = dataset.get_topological_view(x_arg)
-        y[i*batch_size:(i+1)*batch_size,:] = (f(x_arg.astype(X.dtype).T))
+        y[i*batch_size:(i+1)*batch_size,:] = (f(x_arg.astype(X.dtype)))
 
     # find augmentation factor
     af = run_settings.get("augmentation_factor",1)

@@ -13,7 +13,7 @@ import os
 import argparse
 import six.moves
 
-def main(run_settings_path, verbose=False):
+def main(run_settings_path, verbose=False, altdata=None):
     # this should just run either function depending on the run settings
     settings = utils.Settings('settings.json')
     # test script won't overwrite the pickle, so always force load
@@ -26,7 +26,7 @@ def main(run_settings_path, verbose=False):
         test_sklearn(run_settings, verbose=verbose)
     elif run_settings['model type'] == 'pylearn2':
         #train_pylearn2(run_settings)
-        test_pylearn2(run_settings, verbose=verbose)
+        test_pylearn2(run_settings, verbose=verbose,altdata=altdata)
     else:
         raise NotImplementedError("Unsupported model type.")
 
@@ -55,7 +55,7 @@ def test_sklearn(run_settings, verbose=False):
     utils.write_predictions(run_settings['submissions abspath'], p, 
             names, settings.classes)
 
-def test_pylearn2(run_settings, batch_size=4075, verbose=False):
+def test_pylearn2(run_settings, batch_size=4075, verbose=False, altdata=None):
     # Based on the script found at:
     #   https://github.com/zygmuntz/pylearn2-practice/blob/master/predict.py
   
@@ -75,7 +75,15 @@ def test_pylearn2(run_settings, batch_size=4075, verbose=False):
     # then load the dataset
     if verbose:
         print("Loading data...")
-    dataset = neukrill_net.dense_dataset.DensePNGDataset(
+    if altdata:
+        if verbose:
+            print("   Loading alternative data file from {0}".format(altdata))
+        dataset = neukrill_net.dense_dataset.DensePNGDataset(
+            settings_path=run_settings['settings_path'],
+            run_settings=altdata,
+            train_or_predict='test')
+    else:
+        dataset = neukrill_net.dense_dataset.DensePNGDataset(
             settings_path=run_settings['settings_path'],
             run_settings=run_settings['run_settings_path'],
             train_or_predict='test')
@@ -164,5 +172,9 @@ if __name__ == '__main__':
             help="Path to run settings json file.")
     # add verbose option
     parser.add_argument('-v', action="store_true", help="Run verbose.")
+    # add option for alternative data loading (for models with very large augmentation
+    parser.add_argument('--altdata', nargs='?', help="Load alternative dataset"
+            ", useful if your model has too much augmentation."
+            " Should be path to alternative run settings json.", default=None)
     args = parser.parse_args()
-    main(args.run_settings, verbose=args.v)
+    main(args.run_settings, verbose=args.v, altdata=args.altdata)
