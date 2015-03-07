@@ -74,13 +74,17 @@ def check_score(run_settings_path, verbose=False):
     if verbose:
         print("Making predictions...")
     y = np.zeros((dataset.X.shape[0],len(settings.classes)))
-    for i in xrange(n_batches):
+    # get the data specs from the cost function using the model
+    pcost = proxied.keywords['algorithm'].keywords['cost']
+    cost = pylearn2.config.yaml_parse._instantiate(pcost)
+    data_specs = cost.get_data_specs(model)
+    # make sequential iterator
+    iterator = dataset.iterator(batch_size=batch_size,num_batches=n_batches,
+                        mode='even_sequential', data_specs=data_specs)
+    for i,batch in enumerate(iterator):
         if verbose:
             print("    Batch {0} of {1}".format(i+1,n_batches))
-        x_arg = dataset.X[i*batch_size:(i+1)*batch_size,:]
-        if X.ndim > 2:
-            x_arg = dataset.get_topological_view(x_arg)
-        y[i*batch_size:(i+1)*batch_size,:] = (f(x_arg.astype(X.dtype).T))
+        y[i*batch_size:(i+1)*batch_size,:] = f(batch[0])
 
     # find augmentation factor
     af = run_settings.get("augmentation_factor",1)
