@@ -1,18 +1,26 @@
 {
+    "alt_picklepath":"/disk/scratch/neuroglycerin/models/alexnet_based_extra_convlayer_with_superclasses_recent.pkl",
     "augmentation_factor":8,
-    "filename":"alexnet_based_norm_global_8aug",
+    "filename":"alexnet_based_extra_convlayer_with_superclasses",
     "final_shape":[
         48,
         48
     ],
     "model type":"pylearn2",
     "modeldir":"/disk/scratch/neuroglycerin/models",
-    "pickle abspath":"/disk/scratch/neuroglycerin/models/alexnet_based_norm_global_8aug.pkl",
+    "n_classes":121,
+    "n_classes_1":121,
+    "n_classes_2":38,
+    "n_classes_3":16,
+    "n_classes_4":7,
+    "n_classes_5":4,
+    "n_classes_6":2,
+    "pickle abspath":"/disk/scratch/neuroglycerin/models/alexnet_based_extra_convlayer_with_superclasses.pkl",
     "preprocessing":{
         "flip":1,
         "normalise":{
             "global_or_pixel":"global",
-            "mu":0.95484909797345896,
+            "mu":0.954849097973459,
             "sigma":0.14445522859064192
         },
         "resize":[
@@ -22,9 +30,11 @@
         "rotate":4,
         "rotate_is_resizable":0
     },
-    "run_settings_path":"/afs/inf.ed.ac.uk/user/s11/s1145806/Documents/git/neukrill-net-work/run_settings/alexnet_based_norm_global_8aug.json",
-    "settings_path":"/afs/inf.ed.ac.uk/user/s11/s1145806/Documents/git/neukrill-net-work/settings.json",
-    "submissions abspath":"/disk/scratch/neuroglycerin/submissions/alexnet_based_norm_global_8aug.csv",
+    "run_settings_path":"/afs/inf.ed.ac.uk/user/s13/s1320903/Neuroglycerin/neukrill-net-work/run_settings/alexnet_based_extra_convlayer_with_superclasses.json",
+    "save_path":"/disk/scratch/neuroglycerin/models/alexnet_based_extra_convlayer_with_superclasses.pkl",
+    "settings_path":"/afs/inf.ed.ac.uk/user/s13/s1320903/Neuroglycerin/neukrill-net-work/settings.json",
+    "submissions abspath":"/disk/scratch/neuroglycerin/submissions/alexnet_based_extra_convlayer_with_superclasses.csv",
     "train_split":0.8,
+    "use_super_classes":1,
     "yaml file":"alexnet_based_extra_convlayer_with_superclasses.yaml"
 }
