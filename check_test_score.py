@@ -54,10 +54,14 @@ def check_score(run_settings_path, verbose=False):
     # find a good batch size 
     if verbose:
         print("Finding batch size...")
+    if hasattr(dataset.X, 'shape'):
+        N_examples = dataset.X.shape[0]
+    else:
+        N_examples = len(dataset.X)
     batch_size = 500
-    while dataset.X.shape[0]%batch_size != 0:
+    while N_examples%batch_size != 0:
         batch_size += 1
-    n_batches = int(dataset.X.shape[0]/batch_size)
+    n_batches = int(N_examples/batch_size)
     if verbose:
         print("    chosen batch size {0}"
                 " for {1} batches".format(batch_size,n_batches))
@@ -73,7 +77,7 @@ def check_score(run_settings_path, verbose=False):
     # compute probabilities
     if verbose:
         print("Making predictions...")
-    y = np.zeros((dataset.X.shape[0],len(settings.classes)))
+    y = np.zeros((N_examples,len(settings.classes)))
     # get the data specs from the cost function using the model
     pcost = proxied.keywords['algorithm'].keywords['cost']
     cost = pylearn2.config.yaml_parse._instantiate(pcost)
@@ -91,7 +95,7 @@ def check_score(run_settings_path, verbose=False):
     if af > 1:
         if verbose:
             print("Collapsing predictions...")
-        y_collapsed = np.zeros((int(dataset.X.shape[0]/af), len(settings.classes))) 
+        y_collapsed = np.zeros((int(N_examples/af), len(settings.classes))) 
         for i,(low,high) in enumerate(zip(range(0,dataset.y.shape[0],af),
                                     range(af,dataset.y.shape[0]+af,af))):
             y_collapsed[i,:] = np.mean(y[low:high,:], axis=0)
