@@ -1,6 +1,6 @@
 {
     "alt_picklepath":"/disk/scratch/neuroglycerin/models/alexnet_based_extra_convlayer_with_superclasses_recent.pkl",
-    "augmentation_factor":8,
+    "augmentation_factor":1,
     "filename":"alexnet_based_extra_convlayer_with_superclasses",
     "final_shape":[
         48,
@@ -17,7 +17,6 @@
     "n_classes_6":2,
     "pickle abspath":"/disk/scratch/neuroglycerin/models/alexnet_based_extra_convlayer_with_superclasses.pkl",
     "preprocessing":{
-        "flip":1,
         "normalise":{
             "global_or_pixel":"global",
             "mu":0.954849097973459,
@@ -26,9 +25,7 @@
         "resize":[
             48,
             48
-        ],
-        "rotate":4,
-        "rotate_is_resizable":0
+        ]
     },
     "run_settings_path":"/afs/inf.ed.ac.uk/user/s13/s1320903/Neuroglycerin/neukrill-net-work/run_settings/alexnet_based_extra_convlayer_with_superclasses.json",
     "save_path":"/disk/scratch/neuroglycerin/models/alexnet_based_extra_convlayer_with_superclasses.pkl",
