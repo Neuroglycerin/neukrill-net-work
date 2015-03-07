@@ -18,7 +18,7 @@ import argparse
 import os
 import pylearn2.config.yaml_parse
 
-def check_score(run_settings_path, verbose=False):
+def check_score(run_settings_path, verbose=False, augment=1):
     """
     Single function, calculates score, prints and
     returns it.
@@ -77,18 +77,21 @@ def check_score(run_settings_path, verbose=False):
     # compute probabilities
     if verbose:
         print("Making predictions...")
-    y = np.zeros((N_examples,len(settings.classes)))
+    y = np.zeros((N_examples*augment,len(settings.classes)))
     # get the data specs from the cost function using the model
     pcost = proxied.keywords['algorithm'].keywords['cost']
     cost = pylearn2.config.yaml_parse._instantiate(pcost)
     data_specs = cost.get_data_specs(model)
-    # make sequential iterator
-    iterator = dataset.iterator(batch_size=batch_size,num_batches=n_batches,
-                        mode='even_sequential', data_specs=data_specs)
-    for i,batch in enumerate(iterator):
-        if verbose:
-            print("    Batch {0} of {1}".format(i+1,n_batches))
-        y[i*batch_size:(i+1)*batch_size,:] = f(batch[0])
+    i = 0 
+    for _ in range(augment):
+        # make sequential iterator
+        iterator = dataset.iterator(batch_size=batch_size,num_batches=n_batches,
+                            mode='even_sequential', data_specs=data_specs)
+        for batch in iterator:
+            if verbose:
+                print("    Batch {0} of {1}".format(i+1,n_batches*augment))
+            y[i*batch_size:(i+1)*batch_size,:] = f(batch[0])
+            i += 1
 
     # find augmentation factor
     af = run_settings.get("augmentation_factor",1)
@@ -102,6 +105,15 @@ def check_score(run_settings_path, verbose=False):
         y = y_collapsed
         # and collapse labels
         labels = dataset.y[range(0,dataset.y.shape[0],af)]
+    elif augment > 1:
+        y_collapsed = np.zeros((N_examples,len(settings.classes)))
+        # different kind of augmentation, has to be collapsed differently
+        for row in range(N_examples):
+            y_collapsed[row,:] = np.mean(np.vstack([r for r in 
+                y[[i for i in range(row,N_examples*augment,N_examples)],:]]), 
+                axis=0)
+        y = y_collapsed            
+        labels = dataset.y
     else:
         labels = dataset.y
 
@@ -119,5 +131,8 @@ if __name__=='__main__':
         help="Path to run settings json file.")
     # add verbose option
     parser.add_argument('-v', action="store_true", help="Run verbose.")
+    parser.add_argument('--augment', nargs='?', help='For online augmented '
+                'models only. Will increase the number of times the script '
+                'repeats predictions.', type=int)
     args = parser.parse_args()
-    check_score(args.run_settings, verbose=args.v)
+    check_score(args.run_settings, verbose=args.v, augment=args.augment)
