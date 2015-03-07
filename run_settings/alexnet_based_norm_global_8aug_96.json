@@ -1,5 +1,5 @@
 {
-    "alt_picklepath":"/data/models/alexnet_based_norm_global_8aug_96_recent.pkl",
+    "alt_picklepath":"/disk/scratch/neuroglycerin/models/alexnet_based_norm_global_8aug_96_recent.pkl",
     "augmentation_factor":8,
     "filename":"alexnet_based_norm_global_8aug_96",
     "final_shape":[
@@ -7,9 +7,9 @@
         96
     ],
     "model type":"pylearn2",
-    "modeldir":"/data/models",
+    "modeldir":"/disk/scratch/neuroglycerin/models",
     "n_classes":121,
-    "pickle abspath":"/data/models/alexnet_based_norm_global_8aug_96.pkl",
+    "pickle abspath":"/disk/scratch/neuroglycerin/models/alexnet_based_norm_global_8aug_96.pkl",
     "preprocessing":{
         "flip":1,
         "normalise":{
@@ -25,10 +25,10 @@
         "rotate":4,
         "rotate_is_resizable":0
     },
-    "run_settings_path":"/home/ubuntu/neukrill_net/neukrill-net-work/run_settings/alexnet_based_norm_global_8aug_96.json",
-    "save_path":"/data/models/alexnet_based_norm_global_8aug_96.pkl",
-    "settings_path":"/home/ubuntu/neukrill_net/neukrill-net-work/settings.json",
-    "submissions abspath":"/data/submissions/alexnet_based_norm_global_8aug_96.csv",
+    "run_settings_path":"/afs/inf.ed.ac.uk/user/s08/s0805516/repos/neukrill-net-work/run_settings/alexnet_based_norm_global_8aug_96.json",
+    "save_path":"/disk/scratch/neuroglycerin/models/alexnet_based_norm_global_8aug_96.pkl",
+    "settings_path":"/afs/inf.ed.ac.uk/user/s08/s0805516/repos/neukrill-net-work/settings.json",
+    "submissions abspath":"/disk/scratch/neuroglycerin/submissions/alexnet_based_norm_global_8aug_96.csv",
     "train_split":0.8,
     "yaml file":"alexnet_based.yaml"
 }

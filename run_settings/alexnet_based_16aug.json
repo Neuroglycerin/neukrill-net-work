@@ -1,0 +1,33 @@
+{
+    "alt_picklepath":"/disk/scratch/neuroglycerin/models/alexnet_based_16aug_recent.pkl",
+    "augmentation_factor":16,
+    "filename":"alexnet_based_16aug",
+    "final_shape":[
+        48,
+        48
+    ],
+    "model type":"pylearn2",
+    "modeldir":"/disk/scratch/neuroglycerin/models",
+    "n_classes":121,
+    "pickle abspath":"/disk/scratch/neuroglycerin/models/alexnet_based_16aug.pkl",
+    "preprocessing":{
+        "flip":1,
+        "normalise":{
+            "global_or_pixel":"global",
+            "mu":0.954849097973459,
+            "sigma":0.14445522859064192
+        },
+        "resize":[
+            48,
+            48
+        ],
+        "rotate":8,
+        "rotate_is_resizable":0
+    },
+    "run_settings_path":"/afs/inf.ed.ac.uk/user/s08/s0805516/repos/neukrill-net-work/run_settings/alexnet_based_16aug.json",
+    "save_path":"/disk/scratch/neuroglycerin/models/alexnet_based_16aug.pkl",
+    "settings_path":"/afs/inf.ed.ac.uk/user/s08/s0805516/repos/neukrill-net-work/settings.json",
+    "submissions abspath":"/disk/scratch/neuroglycerin/submissions/alexnet_based_16aug.csv",
+    "train_split":0.8,
+    "yaml file":"alexnet_based_extra_convlayer.yaml"
+}
