@@ -39,7 +39,7 @@ def check_score(run_settings_path, verbose=False):
     if verbose:
         print("Loading data...")
     # format the YAML
-    yaml_string = utils.format_yaml(run_settings, settings)
+    yaml_string = neukrill_net.utils.format_yaml(run_settings, settings)
     # load proxied objects
     proxied = pylearn2.config.yaml_parse.load(yaml_string, instantiate=False)
     # pull out proxied dataset
