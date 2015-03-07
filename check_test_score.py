@@ -16,6 +16,7 @@ import neukrill_net.utils
 import sklearn.metrics
 import argparse
 import os
+import pylearn2.config.yaml_parse
 
 def check_score(run_settings_path, verbose=False):
     """
@@ -37,11 +38,18 @@ def check_score(run_settings_path, verbose=False):
     # load the data
     if verbose:
         print("Loading data...")
-    dataset = neukrill_net.dense_dataset.DensePNGDataset(
-            settings_path=run_settings['settings_path'],
-            run_settings=run_settings['run_settings_path'],
-            train_or_predict='train',
-            training_set_mode='test', force=True, verbose=verbose)
+    # format the YAML
+    yaml_string = utils.format_yaml(run_settings, settings)
+    # load proxied objects
+    proxied = pylearn2.config.yaml_parse.load(yaml_string, instantiate=False)
+    # pull out proxied dataset
+    proxdata = proxied.keywords['dataset']
+    # force loading of dataset and switch to test dataset
+    proxdata.keywords['force'] = True
+    proxdata.keywords['training_set_mode'] = 'test'
+    proxdata.keywords['verbose'] = verbose
+    # then instantiate the dataset
+    dataset = pylearn2.config.yaml_parse._instantiate(proxdata)
 
     # find a good batch size 
     if verbose:
@@ -72,7 +80,7 @@ def check_score(run_settings_path, verbose=False):
         x_arg = dataset.X[i*batch_size:(i+1)*batch_size,:]
         if X.ndim > 2:
             x_arg = dataset.get_topological_view(x_arg)
-        y[i*batch_size:(i+1)*batch_size,:] = (f(x_arg.astype(X.dtype)))
+        y[i*batch_size:(i+1)*batch_size,:] = (f(x_arg.astype(X.dtype).T))
 
     # find augmentation factor
     af = run_settings.get("augmentation_factor",1)
