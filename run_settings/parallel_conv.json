@@ -1,0 +1,21 @@
+{
+    "final_shape":[
+        48,
+        48
+    ],
+    "model type":"pylearn2",
+    "n_classes":121,
+    "preprocessing":{
+        "normalise":{
+            "global_or_pixel":"global",
+            "mu":0.9572712779045105,
+            "sigma":0.14225326478481293
+        },
+        "resize":[
+            48,
+            48
+        ]
+    },
+    "train_split":0.8,
+    "yaml file":"parallel_conv.yaml"
+}
