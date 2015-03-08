@@ -20,7 +20,7 @@
     algorithm: !obj:pylearn2.training_algorithms.sgd.SGD {
         train_iteration_mode: even_shuffled_sequential,
         monitor_iteration_mode: even_sequential,
-        batch_size: *batch_size,
+        batch_size: &batch_size 128,
         learning_rate: .1,
         learning_rule: !obj:pylearn2.training_algorithms.learning_rule.Momentum {
             init_momentum: 0.5
