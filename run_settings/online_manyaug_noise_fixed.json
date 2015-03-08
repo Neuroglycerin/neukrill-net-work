@@ -1,0 +1,44 @@
+{
+    "alt_picklepath":"/data/models/online_manyaug_noise_fixed_recent.pkl",
+    "augmentation_factor":1,
+    "filename":"online_manyaug_noise_fixed",
+    "final_shape":[
+        48,
+        48
+    ],
+    "flip":1,
+    "model type":"pylearn2",
+    "modeldir":"/data/models",
+    "n_classes":121,
+    "n_classes_1":121,
+    "n_classes_2":38,
+    "n_classes_3":16,
+    "n_classes_4":7,
+    "n_classes_5":4,
+    "n_classes_6":2,
+    "noise":0.0001,
+    "pickle abspath":"/data/models/online_manyaug_noise_fixed.pkl",
+    "preprocessing":{
+        "normalise":{
+            "global_or_pixel":"global",
+            "mu":0.9567397236824036,
+            "sigma":0.1422377973794937
+        },
+        "resize":[
+            48,
+            48
+        ]
+    },
+    "rotate":-1,
+    "rotate_is_resizable":0,
+    "run_settings_path":"/home/ubuntu/neukrill_net/neukrill-net-work/run_settings/online_manyaug_noise_fixed.json",
+    "save_path":"/data/models/online_manyaug_noise_fixed.pkl",
+    "scale":0.1,
+    "scale_asym":0.04,
+    "settings_path":"/home/ubuntu/neukrill_net/neukrill-net-work/settings.json",
+    "shear":6,
+    "shunt":0.05,
+    "submissions abspath":"/data/submissions/online_manyaug_noise_fixed.csv",
+    "train_split":0.8,
+    "yaml file":"listdataset_base.yaml"
+}
