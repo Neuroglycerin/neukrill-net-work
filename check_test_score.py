@@ -133,6 +133,6 @@ if __name__=='__main__':
     parser.add_argument('-v', action="store_true", help="Run verbose.")
     parser.add_argument('--augment', nargs='?', help='For online augmented '
                 'models only. Will increase the number of times the script '
-                'repeats predictions.', type=int)
+                'repeats predictions.', type=int, default=1)
     args = parser.parse_args()
     check_score(args.run_settings, verbose=args.v, augment=args.augment)
