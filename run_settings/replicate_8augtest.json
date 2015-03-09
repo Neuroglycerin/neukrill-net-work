@@ -9,6 +9,12 @@
     "model type":"pylearn2",
     "modeldir":"/disk/scratch/neuroglycerin/models",
     "n_classes":121,
+    "n_classes_1":121,
+    "n_classes_2":38,
+    "n_classes_3":16,
+    "n_classes_4":7,
+    "n_classes_5":4,
+    "n_classes_6":2,
     "pickle abspath":"/disk/scratch/neuroglycerin/models/replicate_8augtest.pkl",
     "preprocessing":{
         "normalise":{
