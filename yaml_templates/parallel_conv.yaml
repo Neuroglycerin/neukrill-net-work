@@ -6,7 +6,7 @@
                      normalise: {global_or_pixel: 'global',
                                 mu: %(mu)s,
                                 sigma: %(sigma)s}},
-                    {shapefix: %(final_shape)s,
+                    {shape: %(final_shape)s,
                      normalise: {global_or_pixel: 'global',
                                 mu: %(mu)s,
                                 sigma: %(sigma)s}}
@@ -164,7 +164,7 @@
                                  normalise: {global_or_pixel: 'global',
                                             mu: %(mu)s,
                                             sigma: %(sigma)s}},
-                                {shapefix: %(final_shape)s,
+                                {shape: %(final_shape)s,
                                  normalise: {global_or_pixel: 'global',
                                             mu: %(mu)s,
                                             sigma: %(sigma)s}}
@@ -182,38 +182,17 @@
         cost: !obj:pylearn2.costs.cost.SumOfCosts { costs: [ 
             !obj:pylearn2.costs.mlp.dropout.Dropout {
                 input_include_probs: {
-                    parallel_convlayer_1_h1 : 1.,
-                    parallel_convlayer_1_h2 : 1.,
-                    parallel_convlayer_1_h3 : 1.,
-                    parallel_convlayer_1_h4 : 1.,
-                    parallel_convlayer_2_h1 : 1.,
-                    parallel_convlayer_2_h2 : 1.,
-                    parallel_convlayer_2_h3 : 1.,
-                    parallel_convlayer_2_h4 : 1.,
+                    parallel: 1.,
                     h5 : 0.5
                 },
                 input_scales: {
-                    parallel_convlayer_1_h1 : 1.,
-                    parallel_convlayer_1_h2 : 1.,
-                    parallel_convlayer_1_h3 : 1.,
-                    parallel_convlayer_1_h4 : 1.,
-                    parallel_convlayer_2_h1 : 1.,
-                    parallel_convlayer_2_h2 : 1.,
-                    parallel_convlayer_2_h3 : 1.,
-                    parallel_convlayer_2_h4 : 1.,
+                    parallel : 1.,
                     h5 : 2.
                 }
              },
              !obj:pylearn2.costs.mlp.WeightDecay {
                  coeffs : {
-                        parallel_convlayer_1_h1 : 0.00005,
-                        parallel_convlayer_1_h2 : 0.00005,
-                        parallel_convlayer_1_h3 : 0.00005,
-                        parallel_convlayer_1_h4 : 0.00005,
-                        parallel_convlayer_2_h1 : 0.00005,
-                        parallel_convlayer_2_h2 : 0.00005,
-                        parallel_convlayer_2_h3 : 0.00005,
-                        parallel_convlayer_2_h4 : 0.00005,
+                        parallel : 0.00005,
                         h5 : 0.00005
                  }
              }
