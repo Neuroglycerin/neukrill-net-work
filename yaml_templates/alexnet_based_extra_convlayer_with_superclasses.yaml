@@ -190,7 +190,7 @@
             decay_factor: 0.025
         },
         !obj:pylearn2.train_extensions.best_params.MonitorBasedSaveBest {
-             channel_name: valid_objective,
+             channel_name: valid_y_y_1_nll,
              save_path: '%(save_path)s'
         },
         !obj:pylearn2.training_algorithms.sgd.MonitorBasedLRAdjuster {
