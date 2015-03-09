@@ -72,7 +72,9 @@ def check_score(run_settings_path, verbose=False, augment=1):
     model.set_batch_size(batch_size)
     X = model.get_input_space().make_batch_theano()
     Y = model.fprop(X)
-    f = theano.function([X],Y)
+    import pdb
+    #pdb.set_trace()
+    f = theano.function(X,Y)
 
     # compute probabilities
     if verbose:
@@ -90,7 +92,7 @@ def check_score(run_settings_path, verbose=False, augment=1):
         for batch in iterator:
             if verbose:
                 print("    Batch {0} of {1}".format(i+1,n_batches*augment))
-            y[i*batch_size:(i+1)*batch_size,:] = f(batch[0])
+            y[i*batch_size:(i+1)*batch_size,:] = f(batch[0],batch[1])
             i += 1
 
     # find augmentation factor
