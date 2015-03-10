@@ -1,7 +1,7 @@
 {
     "alt_picklepath":"/disk/scratch/neuroglycerin/models/online_manyaug_rerun_recent.pkl",
     "augmentation_factor":1,
-    "filename":"online_manyaug",
+    "filename":"online_manyaug_rerun",
     "final_shape":[
         48,
         48
@@ -31,11 +31,11 @@
     },
     "rotate":-1,
     "rotate_is_resizable":0,
-    "run_settings_path":"/afs/inf.ed.ac.uk/user/s08/s0805516/repos/neukrill-net-work/run_settings/online_manyaug_rerun.json",
+    "run_settings_path":"/afs/inf.ed.ac.uk/user/s11/s1145806/Documents/git/neukrill-net-work/run_settings/online_manyaug_rerun.json",
     "save_path":"/disk/scratch/neuroglycerin/models/online_manyaug_rerun.pkl",
     "scale":0.1,
     "scale_asym":0.04,
-    "settings_path":"/afs/inf.ed.ac.uk/user/s08/s0805516/repos/neukrill-net-work/settings.json",
+    "settings_path":"/afs/inf.ed.ac.uk/user/s11/s1145806/Documents/git/neukrill-net-work/settings.json",
     "shear":6,
     "shunt":0.05,
     "submissions abspath":"/disk/scratch/neuroglycerin/submissions/online_manyaug_rerun.csv",
