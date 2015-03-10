@@ -30,7 +30,7 @@
         },
         layers: [ !obj:pylearn2.models.mlp.ConvRectifiedLinear {
                      layer_name: h1,
-                     output_channels: 16,
+                     output_channels: 32,
                      irange: .025,
                      init_bias: 0,
                      kernel_shape: [8, 8],
@@ -39,7 +39,7 @@
                      max_kernel_norm: 1.9365
                  },!obj:pylearn2.models.mlp.ConvRectifiedLinear {
                      layer_name: h2,
-                     output_channels: 32,
+                     output_channels: 64,
                      irange: .025,
                      init_bias: 1,
                      kernel_shape: [5, 5],
@@ -77,17 +77,11 @@
                             transformer: !obj:neukrill_net.augment.RandomAugment {
                             units: 'float',
                             transform_order: 1,
-                            rotate: %(rotate)s,
-                            rotate_is_resizable: %(rotate_is_resizable)s,
-                            flip: %(flip)s,
-                            scale: %(scale)s,
-                            scale_asym: %(scale_asym)s,
-                            shunt: %(shunt)s,
-                            noise: %(noise)s,
+                            rotate: 4,
+                            flip: 1,
                             normalise: {global_or_pixel: 'global',
                                 mu: %(mu)s,
                                 sigma: %(sigma)s}
-
                         },
                     settings_path: %(settings_path)s,
                     run_settings_path: %(run_settings_path)s,
