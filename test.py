@@ -145,7 +145,7 @@ def test_pylearn2(run_settings, batch_size=4075, verbose=False,
             if type(X) == tuple:
                 y[i*batch_size:(i+1)*batch_size,:] = f(batch[0],batch[1])
             else:
-                y[i*batch_size:(i+1)*batch_size,:] = f(batch[0])
+                y[i*batch_size:(i+1)*batch_size,:] = f(batch)
             i += 1
 
     # stupidest solution to augmentation problem
@@ -172,9 +172,6 @@ def test_pylearn2(run_settings, batch_size=4075, verbose=False,
                 y[[i for i in range(row,N_examples*augment,N_examples)],:]]), 
                 axis=0)
         y = y_collapsed            
-        labels = dataset.y
-    else:
-        labels = dataset.y
 
     # then write our results to csv 
     if verbose:
