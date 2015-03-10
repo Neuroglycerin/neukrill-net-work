@@ -6,7 +6,8 @@
         "/media/dragos/6c25c80a-cce2-4fc8-97ae-fdc11725c266/Projects/Neuroglycerine/NDSB/neukrill-net-work/data",
         "/disk/data2/neuroglycerin/neukrill-data",
         "/disk/scratch/neuroglycerin",
-        "data"
+        "data",
+        "${DATA_DIR}/plankton"
     ],
     "classes": [
         "acantharia_protist",
