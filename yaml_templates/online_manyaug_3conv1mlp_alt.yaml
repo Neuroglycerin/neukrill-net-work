@@ -97,7 +97,7 @@
                             sigma: %(sigma)s}
                         },
                     settings_path: %(settings_path)s,
-                    run_settings_path: %(run_settings_path)s,,
+                    run_settings_path: %(run_settings_path)s,
                     prepreprocessing: {
                         resize: %(final_shape)s,
                         resize_order: 0.75,
