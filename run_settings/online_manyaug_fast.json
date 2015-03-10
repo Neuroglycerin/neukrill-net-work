@@ -1,7 +1,7 @@
 {
-    "alt_picklepath":"/disk/scratch/neuroglycerin/models/online_manyaug_3conv1mlp_recent.pkl",
+    "alt_picklepath":"/disk/scratch/neuroglycerin/models/online_manyaug_fast_recent.pkl",
     "augmentation_factor":1,
-    "filename":"online_manyaug_3conv1mlp",
+    "filename":"online_manyaug_fast",
     "final_shape":[
         48,
         48
@@ -17,7 +17,7 @@
     "n_classes_5":4,
     "n_classes_6":2,
     "noise":0,
-    "pickle abspath":"/disk/scratch/neuroglycerin/models/online_manyaug_3conv1mlp.pkl",
+    "pickle abspath":"/disk/scratch/neuroglycerin/models/online_manyaug_fast.pkl",
     "preprocessing":{
         "normalise":{
             "global_or_pixel":"global",
@@ -31,14 +31,14 @@
     },
     "rotate":-1,
     "rotate_is_resizable":0,
-    "run_settings_path":"/afs/inf.ed.ac.uk/user/s11/s1145806/Documents/git/neukrill-net-work/run_settings/online_manyaug_3conv1mlp.json",
-    "save_path":"/disk/scratch/neuroglycerin/models/online_manyaug_3conv1mlp.pkl",
-    "scale":0.1,
-    "scale_asym":0.04,
+    "run_settings_path":"/afs/inf.ed.ac.uk/user/s11/s1145806/Documents/git/neukrill-net-work/run_settings/online_manyaug_fast.json",
+    "save_path":"/disk/scratch/neuroglycerin/models/online_manyaug_fast.pkl",
+    "scale":0.0,
+    "scale_asym":0.0,
     "settings_path":"/afs/inf.ed.ac.uk/user/s11/s1145806/Documents/git/neukrill-net-work/settings.json",
-    "shear":6,
-    "shunt":0.05,
-    "submissions abspath":"/disk/scratch/neuroglycerin/submissions/online_manyaug_3conv1mlp.csv",
+    "shear":0,
+    "shunt":0.0,
+    "submissions abspath":"/disk/scratch/neuroglycerin/submissions/online_manyaug_fast.csv",
     "train_split":0.8,
-    "yaml file":"online_manyaug_3conv1mlp.yaml"
+    "yaml file":"online_manyaug_fast.yaml"
 }
