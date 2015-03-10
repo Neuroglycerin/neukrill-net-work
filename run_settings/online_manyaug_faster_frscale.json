@@ -1,0 +1,42 @@
+{
+    "alt_picklepath":"/disk/scratch/neuroglycerin/models/online_manyaug_faster_recent.pkl",
+    "augmentation_factor":1,
+    "filename":"online_manyaug",
+    "final_shape":[
+        48,
+        48
+    ],
+    "flip":1,
+    "model type":"pylearn2",
+    "modeldir":"/disk/scratch/neuroglycerin/models",
+    "n_classes":121,
+    "n_classes_1":121,
+    "n_classes_2":38,
+    "n_classes_3":16,
+    "n_classes_4":7,
+    "n_classes_5":4,
+    "n_classes_6":2,
+    "noise":0,
+    "pickle abspath":"/disk/scratch/neuroglycerin/models/online_manyaug_faster.pkl",
+    "preprocessing":{
+        "normalise":{
+            "global_or_pixel":"global",
+            "mu":0.9567397236824036,
+            "sigma":0.1422377973794937
+        },
+        "resize":[
+            48,
+            48
+        ]
+    },
+    "rotate":-1,
+    "rotate_is_resizable":0,
+    "save_path":"/disk/scratch/neuroglycerin/models/online_manyaug_faster.pkl",
+    "scale":0.1,
+    "scale_asym":0.0,
+    "shear":0,
+    "shunt":0.0,
+    "submissions abspath":"/disk/scratch/neuroglycerin/submissions/online_manyaug_faster.csv",
+    "train_split":0.8,
+    "yaml file":"online_manyaug_faster.yaml"
+}

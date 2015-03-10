@@ -8,6 +8,14 @@
     ],
     "model type":"pylearn2",
     "modeldir":"/disk/scratch/neuroglycerin/models",
+    "n_classes":121,
+    "n_classes_1":121,
+    "n_classes_2":38,
+    "n_classes_3":16,
+    "n_classes_4":7,
+    "n_classes_5":4,
+    "n_classes_6":2,
+    "pickle abspath":"/disk/scratch/neuroglycerin/models/continue_rep8aug_manyaug2_v2_less.pkl",
     "preprocessing":{
         "normalise":{
             "global_or_pixel":"global",
@@ -19,9 +27,9 @@
             48
         ]
     },
-    "run_settings_path":"/afs/inf.ed.ac.uk/user/s08/s0805516/repos/neukrill-net-work/run_settings/continue_rep8aug_manyaug2_v2_less.json",
+    "run_settings_path":"/afs/inf.ed.ac.uk/user/s11/s1145806/Documents/git/neukrill-net-work/run_settings/continue_rep8aug_manyaug2_v2_less.json",
     "save_path":"/disk/scratch/neuroglycerin/models/continue_rep8aug_manyaug2_v2_less.pkl",
-    "settings_path":"/afs/inf.ed.ac.uk/user/s08/s0805516/repos/neukrill-net-work/settings.json",
+    "settings_path":"/afs/inf.ed.ac.uk/user/s11/s1145806/Documents/git/neukrill-net-work/settings.json",
     "submissions abspath":"/disk/scratch/neuroglycerin/submissions/continue_rep8aug_manyaug2_v2_less.csv",
     "train_split":0.8,
     "yaml file":"continue_rep8aug_manyaug2_v2_less.yaml"
