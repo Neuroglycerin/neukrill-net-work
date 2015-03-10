@@ -9,7 +9,8 @@ import neukrill_net.utils
 from sklearn.externals import joblib
 
 # Define output path
-pkl_path = 'cached_hlf_train.pkl'
+pkl_path1 = 'cached_hlf_train_data.pkl'
+pkl_path2 = 'cached_hlf_train.pkl'
 
 # Define which basic attributes to use
 attrlst = ['height','width','numpixels','sideratio','mean','std','stderr',
@@ -29,7 +30,10 @@ hlf += neukrill_net.highlevelfeatures.Haralick()
 # hlf += neukrill_net.highlevelfeatures.CoocurProps()
 
 # Save the Z-score of every feature
-hlf.generate_cache(X, lambda x: (x-x.mean(0))/x.std(0), squash_for_postproc=True)
+X = hlf.generate_cache(X, lambda x: (x-x.mean(0))/x.std(0), squash_for_postproc=True)
 
 # Save the feature object with cache to path
-joblib.dump(hlf, pkl_path)
+joblib.dump(X, pkl_path1)
+
+# Save the feature object with cache to path
+joblib.dump(hlf, pkl_path2)
