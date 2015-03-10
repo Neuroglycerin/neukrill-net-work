@@ -94,7 +94,7 @@
                     prepreprocessing: {
                         resize: %(final_shape)s,
                         resize_order: 0.75,
-                    }
+                    },
                     training_set_mode: "validation"
                 }
 
