@@ -72,8 +72,6 @@ def check_score(run_settings_path, verbose=False, augment=1):
     model.set_batch_size(batch_size)
     X = model.get_input_space().make_batch_theano()
     Y = model.fprop(X)
-    import pdb
-    #pdb.set_trace()
     if type(X) == tuple:
         f = theano.function(X,Y)
     else:
