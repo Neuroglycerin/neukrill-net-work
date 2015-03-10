@@ -25,7 +25,7 @@
                     num_channels: 1,
                     axes: ['b', 0, 1, 'c'],},
                 !obj:pylearn2.space.VectorSpace {
-                    shape: 170}
+                    dim: 170}
             ]
         },
         layers: [ !obj:pylearn2.models.mlp.FlattenerLayer {
