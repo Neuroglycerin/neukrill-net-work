@@ -18,7 +18,7 @@
         run_settings_path: %(run_settings_path)s
     },
     model: !obj:pylearn2.models.mlp.MLP {
-        batch_size: &batch_size 512,
+        batch_size: &batch_size 128,
         input_space: !obj:pylearn2.space.Conv2DSpace {
             shape: %(final_shape)s,
             num_channels: 1,
@@ -52,17 +52,20 @@
                      pool_shape: [1, 1],
                      pool_stride: [1, 1],
                      max_kernel_norm: 1.9365
+                 }, !obj:pylearn2.models.mlp.ConvRectifiedLinear {
+                     layer_name: 'h4',
+                     output_channels: 128,
+                     irange: .025,
+                     init_bias: 1,
+                     kernel_shape: [3, 3],
+                     border_mode: full,
+                     pool_shape: [2, 2],
+                     pool_stride: [2, 2],
+                     max_kernel_norm: 1.9365
                  }, !obj:pylearn2.models.mlp.RectifiedLinear {
                      dim: 1024,
                      max_col_norm: 1.9,
                      layer_name: h5,
-                     istdev: .05,
-                     W_lr_scale: .25,
-                     b_lr_scale: .25
-                 }, !obj:pylearn2.models.mlp.RectifiedLinear {
-                     dim: 512,
-                     max_col_norm: 1.9,
-                     layer_name: h6,
                      istdev: .05,
                      W_lr_scale: .25,
                      b_lr_scale: .25
@@ -80,9 +83,9 @@
         train_iteration_mode: even_shuffled_sequential,
         monitor_iteration_mode: even_sequential,
         batch_size: *batch_size,
-        learning_rate: .05,
+        learning_rate: .1,
         learning_rule: !obj:pylearn2.training_algorithms.learning_rule.Momentum {
-            init_momentum: 0.1
+            init_momentum: 0.5
         },
         monitoring_dataset: {
                 'train': *train,
@@ -113,16 +116,16 @@
                 input_include_probs: {
                     h1 : 1.,
                     h2 : 1.,
-                    h3 : 0.9,
-                    h5 : 0.5,
-                    h6 : 0.5
+                    h3 : 1.,
+                    h4 : 1.,
+                    h5 : 0.5
                 },
                 input_scales: {
                     h1 : 1.,
                     h2 : 1.,
-                    h3 : 1.1111111111111111111111,
-                    h5 : 2.,
-                    h6 : 2.
+                    h3 : 1.,
+                    h4 : 1.,
+                    h5 : 2.
                 }
              },
              !obj:pylearn2.costs.mlp.WeightDecay {
@@ -130,8 +133,8 @@
                      h1 : .00005,
                      h2 : .00005,
                      h3 : .00005,
-                     h5 : .00005,
-                     h6 : .00005
+                     h4 : .00005,
+                     h5 : .00005
                  }
              }
              ]
