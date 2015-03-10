@@ -22,7 +22,7 @@
         }
     },
     model: !obj:pylearn2.models.mlp.MLP {
-        batch_size: &batch_size 128,
+        batch_size: &batch_size 512,
         input_space: !obj:pylearn2.space.Conv2DSpace {
             shape: %(final_shape)s,
             num_channels: 1,
@@ -30,7 +30,7 @@
         },
         layers: [ !obj:pylearn2.models.mlp.ConvRectifiedLinear {
                      layer_name: h1,
-                     output_channels: 4,
+                     output_channels: 16,
                      irange: .025,
                      init_bias: 0,
                      kernel_shape: [8, 8],
@@ -39,7 +39,7 @@
                      max_kernel_norm: 1.9365
                  },!obj:pylearn2.models.mlp.ConvRectifiedLinear {
                      layer_name: h2,
-                     output_channels: 6,
+                     output_channels: 32,
                      irange: .025,
                      init_bias: 1,
                      kernel_shape: [5, 5],
@@ -67,7 +67,7 @@
         train_iteration_mode: even_shuffled_sequential,
         monitor_iteration_mode: even_sequential,
         batch_size: *batch_size,
-        learning_rate: .1,
+        learning_rate: .2,
         learning_rule: !obj:pylearn2.training_algorithms.learning_rule.Momentum {
             init_momentum: 0.5
         },
