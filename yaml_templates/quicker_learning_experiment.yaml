@@ -158,9 +158,6 @@
                     h5 : 2.
                 }
              },
-             !obj:pylearn2.costs.cost.MethodCost {
-                 method: 'cost_from_X'
-             }, 
              !obj:pylearn2.costs.mlp.WeightDecay {
                  coeffs : {
                      h1 : .0005,
@@ -179,10 +176,6 @@
                 },
             ]
         },
-#        update_callbacks: !obj:pylearn2.training_algorithms.sgd.ExponentialDecay {
-#            decay_factor: 1.00005,
-#            min_lr: .000001
-#        }
     },
     extensions: [
         !obj:pylearn2.training_algorithms.sgd.LinearDecayOverEpoch {
