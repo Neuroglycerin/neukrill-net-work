@@ -36,13 +36,6 @@ hlf += neukrill_net.highlevelfeatures.Haralick()
 # hlf += neukrill_net.highlevelfeatures.CoocurProps()
 
 
-# Save the raw values of every feature
-X_raw = hlf.generate_cache(X)
-hlf_raw = copy.deepcopy(hlf)
-# Save the feature matrix to disk
-joblib.dump(X_raw, pkl_path1)
-
-
 # the +ve squashed values
 X_range = hlf.generate_cache(X, lambda x: x/x.max(0), squash_for_postproc=True)
 hlf_range = copy.deepcopy(hlf)
@@ -55,6 +48,13 @@ X_posrange = hlf.generate_cache(X, lambda x: (x-x.min(0))/(x.max(0)-x.min(0)), s
 hlf_posrange = copy.deepcopy(hlf)
 # Save the feature matrix
 joblib.dump(X_posrange, pkl_path5)
+
+
+# Save the raw values of every feature
+X_raw = hlf.generate_cache(X)
+hlf_raw = copy.deepcopy(hlf)
+# Save the feature matrix to disk
+joblib.dump(X_raw, pkl_path1)
 
 
 # Save the feature object with cache to path
