@@ -109,6 +109,7 @@ def test_pylearn2(run_settings, batch_size=4075, verbose=False,
     while N_examples%batch_size != 0:
         batch_size += 1
     n_batches = int(N_examples/batch_size)
+    n_classes = len(settings.classes)
     if verbose:
         print("    chosen batch size {0}"
                 " for {1} batches".format(batch_size,n_batches))
@@ -129,7 +130,7 @@ def test_pylearn2(run_settings, batch_size=4075, verbose=False,
     if verbose:
         print("Making predictions...")
     # initialise our results array
-    y = np.zeros((N_examples*augment, len(settings.classes)))
+    y = np.zeros((N_examples*augment, n_classes))
     # didn't want to use xrange explicitly
     pcost = proxied.keywords['algorithm'].keywords['cost']
     cost = pylearn2.config.yaml_parse._instantiate(pcost)
@@ -143,9 +144,10 @@ def test_pylearn2(run_settings, batch_size=4075, verbose=False,
             if verbose:
                 print("    Batch {0} of {1}".format(i+1,n_batches*augment))
             if type(X) == tuple:
-                y[i*batch_size:(i+1)*batch_size,:] = f(batch[0],batch[1])
+                y[i*batch_size:(i+1)*batch_size,:] = f(batch[0],
+                                                       batch[1])[:,:n_classes]
             else:
-                y[i*batch_size:(i+1)*batch_size,:] = f(batch)
+                y[i*batch_size:(i+1)*batch_size,:] = f(batch)[:,:n_classes]
             i += 1
 
     # stupidest solution to augmentation problem
@@ -165,7 +167,7 @@ def test_pylearn2(run_settings, batch_size=4075, verbose=False,
             y_collapsed[i,:] = np.mean(y[low:high,:], axis=0)
         y = y_collapsed
     elif augment > 1:
-        y_collapsed = np.zeros((N_examples,len(settings.classes)))
+        y_collapsed = np.zeros((N_examples,n_classes))
         # different kind of augmentation, has to be collapsed differently
         for row in range(N_examples):
             y_collapsed[row,:] = np.mean(np.vstack([r for r in 
