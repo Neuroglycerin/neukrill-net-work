@@ -62,6 +62,7 @@ def check_score(run_settings_path, verbose=False, augment=1):
     while N_examples%batch_size != 0:
         batch_size += 1
     n_batches = int(N_examples/batch_size)
+    n_classes = len(settings.classes)
     if verbose:
         print("    chosen batch size {0}"
                 " for {1} batches".format(batch_size,n_batches))
@@ -80,7 +81,7 @@ def check_score(run_settings_path, verbose=False, augment=1):
     # compute probabilities
     if verbose:
         print("Making predictions...")
-    y = np.zeros((N_examples*augment,len(settings.classes)))
+    y = np.zeros((N_examples*augment,n_classes))
     # get the data specs from the cost function using the model
     pcost = proxied.keywords['algorithm'].keywords['cost']
     cost = pylearn2.config.yaml_parse._instantiate(pcost)
@@ -94,9 +95,9 @@ def check_score(run_settings_path, verbose=False, augment=1):
             if verbose:
                 print("    Batch {0} of {1}".format(i+1,n_batches*augment))
             if type(X) == tuple:
-                y[i*batch_size:(i+1)*batch_size,:] = f(batch[0],batch[1])
+                y[i*batch_size:(i+1)*batch_size,:] = f(batch[0],batch[1])[:,:n_classes]
             else:
-                y[i*batch_size:(i+1)*batch_size,:] = f(batch[0])
+                y[i*batch_size:(i+1)*batch_size,:] = f(batch[0])[:,:n_classes]
             i += 1
 
     # find augmentation factor
@@ -104,7 +105,7 @@ def check_score(run_settings_path, verbose=False, augment=1):
     if af > 1:
         if verbose:
             print("Collapsing predictions...")
-        y_collapsed = np.zeros((int(N_examples/af), len(settings.classes))) 
+        y_collapsed = np.zeros((int(N_examples/af), n_classes)) 
         for i,(low,high) in enumerate(zip(range(0,dataset.y.shape[0],af),
                                     range(af,dataset.y.shape[0]+af,af))):
             y_collapsed[i,:] = np.mean(y[low:high,:], axis=0)
@@ -112,7 +113,7 @@ def check_score(run_settings_path, verbose=False, augment=1):
         # and collapse labels
         labels = dataset.y[range(0,dataset.y.shape[0],af)]
     elif augment > 1:
-        y_collapsed = np.zeros((N_examples,len(settings.classes)))
+        y_collapsed = np.zeros((N_examples,n_classes))
         # different kind of augmentation, has to be collapsed differently
         for row in range(N_examples):
             y_collapsed[row,:] = np.mean(np.vstack([r for r in 
@@ -122,6 +123,8 @@ def check_score(run_settings_path, verbose=False, augment=1):
         labels = dataset.y
     else:
         labels = dataset.y
+    # if these labels happen to have superclasses in them we better take them out
+    labels = labels[:,:n_classes]
 
     # calculate score
     logloss = sklearn.metrics.log_loss(labels,y)
