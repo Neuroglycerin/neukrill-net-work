@@ -112,8 +112,11 @@
         monitor_iteration_mode: even_sequential,
         batch_size: *batch_size,
         learning_rate: 0.05,
-        learning_rule: !obj:pylearn2.training_algorithms.learning_rule.Momentum {
-            init_momentum: 0.5
+        learning_rule: !obj.neukrill_net.update_norm_monitor.UpdateNormMonitorLearningRule {
+            base_learning_rule: !obj:pylearn2.training_algorithms.learning_rule.Momentum {
+                init_momentum: 0.5
+            },
+            decay: 0.9,
         },
         monitoring_dataset: {
                 'train': *train,
