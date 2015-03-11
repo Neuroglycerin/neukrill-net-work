@@ -9,8 +9,8 @@ import neukrill_net.utils
 from sklearn.externals import joblib
 
 # Define output path
-pkl_path1 = 'cached_hlf_train_data.pkl'
-pkl_path2 = 'cached_hlf_train.pkl'
+pkl_path1 = '/disk/scratch/s1145806/cached_hlf_train_data.pkl'
+pkl_path2 = '/disk/scratch/s1145806/cached_hlf_train.pkl'
 
 # Define which basic attributes to use
 attrlst = ['height','width','numpixels','sideratio','mean','std','stderr',
