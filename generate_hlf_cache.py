@@ -11,13 +11,12 @@ import copy
 from sklearn.externals import joblib
 
 # Define output path
-pkl_path1 = 'cached_hlf_train_data_raw.pkl'
-pkl_path2 = 'cached_hlf_train_raw.pkl'
-pkl_path3 = 'cached_hlf_train_data_ranged.pkl'
-pkl_path4 = 'cached_hlf_train_ranged.pkl'
-pkl_path5 = 'cached_hlf_train_data_posranged.pkl'
-pkl_path6 = 'cached_hlf_train_posranged.pkl'
-
+pkl_path1 = '/disk/scratch/s1145806/cached_hlf_train_data_raw.pkl'
+pkl_path2 = '/disk/scratch/s1145806/cached_hlf_train_raw.pkl'
+pkl_path3 = '/disk/scratch/s1145806/cached_hlf_train_data_ranged.pkl'
+pkl_path4 = '/disk/scratch/s1145806/cached_hlf_train_ranged.pkl'
+pkl_path5 = '/disk/scratch/s1145806/cached_hlf_train_data_posranged.pkl'
+pkl_path6 = '/disk/scratch/s1145806/cached_hlf_train_posranged.pkl'
 
 # Define which basic attributes to use
 attrlst = ['height','width','numpixels','sideratio','mean','std','stderr',
