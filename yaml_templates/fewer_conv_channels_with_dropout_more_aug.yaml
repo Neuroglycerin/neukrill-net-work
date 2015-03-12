@@ -2,8 +2,10 @@
     dataset: &train !obj:neukrill_net.image_directory_dataset.ListDataset {
         transformer: !obj:neukrill_net.augment.RandomAugment {
                 units: 'float',
-                rotate: [0,90,180,270],
-                rotate_is_resizable: 0,
+                rotate: -1,
+                rotate_is_resizable: 1,
+                shunt: 0.03,
+                scale: 0.08,
                 flip: 1,
                 resize: %(final_shape)s,
                 normalise: {global_or_pixel: 'global',
@@ -16,7 +18,7 @@
             resize: %(final_shape)s,
             resize_order: 0.75,
         },
-        training_set_mode: "test"
+        #training_set_mode: "test"
     },
     model: !obj:pylearn2.models.mlp.MLP {
         batch_size: &batch_size 128,
@@ -28,38 +30,45 @@
         layers: [ !obj:pylearn2.models.mlp.ConvRectifiedLinear {
                      layer_name: h1,
                      output_channels: 48,
-                     irange: 0.030,
+                     irange: 0.05,
                      kernel_shape: [5, 5],
                      pool_shape: [3, 3],
                      pool_stride: [2, 2],
                      border_mode: full,
                      b_lr_scale: 2.,
-                     max_kernel_norm: 0.53
+                     max_kernel_norm: 1.
                  },!obj:pylearn2.models.mlp.ConvRectifiedLinear {
                      layer_name: h2,
-                     output_channels: 128,
-                     irange: 0.025,
-                     kernel_shape: [3, 3],
-                     pool_shape: [1, 1],
-                     pool_stride: [1, 1],
-                     border_mode: full,
-                     b_lr_scale: 2.,
-                     max_kernel_norm: 0.61
-                 }, !obj:pylearn2.models.mlp.ConvRectifiedLinear {
-                     layer_name: h3,
-                     output_channels: 128,
-                     irange: 0.023,
+                     output_channels: 48,
+                     irange: 0.05,
                      kernel_shape: [3, 3],
                      pool_shape: [3, 3],
                      pool_stride: [2, 2],
                      border_mode: full,
                      b_lr_scale: 2.,
-                     max_kernel_norm: 0.88
+                     max_kernel_norm: 1.
+                 }, !obj:pylearn2.models.mlp.ConvRectifiedLinear {
+                     layer_name: h3,
+                     output_channels: 48,
+                     irange: 0.05,
+                     kernel_shape: [3, 3],
+                     pool_shape: [3, 3],
+                     pool_stride: [2, 2],
+                     border_mode: full,
+                     b_lr_scale: 2.,
+                     max_kernel_norm: 2.
                  }, !obj:pylearn2.models.mlp.RectifiedLinear {
-                     dim: 1024,
-                     max_col_norm: 1.47,
+                     dim: 512,
+                     max_col_norm: 1.5,
                      layer_name: h4,
-                     istdev: .0035,
+                     istdev: .005,
+                     init_bias: 0,
+                     b_lr_scale: 2.,
+                 }, !obj:pylearn2.models.mlp.RectifiedLinear {
+                     dim: 512,
+                     max_col_norm: 1.5,
+                     layer_name: h5,
+                     istdev: .01,
                      init_bias: 0,
                      b_lr_scale: 2.,
                  }, !obj:pylearn2.models.mlp.FlattenerLayer {
@@ -145,13 +154,15 @@
                     h1 : 1.,
                     h2 : 1.,
                     h3 : 1.,
-                    h4 : 0.5
+                    h4 : 1.,
+                    h5 : 1.,
                 },
                 input_scales: {
                     h1 : 1.,
                     h2 : 1.,
                     h3 : 1.,
-                    h4 : 2.
+                    h4 : 1.,
+                    h5 : 1.,
                 }
              },
              !obj:pylearn2.costs.mlp.WeightDecay {
@@ -159,7 +170,8 @@
                      h1 : .0005,
                      h2 : .0005,
                      h3 : .0005,
-                     h4 : .0005
+                     h4 : .0005,
+                     h5 : .0005,
                  }
              }
              ]
@@ -173,11 +185,6 @@
         },
     },
     extensions: [
-        !obj:pylearn2.training_algorithms.sgd.LinearDecayOverEpoch {
-            start: 1,
-            saturate: 200,
-            decay_factor: 0.025
-        },
         !obj:pylearn2.training_algorithms.learning_rule.MomentumAdjustor {
             start: 1,
             saturate: 200,
@@ -191,7 +198,7 @@
             high_trigger: 1.,
             low_trigger: 0.999,
             grow_amt: 1.1,
-            shrink_amt: 0.9,
+            shrink_amt: 0.8,
             max_lr: 1.,
             min_lr: 1e-5,
             channel_name: valid_y_y_1_nll

@@ -1,0 +1,124 @@
+!obj:pylearn2.train.Train {
+    dataset: &train !obj:neukrill_net.image_directory_dataset.ListDataset {
+        transformer: !obj:neukrill_net.augment.RandomAugment {
+                units: 'float',
+                rotate: -1,
+                rotate_is_resizable: 1,
+                shunt: 0.03,
+                scale: 0.08,
+                flip: 1,
+                resize: %(final_shape)s,
+                normalise: {global_or_pixel: 'global',
+                            mu: %(mu)s,
+                            sigma: %(sigma)s}
+        },
+        settings_path: %(settings_path)s,
+        run_settings_path: %(run_settings_path)s,
+        prepreprocessing: {
+            resize: %(final_shape)s,
+            resize_order: 0.75,
+        },
+        #training_set_mode: "test"
+    },
+    model: !obj:pylearn2.monitor.push_monitor {
+        model: !pkl: "/home/mgraham/data/plankton/models/fewer_conv_channels_with_dropout_resume_0_recent.pkl",
+        name: 'fewer_conv_channels_with_dropout_resume',
+        transfer_experience: 1,
+        save_records: 1
+    },
+    algorithm: !obj:pylearn2.training_algorithms.sgd.SGD {
+        train_iteration_mode: even_shuffled_sequential,
+        monitor_iteration_mode: even_sequential,
+        batch_size: 128,
+        learning_rate: 0.015,
+        learning_rule: !obj:neukrill_net.update_norm_monitor.UpdateNormMonitorLearningRule {
+            base_learning_rule: !obj:pylearn2.training_algorithms.learning_rule.Momentum {
+                init_momentum: 0.5
+            },
+            decay: 0.9,
+        },
+        monitoring_dataset: {
+                'train': *train,
+                'valid' : !obj:neukrill_net.image_directory_dataset.ListDataset {
+                            transformer: !obj:neukrill_net.augment.RandomAugment {
+                                units: 'float',
+                                rotate: 0,
+                                rotate_is_resizable: 0,
+                                flip: 0,
+                                normalise: {global_or_pixel: 'global',
+                                            mu: %(mu)s,
+                                            sigma: %(sigma)s}
+                        },
+                    settings_path: %(settings_path)s,
+                    run_settings_path: %(run_settings_path)s,
+                    prepreprocessing: {
+                        resize: %(final_shape)s,
+                        resize_order: 0.75,
+                    },
+                    training_set_mode: "validation"
+                }
+        },
+        cost: !obj:pylearn2.costs.cost.SumOfCosts { costs: [ 
+            !obj:pylearn2.costs.mlp.dropout.Dropout {
+                input_include_probs: {
+                    h1 : 1.,
+                    h2 : 1.,
+                    h3 : 1.,
+                    h4 : 1.,
+                    h5 : 1.,
+                },
+                input_scales: {
+                    h1 : 1.,
+                    h2 : 1.,
+                    h3 : 1.,
+                    h4 : 1.,
+                    h5 : 1.,
+                }
+             },
+             !obj:pylearn2.costs.mlp.WeightDecay {
+                 coeffs : {
+                     h1 : .0005,
+                     h2 : .0005,
+                     h3 : .0005,
+                     h4 : .0005,
+                     h5 : .0005,
+                 }
+             }
+             ]
+        },
+        termination_criterion: !obj:pylearn2.termination_criteria.And {
+            criteria: [
+                !obj:pylearn2.termination_criteria.EpochCounter {
+                    max_epochs: 1000
+                },
+            ]
+        },
+    },
+    extensions: [
+#        !obj:pylearn2.training_algorithms.sgd.LinearDecayOverEpoch {
+#            start: 1,
+#            saturate: 200,
+#            decay_factor: 0.005
+#        },
+        !obj:pylearn2.training_algorithms.learning_rule.MomentumAdjustor {
+            start: 1,
+            saturate: 100,
+            final_momentum: 0.95
+        },
+        !obj:pylearn2.train_extensions.best_params.MonitorBasedSaveBest {
+             channel_name: valid_y_y_1_nll,
+             save_path: '%(save_path)s'
+        },
+        !obj:pylearn2.training_algorithms.sgd.MonitorBasedLRAdjuster {
+            high_trigger: 1.,
+            low_trigger: 0.999,
+            grow_amt: 1.1,
+            shrink_amt: 0.9,
+            max_lr: 1.,
+            min_lr: 1e-5,
+            channel_name: valid_y_y_1_nll
+        }
+    ],
+    save_path: '%(alt_picklepath)s',
+    save_freq: 1
+}
