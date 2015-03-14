@@ -1,0 +1,30 @@
+{
+    "alt_picklepath":"/disk/scratch/neuroglycerin/models/replicate_8aug_96by96_recent.pkl",
+    "augmentation_factor":1,
+    "filename":"replicate_8aug_96by96",
+    "final_shape":[
+        96,
+        96
+    ],
+    "model type":"pylearn2",
+    "modeldir":"/disk/scratch/neuroglycerin/models",
+    "n_classes":121,
+    "pickle abspath":"/disk/scratch/neuroglycerin/models/replicate_8aug_96by96.pkl",
+    "preprocessing":{
+        "normalise":{
+            "global_or_pixel":"global",
+            "mu":0.9572747349739075,
+            "sigma":0.14220687747001648
+        },
+        "resize":[
+            96,
+            96
+        ]
+    },
+    "run_settings_path":"/afs/inf.ed.ac.uk/user/s08/s0805516/repos/neukrill-net-work/run_settings/replicate_8aug_96by96.json",
+    "save_path":"/disk/scratch/neuroglycerin/models/replicate_8aug_96by96.pkl",
+    "settings_path":"/afs/inf.ed.ac.uk/user/s08/s0805516/repos/neukrill-net-work/settings.json",
+    "submissions abspath":"/disk/scratch/neuroglycerin/submissions/replicate_8aug_96by96.csv",
+    "train_split":0.8,
+    "yaml file":"replicate_8aug_online.yaml"
+}

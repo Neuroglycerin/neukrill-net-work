@@ -1,0 +1,127 @@
+!obj:pylearn2.train.Train {
+    dataset: &train !obj:neukrill_net.image_directory_dataset.ListDataset {
+        transformer: !obj:neukrill_net.augment.RandomAugment {
+                units: 'float',
+                rotate: -1,
+                rotate_is_resizable: 0,
+                flip: 1,
+                shunt: 0.05,
+                scale: 0.05,
+                shear: 5,
+                resize: %(final_shape)s,
+                normalise: {global_or_pixel: 'global',
+                            mu: %(mu)s,
+                            sigma: %(sigma)s}
+        },
+        settings_path: %(settings_path)s,
+        run_settings_path: %(run_settings_path)s
+    },
+    model: !obj:pylearn2.models.mlp.MLP {
+        batch_size: &batch_size 128,
+        input_space: !obj:pylearn2.space.Conv2DSpace {
+            shape: %(final_shape)s,
+            num_channels: 1,
+            axes: ['b', 0, 1, 'c'],
+        },
+        layers: [!obj:pylearn2.models.mlp.ConvRectifiedLinear {
+                    layer_name: 'h1',
+                    output_channels: 128,
+                    init_bias: 0.0,
+                    kernel_shape: [4,4],
+                    irange: 0.0074,
+                    max_kernel_norm: 2.0,
+                    pool_shape: [6,6],
+                    pool_stride: [4,4]
+                },
+                !obj:pylearn2.models.mlp.ConvRectifiedLinear {
+                    layer_name: 'h2',
+                    output_channels: 128,
+                    init_bias: 0.0,
+                    max_kernel_norm: 3.5,
+                    kernel_shape: [3,3],
+                    irange: 0.0098,
+                    pool_shape: [2,2],
+                    pool_stride: [2,2]
+                },
+                !obj:pylearn2.models.mlp.ConvRectifiedLinear {
+                    layer_name: 'h3',
+                    output_channels: 128,
+                    init_bias: 0.0,
+                    max_kernel_norm: 3.5,
+                    kernel_shape: [3,3],
+                    irange: 0.0098,
+                    pool_shape: [2,2],
+                    pool_stride: [2,2]
+                },
+                !obj:pylearn2.models.mlp.RectifiedLinear {
+                    dim: 1024,
+                    layer_name: 'h4',
+                    istdev: 0.0158,
+                    max_col_norm: 3.5},
+                !obj:pylearn2.models.mlp.RectifiedLinear {
+                    dim: 1024,
+                    layer_name: 'h5',
+                    istdev: 0.0108,
+                    max_col_norm: 3.5},
+                !obj:pylearn2.models.mlp.Softmax {
+                    n_classes: 121,
+                    max_col_norm: 4.0,
+                    layer_name: 'y',
+                    istdev: 0.0107
+                }]
+    },
+    algorithm: !obj:pylearn2.training_algorithms.sgd.SGD {
+        train_iteration_mode: even_shuffled_sequential,
+        monitor_iteration_mode: even_sequential,
+        batch_size: *batch_size,
+        learning_rate: 0.1,
+        learning_rule: !obj:neukrill_net.update_norm_monitor.UpdateNormMonitorLearningRule {
+            base_learning_rule: !obj:pylearn2.training_algorithms.learning_rule.Momentum {
+                init_momentum: 0.5
+            },
+            decay: 0.9,
+        },
+        monitoring_dataset: {
+                'train': *train,
+                'valid' : !obj:neukrill_net.image_directory_dataset.ListDataset {
+                            transformer: !obj:neukrill_net.augment.RandomAugment {
+                                resize: %(final_shape)s,
+                                units: 'float',
+                                normalise: {global_or_pixel: 'global',
+                                            mu: %(mu)s,
+                                            sigma: %(sigma)s}
+                        },
+                    settings_path: %(settings_path)s,
+                    run_settings_path: %(run_settings_path)s,
+                    training_set_mode: "validation"
+                }
+        },
+        cost: !obj:pylearn2.costs.mlp.Default {},
+        termination_criterion: !obj:pylearn2.termination_criteria.MonitorBased {
+            prop_decrease: 0.01, 
+            N: 30, 
+            channel_name: 'valid_y_nll'},
+    },
+    extensions: [
+        !obj:pylearn2.training_algorithms.learning_rule.MomentumAdjustor {
+            start: 1,
+            saturate: 200,
+            final_momentum: 0.5
+        },
+        !obj:pylearn2.train_extensions.best_params.MonitorBasedSaveBest {
+             channel_name: valid_y_nll,
+             save_path: '%(save_path)s'
+        },
+        !obj:pylearn2.training_algorithms.sgd.MonitorBasedLRAdjuster {
+            high_trigger: 1.,
+            low_trigger: 0.999,
+            grow_amt: 1.01,
+            shrink_amt: 0.99,
+            max_lr: 1.,
+            min_lr: 1e-5,
+            channel_name: valid_y_nll
+        }
+    ],
+    save_path: '%(alt_picklepath)s',
+    save_freq: 1
+}
