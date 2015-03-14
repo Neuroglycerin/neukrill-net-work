@@ -1,6 +1,6 @@
 {
-    "alt_picklepath":"/disk/scratch/neuroglycerin/models/parallel_conv_recent.pkl",
-    "filename":"parallel_conv",
+    "alt_picklepath":"/disk/scratch/neuroglycerin/models/parallel_conv_fixed_recent.pkl",
+    "filename":"parallel_conv_fixed",
     "final_shape":[
         48,
         48
@@ -14,7 +14,7 @@
     "n_classes_4":7,
     "n_classes_5":4,
     "n_classes_6":2,
-    "pickle abspath":"/disk/scratch/neuroglycerin/models/parallel_conv.pkl",
+    "pickle abspath":"/disk/scratch/neuroglycerin/models/parallel_conv_fixed.pkl",
     "preprocessing":{
         "normalise":{
             "global_or_pixel":"global",
@@ -26,10 +26,10 @@
             48
         ]
     },
-    "run_settings_path":"/afs/inf.ed.ac.uk/user/s08/s0805516/repos/neukrill-net-work/run_settings/parallel_conv.json",
-    "save_path":"/disk/scratch/neuroglycerin/models/parallel_conv.pkl",
-    "settings_path":"/afs/inf.ed.ac.uk/user/s08/s0805516/repos/neukrill-net-work/settings.json",
-    "submissions abspath":"/disk/scratch/neuroglycerin/submissions/parallel_conv.csv",
+    "run_settings_path":"/afs/inf.ed.ac.uk/user/s11/s1145806/Documents/git/neukrill-net-work/run_settings/parallel_conv_fixed.json",
+    "save_path":"/disk/scratch/neuroglycerin/models/parallel_conv_fixed.pkl",
+    "settings_path":"/afs/inf.ed.ac.uk/user/s11/s1145806/Documents/git/neukrill-net-work/settings.json",
+    "submissions abspath":"/disk/scratch/neuroglycerin/submissions/parallel_conv_fixed.csv",
     "train_split":0.8,
     "yaml file":"parallel_conv_fixed.yaml"
 }

@@ -59,7 +59,7 @@
                                      output_channels: 64,
                                      irange: .02,
                                      init_bias: 0.5,
-                                     kernel_shape: [6, 6],
+                                     kernel_shape: [4, 4],
                                      pool_shape: [2, 2],
                                      pool_stride: [2, 2],
                                      max_kernel_norm: 0.8
@@ -68,8 +68,7 @@
                                      output_channels: 96,
                                      irange: .02,
                                      init_bias: 0.5,
-                                     kernel_shape: [6, 6],
-                                     border_mode: full,
+                                     kernel_shape: [3, 3],
                                      pool_shape: [2, 2],
                                      pool_stride: [2, 2],
                                      max_kernel_norm: 0.8
@@ -78,15 +77,15 @@
                                      output_channels: 128,
                                      irange: .002,
                                      init_bias: 0.5,
-                                     kernel_shape: [6, 6],
+                                     kernel_shape: [3, 3],
                                      border_mode: full,
-                                     pool_shape: [2, 2],
-                                     pool_stride: [2, 2],
+                                     pool_shape: [3, 3],
+                                     pool_stride: [3, 3],
                                      max_kernel_norm: 0.8
                                 }
                             ]},
                             !obj:pylearn2.models.mlp.MLP {
-                                layer_name: "convlayer_1",
+                                layer_name: "convlayer_2",
                                 batch_size: *batch_size,
                                 layers: [
                                     !obj:pylearn2.models.mlp.ConvRectifiedLinear {
@@ -103,7 +102,7 @@
                                      output_channels: 64,
                                      irange: .02,
                                      init_bias: 1,
-                                     kernel_shape: [6, 6],
+                                     kernel_shape: [4, 4],
                                      pool_shape: [2, 2],
                                      pool_stride: [2, 2],
                                      max_kernel_norm: 0.8
@@ -112,8 +111,7 @@
                                      output_channels: 96,
                                      irange: .02,
                                      init_bias: 0.5,
-                                     kernel_shape: [6, 6],
-                                     border_mode: full,
+                                     kernel_shape: [3, 3],
                                      pool_shape: [2, 2],
                                      pool_stride: [2, 2],
                                      max_kernel_norm: 0.8
@@ -122,10 +120,10 @@
                                      output_channels: 128,
                                      irange: .002,
                                      init_bias: 0.5,
-                                     kernel_shape: [6, 6],
+                                     kernel_shape: [3, 3],
                                      border_mode: full,
-                                     pool_shape: [2, 2],
-                                     pool_stride: [2, 2],
+                                     pool_shape: [3, 3],
+                                     pool_stride: [3, 3],
                                      max_kernel_norm: 0.8
                                 }
                                 ]}
@@ -134,7 +132,7 @@
                  },
                    !obj:pylearn2.models.mlp.RectifiedLinear {
                      dim: 1024,
-                     max_col_norm: 1.5,
+                     max_col_norm: 1.9,
                      layer_name: h5,
                      istdev: .02,
                      W_lr_scale: .25,
@@ -153,7 +151,7 @@
         train_iteration_mode: even_shuffled_sequential,
         monitor_iteration_mode: even_sequential,
         batch_size: *batch_size,
-        learning_rate: .05,
+        learning_rate: .25,
         learning_rule: !obj:pylearn2.training_algorithms.learning_rule.Momentum {
             init_momentum: 0.25
         },
@@ -221,8 +219,8 @@
         !obj:pylearn2.training_algorithms.sgd.MonitorBasedLRAdjuster {
             high_trigger: 1.,
             low_trigger: 0.999,
-            grow_amt: 1.012,
-            shrink_amt: 0.986,
+            grow_amt: 1.015,
+            shrink_amt: 0.983,
             max_lr: 0.4,
             min_lr: 1e-5,
             channel_name: valid_y_nll

@@ -1,7 +1,7 @@
 {
-    "alt_picklepath":"/disk/scratch/neuroglycerin/models/hopeful_recent.pkl",
+    "alt_picklepath":"/disk/scratch/neuroglycerin/models/continue_hopeful_recent.pkl",
     "augmentation_factor":1,
-    "filename":"hopeful",
+    "filename":"continue_hopeful",
     "final_shape":[
         64,
         64
@@ -16,7 +16,7 @@
     "n_classes_4":7,
     "n_classes_5":4,
     "n_classes_6":2,
-    "pickle abspath":"/disk/scratch/neuroglycerin/models/hopeful.pkl",
+    "pickle abspath":"/disk/scratch/neuroglycerin/models/continue_hopeful.pkl",
     "preprocessing":{
         "invert":1,
         "resize":[
@@ -25,14 +25,14 @@
         ]
     },
     "rotate":-1,
-    "run_settings_path":"/afs/inf.ed.ac.uk/user/s11/s1145806/Documents/git/neukrill-net-work/run_settings/hopeful.json",
-    "save_path":"/disk/scratch/neuroglycerin/models/hopeful.pkl",
+    "run_settings_path":"/afs/inf.ed.ac.uk/user/s11/s1145806/Documents/git/neukrill-net-work/run_settings/continue_hopeful.json",
+    "save_path":"/disk/scratch/neuroglycerin/models/continue_hopeful.pkl",
     "scale":0.08,
     "scale_asym":0.005,
     "settings_path":"/afs/inf.ed.ac.uk/user/s11/s1145806/Documents/git/neukrill-net-work/settings.json",
     "shear":6,
     "shunt":0.025,
-    "submissions abspath":"/disk/scratch/neuroglycerin/submissions/hopeful.csv",
+    "submissions abspath":"/disk/scratch/neuroglycerin/submissions/continue_hopeful.csv",
     "train_split":0.8,
-    "yaml file":"hopeful.yaml"
+    "yaml file":"continue_hopeful.yaml"
 }

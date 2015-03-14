@@ -1,0 +1,33 @@
+{
+    "alt_picklepath":"/disk/scratch/neuroglycerin/models/experiment_shapefix_4_recent.pkl",
+    "augmentation_factor":1,
+    "filename":"experiment_shapefix_4",
+    "final_shape":[
+        64,
+        64
+    ],
+    "model type":"pylearn2",
+    "modeldir":"/disk/scratch/neuroglycerin/models",
+    "n_classes":121,
+    "n_classes_1":121,
+    "n_classes_2":38,
+    "n_classes_3":16,
+    "n_classes_4":7,
+    "n_classes_5":4,
+    "n_classes_6":2,
+    "pickle abspath":"/disk/scratch/neuroglycerin/models/experiment_shapefix_4.pkl",
+    "preprocessing":{
+        "invert":1,
+        "resize":[
+            64,
+            64
+        ]
+    },
+    "run_settings_path":"/afs/inf.ed.ac.uk/user/s11/s1145806/Documents/git/neukrill-net-work/run_settings/experiment_shapefix_4.json",
+    "save_path":"/disk/scratch/neuroglycerin/models/experiment_shapefix_4.pkl",
+    "settings_path":"/afs/inf.ed.ac.uk/user/s11/s1145806/Documents/git/neukrill-net-work/settings.json",
+    "submissions abspath":"/disk/scratch/neuroglycerin/submissions/experiment_shapefix_4.csv",
+    "train_split":0.8,
+    "use_super_classes":1,
+    "yaml file":"experiment_shapefix_4.yaml"
+}

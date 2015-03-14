@@ -1,0 +1,185 @@
+!obj:pylearn2.train.Train {
+    dataset: &train !obj:neukrill_net.image_directory_dataset.ListDataset {
+        transformer: !obj:neukrill_net.augment.RandomAugment {
+                units: 'float',
+                flip: 1,
+                rotate: -1,
+                rotate_is_resizable: 0,
+                shear: 6,
+                scale: 0.08,
+                scale_asym: 0.008,
+                shunt: 0.04,
+                shapefix: %(final_shape)s,
+                invert: 1
+            },
+        settings_path: %(settings_path)s,
+        run_settings_path: %(run_settings_path)s,
+        training_set_mode: "test"
+    },
+    model: !obj:pylearn2.models.mlp.MLP {
+        batch_size: &batch_size 128,
+        input_space: !obj:pylearn2.space.Conv2DSpace {
+            shape: %(final_shape)s,
+            num_channels: 1,
+            axes: ['b', 0, 1, 'c'],
+        },
+        layers: [ !obj:pylearn2.models.mlp.ConvRectifiedLinear {
+                     layer_name: h1,
+                     output_channels: 48,
+                     irange: 0.05,
+                     kernel_shape: [5, 5],
+                     pool_shape: [3, 3],
+                     pool_stride: [2, 2],
+                     border_mode: full,
+                     b_lr_scale: 2.,
+                     max_kernel_norm: 1.
+                 }, !obj:pylearn2.models.mlp.ConvRectifiedLinear {
+                     layer_name: h2,
+                     output_channels: 48,
+                     irange: 0.05,
+                     kernel_shape: [5, 5],
+                     pool_shape: [3, 3],
+                     pool_stride: [2, 2],
+                     border_mode: full,
+                     b_lr_scale: 2.,
+                     max_kernel_norm: 1.
+                 }, !obj:pylearn2.models.mlp.ConvRectifiedLinear {
+                     layer_name: h3,
+                     output_channels: 48,
+                     irange: 0.05,
+                     kernel_shape: [5, 5],
+                     pool_shape: [4, 4],
+                     pool_stride: [3, 3],
+                     border_mode: full,
+                     b_lr_scale: 2.,
+                     max_kernel_norm: 1.
+                 }, !obj:pylearn2.models.mlp.RectifiedLinear {
+                     dim: 1024,
+                     max_col_norm: 1.5,
+                     layer_name: h10,
+                     istdev: .01,
+                     init_bias: 0,
+                     b_lr_scale: 2.,
+                 }, !obj:pylearn2.models.mlp.FlattenerLayer {
+                     raw_layer: !obj:pylearn2.models.mlp.CompositeLayer {
+                     layer_name: 'y',
+                     layers: [
+                        !obj:pylearn2.models.mlp.Softmax {
+                            n_classes: %(n_classes_1)i,
+                            max_col_norm: 1.8,
+                            layer_name: y_1,
+                            istdev: .01,
+                            b_lr_scale: 2.,
+                        },
+                        !obj:pylearn2.models.mlp.Softmax {
+                            n_classes: %(n_classes_2)i,
+                            layer_name: y_2,
+                            istdev: .01,
+                            b_lr_scale: 2.,
+                        },
+                        !obj:pylearn2.models.mlp.Softmax {
+                            n_classes: %(n_classes_3)i,
+                            layer_name: y_3,
+                            istdev: .01,
+                            b_lr_scale: 2.,
+                        },
+                        !obj:pylearn2.models.mlp.Softmax {
+                            n_classes: %(n_classes_4)i,
+                            layer_name: y_4,
+                            istdev: .01,
+                            b_lr_scale: 2.,
+                        },
+                        !obj:pylearn2.models.mlp.Softmax {
+                            n_classes: %(n_classes_5)i,
+                            layer_name: y_5,
+                            istdev: .01,
+                            b_lr_scale: 2.,
+                        },
+                        !obj:pylearn2.models.mlp.Softmax {
+                            n_classes: %(n_classes_6)i,
+                            layer_name: y_6,
+                            istdev: .01,
+                            b_lr_scale: 2.,
+                        }
+                    ]
+                }
+                }
+                ],
+    },
+    algorithm: !obj:pylearn2.training_algorithms.sgd.SGD {
+        train_iteration_mode: even_shuffled_sequential,
+        monitor_iteration_mode: even_sequential,
+        batch_size: *batch_size,
+        learning_rate: 0.05,
+        learning_rule: !obj:neukrill_net.update_norm_monitor.UpdateNormMonitorLearningRule {
+            base_learning_rule: !obj:pylearn2.training_algorithms.learning_rule.Momentum {
+                init_momentum: 0.5
+            },
+            decay: 0.9,
+        },
+        monitoring_dataset: {
+                'train': *train,
+                'valid' : !obj:neukrill_net.image_directory_dataset.ListDataset {
+                            transformer: !obj:neukrill_net.augment.RandomAugment {
+                                units: 'float',
+                                rotate: 0,
+                                rotate_is_resizable: 0,
+                                flip: 0,
+                                shapefix: %(final_shape)s,
+                                invert: 1
+                        },
+                    settings_path: %(settings_path)s,
+                    run_settings_path: %(run_settings_path)s,
+                    training_set_mode: "validation"
+                }
+        },
+        cost: !obj:pylearn2.costs.cost.SumOfCosts { costs: [ 
+            !obj:pylearn2.costs.mlp.dropout.Dropout {
+                input_include_probs: {
+                    h10 : 0.5,
+                },
+                input_scales: {
+                    h10 : 2.,
+                }
+             },
+             !obj:pylearn2.costs.mlp.WeightDecay {
+                 coeffs : {
+                     h1 : .0005,
+                     h2 : .0005,
+                     h3 : .0005,
+                     h10 : .0005,
+                 }
+             }
+             ]
+        },
+        termination_criterion: !obj:pylearn2.termination_criteria.And {
+            criteria: [
+                !obj:pylearn2.termination_criteria.EpochCounter {
+                    max_epochs: 500
+                },
+            ]
+        },
+    },
+    extensions: [
+        !obj:pylearn2.training_algorithms.learning_rule.MomentumAdjustor {
+            start: 1,
+            saturate: 200,
+            final_momentum: 0.95
+        },
+        !obj:pylearn2.train_extensions.best_params.MonitorBasedSaveBest {
+             channel_name: valid_y_y_1_nll,
+             save_path: '%(save_path)s'
+        },
+        !obj:pylearn2.training_algorithms.sgd.MonitorBasedLRAdjuster {
+            high_trigger: 1.,
+            low_trigger: 0.999,
+            grow_amt: 1.1,
+            shrink_amt: 0.8,
+            max_lr: 1.,
+            min_lr: 1e-5,
+            channel_name: valid_y_y_1_nll
+        }
+    ],
+    save_path: '%(alt_picklepath)s',
+    save_freq: 1
+}
