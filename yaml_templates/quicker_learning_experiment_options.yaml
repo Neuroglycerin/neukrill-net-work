@@ -2,11 +2,9 @@
     dataset: &train !obj:neukrill_net.image_directory_dataset.ListDataset {
         transformer: !obj:neukrill_net.augment.RandomAugment {
                 units: 'float',
-                rotate: -1,
+                rotate: %(rotate)s,
                 rotate_is_resizable: 0,
                 flip: 1,
-                shunt: 0.03,
-                scale: 0.08,
                 resize: %(final_shape)s,
                 normalise: {global_or_pixel: 'global',
                             mu: %(mu)s,
@@ -24,39 +22,46 @@
         },
         layers: [ !obj:pylearn2.models.mlp.ConvRectifiedLinear {
                      layer_name: h1,
-                     output_channels: 48,
-                     irange: 0.03, # ~ 3**0.5 * 0.01 (std = irange / 3**0.5
+                     output_channels: %(h1_channels)i,
+                     irange: .017, # ~ 3**0.5 * 0.01 (std = irange / 3**0.5
                      kernel_shape: [5, 5],
                      pool_shape: [3, 3],
                      pool_stride: [2, 2],
                      border_mode: full,
                      b_lr_scale: 2.,
-                     max_kernel_norm: 0.53
+                     max_kernel_norm: 1.9365
                  },!obj:pylearn2.models.mlp.ConvRectifiedLinear {
                      layer_name: h2,
-                     output_channels: 128,
-                     irange: 0.025,
+                     output_channels: %(h2_channels)i,
+                     irange: .017,
                      kernel_shape: [3, 3],
-                     pool_shape: [3, 3],
-                     pool_stride: [2, 2],
+                     pool_shape: [1, 1],
+                     pool_stride: [1, 1],
                      border_mode: full,
                      b_lr_scale: 2.,
-                     max_kernel_norm: 0.61
+                     max_kernel_norm: 1.9365
                  }, !obj:pylearn2.models.mlp.ConvRectifiedLinear {
                      layer_name: h3,
-                     output_channels: 128,
-                     irange: 0.0225,
+                     output_channels: %(h3_channels)i,
+                     irange: .017,
                      kernel_shape: [3, 3],
                      pool_shape: [3, 3],
                      pool_stride: [2, 2],
                      border_mode: full,
                      b_lr_scale: 2.,
-                     max_kernel_norm: 0.88
+                     max_kernel_norm: 1.9365
                  }, !obj:pylearn2.models.mlp.RectifiedLinear {
-                     dim: 1024,
-                     max_col_norm: 1.47,
+                     dim: %(h4_dim)i,
+                     max_col_norm: 1.9,
                      layer_name: h4,
-                     istdev: 0.0035,
+                     istdev: .01,
+                     init_bias: 0,
+                     b_lr_scale: 2.,
+                 }, !obj:pylearn2.models.mlp.RectifiedLinear {
+                     dim: %(h5_dim)i,
+                     max_col_norm: 1.9,
+                     layer_name: h5,
+                     istdev: .01,
                      init_bias: 0,
                      b_lr_scale: 2.,
                  }, !obj:pylearn2.models.mlp.FlattenerLayer {
@@ -65,38 +70,44 @@
                      layers: [
                         !obj:pylearn2.models.mlp.Softmax {
                             n_classes: %(n_classes_1)i,
+                            max_col_norm: 1.9365,
                             layer_name: y_1,
-                            istdev: 0.0031,
+                            istdev: .01,
                             b_lr_scale: 2.,
                         },
                         !obj:pylearn2.models.mlp.Softmax {
                             n_classes: %(n_classes_2)i,
+                            max_col_norm: 1.9365,
                             layer_name: y_2,
-                            istdev: 0.0031,
+                            istdev: .01,
                             b_lr_scale: 2.,
                         },
                         !obj:pylearn2.models.mlp.Softmax {
                             n_classes: %(n_classes_3)i,
+                            max_col_norm: 1.9365,
                             layer_name: y_3,
-                            istdev: 0.0031,
+                            istdev: .01,
                             b_lr_scale: 2.,
                         },
                         !obj:pylearn2.models.mlp.Softmax {
                             n_classes: %(n_classes_4)i,
+                            max_col_norm: 1.9365,
                             layer_name: y_4,
-                            istdev: 0.0031,
+                            istdev: .01,
                             b_lr_scale: 2.,
                         },
                         !obj:pylearn2.models.mlp.Softmax {
                             n_classes: %(n_classes_5)i,
+                            max_col_norm: 1.9365,
                             layer_name: y_5,
-                            istdev: 0.0031,
+                            istdev: .01,
                             b_lr_scale: 2.,
                         },
                         !obj:pylearn2.models.mlp.Softmax {
                             n_classes: %(n_classes_6)i,
+                            max_col_norm: 1.9365,
                             layer_name: y_6,
-                            istdev: 0.0031,
+                            istdev: .01,
                             b_lr_scale: 2.,
                         }
                     ]
@@ -136,21 +147,27 @@
                     h1 : 1.,
                     h2 : 1.,
                     h3 : 1.,
-                    h4 : 1.,
+                    h4 : %(dropout)f,
+                    h5 : %(dropout)f
                 },
                 input_scales: {
                     h1 : 1.,
                     h2 : 1.,
                     h3 : 1.,
-                    h4 : 1.,
+                    h4 : %(scale)f,
+                    h5 : %(scale)f
                 }
              },
+             !obj:pylearn2.costs.cost.MethodCost {
+                 method: 'cost_from_X'
+             }, 
              !obj:pylearn2.costs.mlp.WeightDecay {
                  coeffs : {
                      h1 : .0005,
                      h2 : .0005,
                      h3 : .0005,
                      h4 : .0005,
+                     h5 : .0005,
                  }
              }
              ]

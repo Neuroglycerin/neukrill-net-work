@@ -1,0 +1,35 @@
+{
+    "alt_picklepath":"/disk/scratch/neuroglycerin/models/opencv_integrated_repeat_recent.pkl",
+    "filename":"opencv_integrated_repeat",
+    "final_shape":[
+        48,
+        48
+    ],
+    "model type":"pylearn2",
+    "modeldir":"/disk/scratch/neuroglycerin/models",
+    "n_classes":121,
+    "n_classes_1":121,
+    "n_classes_2":38,
+    "n_classes_3":16,
+    "n_classes_4":7,
+    "n_classes_5":4,
+    "n_classes_6":2,
+    "pickle abspath":"/disk/scratch/neuroglycerin/models/opencv_integrated_repeat.pkl",
+    "preprocessing":{
+        "normalise":{
+            "global_or_pixel":"global",
+            "mu":0.9572712779045105,
+            "sigma":0.14225326478481293
+        },
+        "resize":[
+            48,
+            48
+        ]
+    },
+    "run_settings_path":"/afs/inf.ed.ac.uk/user/s08/s0805516/repos/neukrill-net-work/run_settings/opencv_integrated_repeat.json",
+    "save_path":"/disk/scratch/neuroglycerin/models/opencv_integrated_repeat.pkl",
+    "settings_path":"/afs/inf.ed.ac.uk/user/s08/s0805516/repos/neukrill-net-work/settings.json",
+    "submissions abspath":"/disk/scratch/neuroglycerin/submissions/opencv_integrated_repeat.csv",
+    "train_split":0.8,
+    "yaml file":"opencv_integrated.yaml"
+}
