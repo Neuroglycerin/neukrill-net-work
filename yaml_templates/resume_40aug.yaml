@@ -88,11 +88,7 @@
             decay: 0.9,
         },
         monitoring_dataset: {
-                'train': *train,
-                'valid' : !obj:neukrill_net.dense_dataset.DensePNGDataset  {
-                                settings_path: %(settings_path)s,
-                                run_settings: %(run_settings_path)s,
-                                training_set_mode: "validation"
+                'train': *train
             },
         },
         cost: !obj:pylearn2.costs.cost.SumOfCosts { costs: [ 
@@ -140,20 +136,13 @@
             saturate: 25,
             final_momentum: 0.95
         },
-        !obj:pylearn2.train_extensions.best_params.MonitorBasedSaveBest {
-             channel_name: valid_y_nll,
-             save_path: '%(save_path)s'
-        },
-        !obj:pylearn2.training_algorithms.sgd.MonitorBasedLRAdjuster {
-            high_trigger: 1.,
-            low_trigger: 0.999,
-            grow_amt: 2.1,
-            shrink_amt: 0.43,
-            max_lr: 0.2,
-            min_lr: 1e-5,
-            channel_name: valid_y_nll
+        !obj:pylearn2.training_algorithms.sgd.LinearDecayOverEpoch {
+            start: 1,
+            saturate: 25,
+            decay_factor: 0.025
         }
+
     ],
-    save_path: '%(alt_picklepath)s',
+    save_path: '%(save_path)s',
     save_freq: 1
 }

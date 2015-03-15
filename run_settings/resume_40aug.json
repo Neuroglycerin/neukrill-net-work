@@ -17,7 +17,6 @@
     "n_classes_6":2,
     "pickle abspath":"/disk/scratch/neuroglycerin/models/resume_40aug.pkl",
     "preprocessing":{
-        "flip":1,
         "normalise":{
             "global_or_pixel":"global",
             "mu":0.954849097973459,
@@ -26,15 +25,13 @@
         "resize":[
             48,
             48
-        ],
-        "rotate":4,
-        "rotate_is_resizable":0
+        ]
     },
     "resume_pickle":"/disk/scratch/neuroglycerin/models/alexnet_based_40aug.pkl",
     "run_settings_path":"/afs/inf.ed.ac.uk/user/s13/s1320903/Neuroglycerin/neukrill-net-work/run_settings/resume_40aug.json",
     "save_path":"/disk/scratch/neuroglycerin/models/resume_40aug.pkl",
     "settings_path":"/afs/inf.ed.ac.uk/user/s13/s1320903/Neuroglycerin/neukrill-net-work/settings.json",
     "submissions abspath":"/disk/scratch/neuroglycerin/submissions/resume_40aug.csv",
-    "train_split":0.8,
+    "train_split":1.0,
     "yaml file":"resume_40aug.yaml"
 }
