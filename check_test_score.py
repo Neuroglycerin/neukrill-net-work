@@ -63,7 +63,7 @@ def make_predictions(run_settings_path, verbose=False, augment=1):
     n_classes = len(settings.classes)
     if verbose:
         print("    chosen batch size {0}"
-                " for {1} batches per pas".format(batch_size,n_batches))
+                " for {1} batches per pass".format(batch_size,n_batches))
 
     # compiling theano forward propagation
     if verbose:
