@@ -18,7 +18,7 @@ import argparse
 import os
 import pylearn2.config.yaml_parse
 
-def check_score(run_settings_path, verbose=False, augment=1):
+def make_predictions(run_settings_path, verbose=False, augment=1):
     """
     Single function, calculates score, prints and
     returns it.
@@ -29,27 +29,25 @@ def check_score(run_settings_path, verbose=False, augment=1):
     settings = neukrill_net.utils.Settings("settings.json")
     run_settings = neukrill_net.utils.load_run_settings(run_settings_path, 
             settings, force=True)
-    
+
+    # if augment not specified on cmdline may be specified in run_settings
+    if augment == 1:
+        augment = run_settings.get("augment",1)
+
     # load the model
     if verbose:
         print("Loading model...")
     model = pylearn2.utils.serial.load(run_settings['pickle abspath'])
 
-    # load the data
-    if verbose:
-        print("Loading data...")
+    # load proxied YAML
     # format the YAML
     yaml_string = neukrill_net.utils.format_yaml(run_settings, settings)
     # load proxied objects
     proxied = pylearn2.config.yaml_parse.load(yaml_string, instantiate=False)
-    # pull out proxied dataset
-    proxdata = proxied.keywords['dataset']
-    # force loading of dataset and switch to test dataset
-    proxdata.keywords['force'] = True
-    proxdata.keywords['training_set_mode'] = 'test'
-    proxdata.keywords['verbose'] = verbose
-    # then instantiate the dataset
-    dataset = pylearn2.config.yaml_parse._instantiate(proxdata)
+
+    # load the dataset
+    dataset = neukrill_net.utils.dataset_from_yaml(proxied,
+        training_set_mode='test', verbose=verbose)
 
     # find a good batch size 
     if verbose:
@@ -65,7 +63,7 @@ def check_score(run_settings_path, verbose=False, augment=1):
     n_classes = len(settings.classes)
     if verbose:
         print("    chosen batch size {0}"
-                " for {1} batches".format(batch_size,n_batches))
+                " for {1} batches per pas".format(batch_size,n_batches))
 
     # compiling theano forward propagation
     if verbose:
@@ -126,22 +124,53 @@ def check_score(run_settings_path, verbose=False, augment=1):
     # if these labels happen to have superclasses in them we better take them out
     labels = labels[:,:n_classes]
 
-    # calculate score
-    logloss = sklearn.metrics.log_loss(labels,y)
-    print("Log loss: {0}".format(logloss))
+    return y,labels
 
+def check_score(labels, run_settings, y_arrays, verbose=False):
+    """
+    Takes one or more arrays of predictions, and an array of the true
+    labels and calculates the log loss.
+    """
+    if len(y_arrays) > 1:
+        # if verbose, first find log loss of each model individually
+        for y,fpath in zip(y_arrays,run_settings):
+            logloss = sklearn.metrics.log_loss(labels,y)
+            print("{1} log loss: {0}".format(logloss,fpath))
+
+        # average the predictions from each model
+        predictions = np.mean(np.array(y_arrays),axis=0)
+
+        if verbose:
+            print("Combined:")
+        # calculate score
+        logloss = sklearn.metrics.log_loss(labels,predictions)
+        print("Log loss: {0}".format(logloss))
+    else:
+        # calculate score
+        logloss = sklearn.metrics.log_loss(labels,y_arrays[0])
+        print("Log loss: {0}".format(logloss))
     return logloss
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser(description='Check the log loss score'
                                                  'on the holdout test set.')
     parser.add_argument('run_settings', metavar='run_settings', type=str, 
-        nargs='?', default=os.path.join("run_settings","alexnet_based.json"),
+        nargs='+', default=os.path.join("run_settings","alexnet_based.json"),
         help="Path to run settings json file.")
     # add verbose option
     parser.add_argument('-v', action="store_true", help="Run verbose.")
     parser.add_argument('--augment', nargs='?', help='For online augmented '
                 'models only. Will increase the number of times the script '
-                'repeats predictions.', type=int, default=1)
+                'repeats predictions. Do not use this if you are running this'
+                ' with more than one json and one of the jsons does not'
+                ' support online augmentation. In that case, specify an '
+                '"augment" variable in the run_settings json for that '
+                'specific model.', type=int, default=1)
     args = parser.parse_args()
-    check_score(args.run_settings, verbose=args.v, augment=args.augment)
+    predictions = []
+    for run_settings in args.run_settings:
+        if args.v:
+            print("Running {0} predictions.".format(run_settings))
+        y,labels = make_predictions(run_settings, verbose=args.v, augment=args.augment)
+        predictions.append(y)
+    check_score(labels, args.run_settings, predictions, verbose=args.v)
