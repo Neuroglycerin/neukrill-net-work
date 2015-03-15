@@ -12,12 +12,12 @@ import numpy as np
 from sklearn.externals import joblib
 
 # Define output path
-pkl_path1 = '/disk/scratch/s1145806/cached_hlf_train_data_raw.pkl'
-pkl_path2 = '/disk/scratch/s1145806/cached_hlf_train_raw.pkl'
-pkl_path3 = '/disk/scratch/s1145806/cached_hlf_train_data_ranged.pkl'
-pkl_path4 = '/disk/scratch/s1145806/cached_hlf_train_ranged.pkl'
-pkl_path5 = '/disk/scratch/s1145806/cached_hlf_train_data_posranged.pkl'
-pkl_path6 = '/disk/scratch/s1145806/cached_hlf_train_posranged.pkl'
+pkl_path1 = '/disk/data1/s1145806/cached_hlf_test_data_raw.pkl'
+pkl_path2 = '/disk/data1/s1145806/cached_hlf_test_raw.pkl'
+pkl_path3 = '/disk/data1/s1145806/cached_hlf_test_data_ranged.pkl'
+pkl_path4 = '/disk/data1/s1145806/cached_hlf_test_ranged.pkl'
+pkl_path5 = '/disk/data1/s1145806/cached_hlf_test_data_posranged.pkl'
+pkl_path6 = '/disk/data1/s1145806/cached_hlf_test_posranged.pkl'
 
 # Define which basic attributes to use
 attrlst = ['height','width','numpixels','sideratio','mean','std','stderr',
@@ -25,7 +25,7 @@ attrlst = ['height','width','numpixels','sideratio','mean','std','stderr',
 
 # Parse the data
 settings = neukrill_net.utils.Settings('settings.json')
-X,y = neukrill_net.utils.load_rawdata(settings.image_fnames, settings.classes)
+X,y = neukrill_net.utils.load_rawdata(settings.image_fnames)
 
 # Combine all the features we want to use
 hlf  = neukrill_net.highlevelfeatures.BasicAttributes(attrlst)

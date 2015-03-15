@@ -9,15 +9,16 @@ import neukrill_net.augment
 import neukrill_net.highlevelfeatures
 import neukrill_net.utils
 import copy
+import numpy as np
 from sklearn.externals import joblib
 
 # Define output path
-pkl_path1 = '/disk/data2/neuroglycerin/cached_hlf_train8_data_raw.pkl'
-pkl_path2 = '/disk/data2/neuroglycerin/cached_hlf_train8_raw.pkl'
-pkl_path3 = '/disk/data2/neuroglycerin/cached_hlf_train8_data_ranged.pkl'
-pkl_path4 = '/disk/data2/neuroglycerin/cached_hlf_train8_ranged.pkl'
-pkl_path5 = '/disk/data2/neuroglycerin/cached_hlf_train8_data_posranged.pkl'
-pkl_path6 = '/disk/data2/neuroglycerin/cached_hlf_train8_posranged.pkl'
+pkl_path1 = '/disk/data1/s1145806/cached_hlf_train8_data_raw.pkl'
+pkl_path2 = '/disk/data1/s1145806/cached_hlf_train8_raw.pkl'
+pkl_path3 = '/disk/data1/s1145806/cached_hlf_train8_data_ranged.pkl'
+pkl_path4 = '/disk/data1/s1145806/cached_hlf_train8_ranged.pkl'
+pkl_path5 = '/disk/data1/s1145806/cached_hlf_train8_data_posranged.pkl'
+pkl_path6 = '/disk/data1/s1145806/cached_hlf_train8_posranged.pkl'
 
 # Define which basic attributes to use
 attrlst = ['height','width','numpixels','sideratio','mean','std','stderr',
