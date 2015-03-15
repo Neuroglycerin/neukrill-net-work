@@ -1,7 +1,7 @@
 {
-    "alt_picklepath":"/disk/scratch/neuroglycerin/models/opencv_integrated_v5_recent.pkl",
+    "alt_picklepath":"/disk/scratch/neuroglycerin/models/opencv_integrated_v5_fixed_recent.pkl",
     "cache":"/disk/scratch/s1145806/cached_hlf_train_data_ranged.pkl",
-    "filename":"opencv_integrated_v5",
+    "filename":"opencv_integrated_v5_fixed",
     "final_shape":[
         48,
         48
@@ -15,7 +15,7 @@
     "n_classes_4":7,
     "n_classes_5":4,
     "n_classes_6":2,
-    "pickle abspath":"/disk/scratch/neuroglycerin/models/opencv_integrated_v5.pkl",
+    "pickle abspath":"/disk/scratch/neuroglycerin/models/opencv_integrated_v5_fixed.pkl",
     "preprocessing":{
         "normalise":{
             "global_or_pixel":"global",
@@ -27,10 +27,10 @@
             48
         ]
     },
-    "run_settings_path":"/afs/inf.ed.ac.uk/user/s11/s1145806/Documents/git/neukrill-net-work/run_settings/opencv_integrated_v5.json",
-    "save_path":"/disk/scratch/neuroglycerin/models/opencv_integrated_v5.pkl",
+    "run_settings_path":"/afs/inf.ed.ac.uk/user/s11/s1145806/Documents/git/neukrill-net-work/run_settings/opencv_integrated_v5_fixed.json",
+    "save_path":"/disk/scratch/neuroglycerin/models/opencv_integrated_v5_fixed.pkl",
     "settings_path":"/afs/inf.ed.ac.uk/user/s11/s1145806/Documents/git/neukrill-net-work/settings.json",
-    "submissions abspath":"/disk/scratch/neuroglycerin/submissions/opencv_integrated_v5.csv",
+    "submissions abspath":"/disk/scratch/neuroglycerin/submissions/opencv_integrated_v5_fixed.csv",
     "train_split":0.8,
     "yaml file":"opencv_integrated_v5.yaml"
 }

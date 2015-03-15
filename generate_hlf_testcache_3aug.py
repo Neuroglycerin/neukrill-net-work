@@ -13,12 +13,12 @@ import numpy as np
 from sklearn.externals import joblib
 
 # Define output path
-pkl_path1 = '/disk/data1/s1145806/cached_hlf_train40_data_raw.pkl'
-pkl_path2 = '/disk/data1/s1145806/cached_hlf_train40_raw.pkl'
-pkl_path3 = '/disk/data1/s1145806/cached_hlf_train40_data_ranged.pkl'
-pkl_path4 = '/disk/data1/s1145806/cached_hlf_train40_ranged.pkl'
-pkl_path5 = '/disk/data1/s1145806/cached_hlf_train40_data_posranged.pkl'
-pkl_path6 = '/disk/data1/s1145806/cached_hlf_train40_posranged.pkl'
+pkl_path1 = '/disk/data1/s1145806/cached_hlf_test3_data_raw.pkl'
+pkl_path2 = '/disk/data1/s1145806/cached_hlf_test3_raw.pkl'
+pkl_path3 = '/disk/data1/s1145806/cached_hlf_test3_data_ranged.pkl'
+pkl_path4 = '/disk/data1/s1145806/cached_hlf_test3_ranged.pkl'
+pkl_path5 = '/disk/data1/s1145806/cached_hlf_test3_data_posranged.pkl'
+pkl_path6 = '/disk/data1/s1145806/cached_hlf_test3_posranged.pkl'
 
 # Define which basic attributes to use
 attrlst = ['height','width','numpixels','sideratio','mean','std','stderr',
@@ -26,7 +26,7 @@ attrlst = ['height','width','numpixels','sideratio','mean','std','stderr',
 
 # Parse the data
 settings = neukrill_net.utils.Settings('settings.json')
-X,y = neukrill_net.utils.load_rawdata(settings.image_fnames, settings.classes)
+X,y = neukrill_net.utils.load_rawdata(settings.image_fnames)
 
 # Combine all the features we want to use
 hlf_list  = []
@@ -39,10 +39,8 @@ hlf_list.append( neukrill_net.highlevelfeatures.Haralick()               )
 # hlf_list.append( neukrill_net.highlevelfeatures.CoocurProps()            )
 
 augs = {'units': 'uint8',
-        'rotate': 4,
-        'rotate_is_resizable': 0,
-        'flip': 1,
-        'crop': 1}
+        'rotate': 3,
+        'rotate_is_resizable': 1}
 
 aug_fun = neukrill_net.augment.augmentation_wrapper(**augs)
 hlf = neukrill_net.highlevelfeatures.MultiHighLevelFeature(hlf_list, augment_func=aug_fun)

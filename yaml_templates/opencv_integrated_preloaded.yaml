@@ -1,22 +1,12 @@
 !obj:pylearn2.train.Train {
-    dataset: &train !obj:neukrill_net.parallel_dataset.PassthroughDataset {
-        transformer: !obj:neukrill_net.augment.RandomAugment {
-                units: 'float',
-                rotate: [0,90,180,270],
-                rotate_is_resizable: 0,
-                flip: 1,
-                resize: %(final_shape)s,
-                normalise: {global_or_pixel: 'global',
-                            mu: %(mu)s,
-                            sigma: %(sigma)s}
-            },
+    dataset: &train !obj:neukrill_net.preloaded_passthrough_dataset.PreloadedPassthroughDataset {
         settings_path: %(settings_path)s,
         run_settings_path: %(run_settings_path)s,
         cached: %(cache)s,
-        #training_set_mode: 'test'
+        training_set_mode: 'test'
     },
     model: !obj:pylearn2.models.mlp.MLP {
-        batch_size: &batch_size 256,
+        batch_size: &batch_size 128,
         input_source: ['img_1','img_2'],
         input_space: !obj:pylearn2.space.CompositeSpace {
             components: [
@@ -66,6 +56,13 @@
                                      border_mode: full,
                                      b_lr_scale: 2.,
                                      max_kernel_norm: 2.
+                                 }, !obj:pylearn2.models.mlp.RectifiedLinear {
+                                     dim: 512,
+                                     layer_name: h4,
+                                     max_col_norm: 1.5,
+                                     istdev: .05,
+                                     W_lr_scale: .25,
+                                     b_lr_scale: .25
                                  }
                             ]},    !obj:pylearn2.models.mlp.MLP {
                                 layer_name: passthrough,
@@ -81,7 +78,7 @@
                         ]}
                  },
                    !obj:pylearn2.models.mlp.RectifiedLinear {
-                     dim: 768,
+                     dim: 512,
                      layer_name: h5,
                      max_col_norm: 1.5,
                      istdev: .05,
@@ -109,23 +106,12 @@
         },
         monitoring_dataset: {
                 'train': *train,
-                'valid' : !obj:neukrill_net.parallel_dataset.PassthroughDataset {
-                transformer: !obj:neukrill_net.augment.RandomAugment {
-                        units: 'float',
-                        transform_order: 0,
-                        rotate: 0,
-                        rotate_is_resizable: 0,
-                        flip: 0,
-                        resize: %(final_shape)s,
-                        normalise: {global_or_pixel: 'global',
-                                    mu: %(mu)s,
-                                    sigma: %(sigma)s}
-                    },
-                settings_path: %(settings_path)s,
-                run_settings_path: %(run_settings_path)s,
-                cached: %(cache)s,
-                training_set_mode: 'validation'
-        }
+                'valid' : !obj:neukrill_net.preloaded_passthrough_dataset.PreloadedPassthroughDataset  {
+                                settings_path: %(settings_path)s,
+                                run_settings_path: %(run_settings_path)s,
+                                cached: %(cache)s,
+                                training_set_mode: "validation"
+                            },
         },
         cost: !obj:pylearn2.costs.cost.SumOfCosts { costs: [ 
             !obj:pylearn2.costs.mlp.dropout.Dropout {
