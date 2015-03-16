@@ -3,6 +3,7 @@
 import neukrill_net.utils as utils
 import neukrill_net.image_processing as image_processing
 import neukrill_net.augment as augment
+import neukrill_net.dense_dataset
 
 import csv
 import pickle
@@ -13,7 +14,11 @@ import os
 import argparse
 import six.moves
 
-def main(run_settings_path, verbose=False, altdata=None, augment=1):
+import pylearn2.utils
+import pylearn2.config
+import theano
+
+def main(run_settings_path, verbose=False, altdata=None, augment=1, split=1):
     # this should just run either function depending on the run settings
     settings = utils.Settings('settings.json')
     # test script won't overwrite the pickle, so always force load
@@ -27,7 +32,7 @@ def main(run_settings_path, verbose=False, altdata=None, augment=1):
     elif run_settings['model type'] == 'pylearn2':
         #train_pylearn2(run_settings)
         test_pylearn2(run_settings, verbose=verbose,altdata=altdata,
-                augment=augment)
+                augment=augment, split=split)
     else:
         raise NotImplementedError("Unsupported model type.")
 
@@ -57,14 +62,11 @@ def test_sklearn(run_settings, verbose=False):
             names, settings.classes)
 
 def test_pylearn2(run_settings, batch_size=4075, verbose=False, 
-        augment=1, altdata=None):
+        augment=1, altdata=None, split=1):
     # Based on the script found at:
     #   https://github.com/zygmuntz/pylearn2-practice/blob/master/predict.py
   
-    import pylearn2.utils
-    import pylearn2.config
-    import neukrill_net.dense_dataset
-    import theano
+
 
     # unpack settings
     settings = run_settings['settings']
@@ -74,30 +76,60 @@ def test_pylearn2(run_settings, batch_size=4075, verbose=False,
         print("Loading model...")
     model = pylearn2.utils.serial.load(run_settings['pickle abspath'])
 
-    # then load the dataset
+    # load the dataset, but split it if required.
+    predictions = []
+    for block in range(split):
+        if verbose and split == 1:
+            print("Loading data...")
+        elif verbose:
+            print("Loading data, split {0} of {1}...".format(block+1,split))
+        if altdata:
+            if verbose:
+                print("   Loading alternative data file from {0}".format(altdata))
+            dataset = neukrill_net.dense_dataset.DensePNGDataset(
+                settings_path=run_settings['settings_path'],
+                run_settings=altdata,
+                train_or_predict='test')
+        else:
+            # format the YAML
+            yaml_string = neukrill_net.utils.format_yaml(run_settings, settings)
+            # load proxied objects
+            proxied = pylearn2.config.yaml_parse.load(yaml_string, instantiate=False)
+            # pull out proxied dataset
+            proxdata = proxied.keywords['dataset']
+            # force loading of dataset and switch to test dataset
+            proxdata.keywords['force'] = True
+            proxdata.keywords['train_or_predict'] = 'test'
+            proxdata.keywords['verbose'] = verbose
+            proxdata.keywords['split'] = (block,split)
+            # then instantiate the dataset
+            dataset = pylearn2.config.yaml_parse._instantiate(proxdata)
+
+        # make predictions
+        predictions.append(make_predictions(model, dataset, settings, 
+            run_settings, proxied, batch_size=100, verbose=verbose, 
+            augment=augment, altdata=altdata))
+
+    with open("/disk/scratch/neuroglycerin/dump/test3.py.pkl", "wb") as f:
+        import pickle
+        pickle.dump(predictions, f)
+
+    # stack predictions
+    predictions = np.vstack(predictions)
+
+    # get the names
+    names = [os.path.basename(fpath) for fpath in settings.image_fnames['test']]
+
+    # then write our results to csv 
     if verbose:
-        print("Loading data...")
-    if altdata:
-        if verbose:
-            print("   Loading alternative data file from {0}".format(altdata))
-        dataset = neukrill_net.dense_dataset.DensePNGDataset(
-            settings_path=run_settings['settings_path'],
-            run_settings=altdata,
-            train_or_predict='test')
-    else:
-        # format the YAML
-        yaml_string = neukrill_net.utils.format_yaml(run_settings, settings)
-        # load proxied objects
-        proxied = pylearn2.config.yaml_parse.load(yaml_string, instantiate=False)
-        # pull out proxied dataset
-        proxdata = proxied.keywords['dataset']
-        # force loading of dataset and switch to test dataset
-        proxdata.keywords['force'] = True
-        proxdata.keywords['train_or_predict'] = 'test'
-        proxdata.keywords['verbose'] = verbose
-        # then instantiate the dataset
-        dataset = pylearn2.config.yaml_parse._instantiate(proxdata)
+        print("Writing csv")
+    utils.write_predictions(run_settings['submissions abspath'], predictions, 
+            dataset.names, settings.classes)
+
+def make_predictions(model, dataset, settings, run_settings, proxied,
+                batch_size=100, verbose=False, augment=1, altdata=None):
     
+
     # find a good batch size 
     if verbose:
         print("Finding batch size...")
@@ -135,6 +167,7 @@ def test_pylearn2(run_settings, batch_size=4075, verbose=False,
     pcost = proxied.keywords['algorithm'].keywords['cost']
     cost = pylearn2.config.yaml_parse._instantiate(pcost)
     data_specs = cost.get_data_specs(model)
+    data_specs = (data_specs[0].components[0],data_specs[1][0])
     i = 0 
     for _ in range(augment):
         # make sequential iterator
@@ -174,12 +207,8 @@ def test_pylearn2(run_settings, batch_size=4075, verbose=False,
                 y[[i for i in range(row,N_examples*augment,N_examples)],:]]), 
                 axis=0)
         y = y_collapsed            
+    return y
 
-    # then write our results to csv 
-    if verbose:
-        print("Writing csv")
-    utils.write_predictions(run_settings['submissions abspath'], y, 
-            dataset.names, settings.classes)
 
 if __name__ == '__main__':
     # copied code from train.py here instead of making a function
@@ -200,6 +229,9 @@ if __name__ == '__main__':
     parser.add_argument('--augment', nargs='?', help='For online augmented '
                 'models only. Will increase the number of times the script '
                 'repeats predictions.', type=int, default=1)
+    parser.add_argument('--split', nargs='?', help='Factor to split test set, '
+            'to reduce problems with memory being filled when loading large '
+            'augmented test sets.', type=int, default=1)
     args = parser.parse_args()
     main(args.run_settings, verbose=args.v, altdata=args.altdata, 
-            augment=args.augment)
+            augment=args.augment, split=args.split)

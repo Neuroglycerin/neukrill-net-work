@@ -1,6 +1,7 @@
 {
     "alt_picklepath":"/disk/scratch/neuroglycerin/models/replicate_8aug_recent.pkl",
     "augmentation_factor":1,
+    "augment":16,
     "filename":"replicate_8aug",
     "final_shape":[
         48,
