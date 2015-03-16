@@ -13,7 +13,7 @@ import sklearn.ensemble
 import sklearn.feature_selection
 
 
-def predict(cache_paths, out_fname, clf, settings, train_split=0.8):
+def predict(cache_paths, out_fname, clf, settings, generate_heldout=True):
     
     X_train = joblib.load(cache_paths[0])
     X_test = joblib.load(cache_paths[1])
@@ -44,6 +44,33 @@ def predict(cache_paths, out_fname, clf, settings, train_split=0.8):
     names = [os.path.basename(path) for path in settings.image_fnames['test']]
     
     neukrill_net.utils.write_predictions(out_fname, p_avg, names, settings.classes)
+    
+    if not generate_heldout:
+        return
+    
+    li_test = neukrill_net.utils.train_test_split_bool(settings.image_fnames, 'test', train_split=0.8, classes=settings.classes)
+    li_nottest = np.logical_not(li_test)
+    
+    X2_train = X_train[:,li_nottest,:]
+    X2_test = X_train[:,li_test,:]
+    
+    XX_train = X2_train.reshape((X2_train.shape[0]*X2_train.shape[1],X2_train.shape[2]))
+    XX_test = X2_test.reshape((X2_test.shape[0]*X2_test.shape[1],X2_test.shape[2]))
+    yy_train = np.tile(y_train[li_nottest], n_augments)
+    yy_test = y_train[li_nottest]
+    
+    XX_train = pcfilter.transform(XX_train)
+    XX_test  = pcfilter.transform(XX_test)
+    
+    clf.fit(XX_train,yy_train)
+    
+    p = clf.predict_proba(XX_test)
+    p = np.reshape(p, (X_test.shape[0], X_test.shape[1], p.shape[1]))
+    
+    p_avg = p.mean(0)
+    
+    joblib.dump( (p_avg, yy_test), out_fname + '_heldout.pkl', )
+    
 
 
 cache_paths = [('/disk/data1/s1145806/cached_hlf_train_data_raw_ranged.pkl'     , '/disk/data1/s1145806/cached_hlf_test_data_raw_ranged.pkl'     ),
