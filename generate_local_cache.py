@@ -40,7 +40,7 @@ kprf_base = sklearn.ensemble.RandomForestClassifier(n_estimators=500, max_depth=
 hlf_list = []
 for index,detector in enumerate(detector_list):
     hlf_list += [neukrill_net.highlevelfeatures.KeypointEnsembleClassifier(detector, describer_list[index], kprf_base,
-                                                                     return_num_kp=True, verbosity=1, summary_method='vote')]
+                                                                     return_num_kp=True, n_jobs=16, verbosity=1, summary_method='vote')]
 
 hlf = neukrill_net.highlevelfeatures.MultiHighLevelFeature(hlf_list)
 
