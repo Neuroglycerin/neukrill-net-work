@@ -110,7 +110,7 @@ def test_pylearn2(run_settings, batch_size=4075, verbose=False,
             run_settings, proxied, batch_size=100, verbose=verbose, 
             augment=augment, altdata=altdata))
 
-    with open("/disk/scratch/neuroglycerin/dump/test.py.pkl", "wb") as f:
+    with open("/disk/scratch/neuroglycerin/dump/test3.py.pkl", "wb") as f:
         import pickle
         pickle.dump(predictions, f)
 
