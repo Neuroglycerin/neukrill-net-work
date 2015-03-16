@@ -69,7 +69,7 @@ def predict(cache_paths, out_fname, clf, settings, generate_heldout=True):
     XX_train = X2_train.reshape((X2_train.shape[0]*X2_train.shape[1],X2_train.shape[2]))
     XX_test = X2_test.reshape((X2_test.shape[0]*X2_test.shape[1],X2_test.shape[2]))
     yy_train = np.tile(y_train[li_nottest], n_augments)
-    yy_test = y_train[li_nottest]
+    yy_test = y_train[li_test]
     
     XX_train = pcfilter.transform(XX_train)
     XX_test  = pcfilter.transform(XX_test)
@@ -81,9 +81,13 @@ def predict(cache_paths, out_fname, clf, settings, generate_heldout=True):
     print '{}: predicting on heldout'.format(time.time()-t0)
     
     p = clf.predict_proba(XX_test)
-    p = np.reshape(p, (X_test.shape[0], X_test.shape[1], p.shape[1]))
+    p = np.reshape(p, (X2_test.shape[0], X2_test.shape[1], p.shape[1]))
     
     p_avg = p.mean(0)
+    
+    nll = sklearn.metrics.log_loss(yy_test, p_avg)
+    
+    print 'NLL score is {}'.format(nll)
     
     print '{}: writing heldout to disk'.format(time.time()-t0)
     
