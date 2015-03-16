@@ -38,7 +38,7 @@ def predict(cache_paths, out_fname, clf, settings, train_split=0.8):
     
     p_avg = p.mean(0)
     
-    names = [os.path.basename(path) for path in X_paths]
+    names = [os.path.basename(path) for path in settings.image_fnames['test']]
     
     neukrill_net.utils.write_predictions(out_fname, p_avg, names, settings.classes)
 
