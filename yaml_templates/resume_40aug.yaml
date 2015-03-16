@@ -11,8 +11,8 @@
     algorithm: !obj:pylearn2.training_algorithms.sgd.SGD {
         train_iteration_mode: even_shuffled_sequential,
         monitor_iteration_mode: even_sequential,
-        batch_size: *batch_size,
-        learning_rate: 0.0015,
+        batch_size: 128,
+        learning_rate: 0.003,
         learning_rule: !obj:neukrill_net.update_norm_monitor.UpdateNormMonitorLearningRule {
             base_learning_rule: !obj:pylearn2.training_algorithms.learning_rule.Momentum {
                 init_momentum: 0.5
