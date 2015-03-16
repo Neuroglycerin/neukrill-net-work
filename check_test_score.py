@@ -100,6 +100,10 @@ def make_predictions(run_settings_path, verbose=False, augment=1):
 
     # find augmentation factor
     af = run_settings.get("augmentation_factor",1)
+    # override augmentation factor for augment keyarg
+    # unfortunately, this is what we've been reduced to
+    if augment > 1:
+        af = 1
     if af > 1:
         if verbose:
             print("Collapsing predictions...")
