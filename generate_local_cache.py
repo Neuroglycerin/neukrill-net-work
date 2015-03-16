@@ -49,7 +49,7 @@ hlf = neukrill_net.highlevelfeatures.MultiHighLevelFeature(hlf_list)
 print "Partitioning the training data"
 
 # Remove the data which is going to be held out
-li_test = neukrill_net.utils.train_test_split_bool(image_fnames, 'test', train_split=0.8, classes=settings.classes)
+li_test = neukrill_net.utils.train_test_split_bool(settings.image_fnames, 'test', train_split=0.8, classes=settings.classes)
 li_nottest = np.logical_not(li_test)
 indices_nottest = np.where(li_nottest)[0]
 
