@@ -15,15 +15,15 @@ import sklearn.grid_search
 
 
 # Define output path
-train_pkl_path = '/disk/data1/s1145806/cached_kpecORB_train_data_raw.pkl'
-test_pkl_path = '/disk/data1/s1145806/cached_kpecORB_test_data_raw.pkl'
+train_pkl_path = '/disk/data1/s1145806/cached_kpecORB_quick_train_data_raw.pkl'
+test_pkl_path = '/disk/data1/s1145806/cached_kpecORB_quick_test_data_raw.pkl'
 
 
 t0 = time.time()
 
 print "Setup..."
 
-max_num_kp = 200
+max_num_kp = 121
 
 settings = neukrill_net.utils.Settings('settings.json')
 X,y = settings.flattened_train_paths(settings.classes)
@@ -36,7 +36,7 @@ detector = lambda image: neukrill_net.image_features.get_ORB_keypoints(image, n=
 
 describer = neukrill_net.image_features.get_ORB_descriptions
 
-kprf_base = sklearn.ensemble.RandomForestClassifier(n_estimators=750, max_depth=15, min_samples_leaf=20, n_jobs=12, random_state=42)
+kprf_base = sklearn.ensemble.RandomForestClassifier(n_estimators=400, max_depth=10, min_samples_leaf=20, n_jobs=12, random_state=42)
 
 hlf = neukrill_net.highlevelfeatures.KeypointEnsembleClassifier(detector, describer, kprf_base,
                                                                      return_num_kp=True, n_jobs=16, verbosity=1, summary_method='vote')
