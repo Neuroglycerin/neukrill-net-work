@@ -9,6 +9,7 @@ import os
 import argparse
 import neukrill_net.utils
 import numpy as np
+import json
 
 def combine_csvs(csv_paths, verbose=False):
     """
@@ -54,10 +55,8 @@ if __name__ == "__main__":
     csv_paths = []
     for rspath in args.run_settings:
         # load the run settings
-        rs = neukrill_net.utils.load_run_settings(rspath,
-            settings,
-            settings_path='settings.json',
-            force=True)
+        with open(rspath) as f:
+            rs = json.load(f)
         csv_paths.append(rs["submissions abspath"])
     # pass the csv paths to the combiner to combine
     predictions = combine_csvs(csv_paths, verbose=args.v)
