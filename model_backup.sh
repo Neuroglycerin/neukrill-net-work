@@ -1,6 +1,6 @@
 #!/bin/bash
 
-usage="./model_backup.sh MODELFILE BACKUPDIR (run in dir of original file)"
+usage="./model_backup.sh MODELFILE BACKUPDIR" 
 
 if [ "$#" -ne 2 ]
 then
