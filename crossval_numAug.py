@@ -19,6 +19,7 @@ def check_score(cache_path, clf, settings, train_split=0.8):
     
     X = joblib.load(cache_path)
     X_paths,y = settings.flattened_train_paths(settings.classes)
+    y = np.array(y)
     
     n_augments = X.shape[0]
     
