@@ -73,22 +73,74 @@ def predict(cache_paths, out_fname, clf, settings, generate_heldout=True):
     
 
 
-cache_paths = [('/disk/data1/s1145806/cached_hlf_train_data_raw_ranged.pkl'     , '/disk/data1/s1145806/cached_hlf_test_data_raw_ranged.pkl'     ),
+cache_paths = [
+               ('/disk/data1/s1145806/cached_hlf_train_data_raw_ranged.pkl'     , '/disk/data1/s1145806/cached_hlf_test_data_raw_ranged.pkl'     ),
                ('/disk/data1/s1145806/cached_hlf_train3_data_raw_ranged.pkl'    , '/disk/data1/s1145806/cached_hlf_test3_data_raw_ranged.pkl'    ),
                ('/disk/data1/s1145806/cached_hlf_train6_data_raw_ranged.pkl'    , '/disk/data1/s1145806/cached_hlf_test6_data_raw_ranged.pkl'    ),
-               ('/disk/data1/s1145806/cached_hlf_train10_data_raw_ranged.pkl'   , '/disk/data1/s1145806/cached_hlf_test10_data_raw_ranged.pkl'   ),
+               ('/disk/data1/s1145806/cached_hlf_train8_data_raw_ranged.pkl'    , '/disk/data1/s1145806/cached_hlf_test8_data_raw_ranged.pkl'    ),
                ('/disk/data1/s1145806/cached_hlf_train15_data_raw_ranged.pkl'   , '/disk/data1/s1145806/cached_hlf_test15_data_raw_ranged.pkl'   ),
+               ('/disk/data1/s1145806/cached_hlf_train10_data_raw_ranged.pkl'   , '/disk/data1/s1145806/cached_hlf_test10_data_raw_ranged.pkl'   ),
                ('/disk/data1/s1145806/cached_hlf_train15alt_data_raw_ranged.pkl', '/disk/data1/s1145806/cached_hlf_test15alt_data_raw_ranged.pkl'),
-               ('/disk/data1/s1145806/cached_hlf_train30_data_raw_ranged.pkl'   , '/disk/data1/s1145806/cached_hlf_test30_data_raw_ranged.pkl'   )]
+               ]
 
-n_trees = 1500
-max_depth = 20
+
+cache_paths = [
+               ('/disk/data1/s1145806/cached_hlf_train15alt_data_raw_ranged.pkl', '/disk/data1/s1145806/cached_hlf_test15alt_data_raw_ranged.pkl'),
+               ]
+
+
+n_trees = 1000
+max_depth = 11
+n_jobs = 8
+
+print "{} trees, {} deep, (n_jobs={})".format(n_trees,max_depth,n_jobs)
 
 settings = neukrill_net.utils.Settings('settings.json')
-clf = sklearn.ensemble.RandomForestClassifier(n_estimators=n_trees, max_depth=max_depth, min_samples_leaf=3, n_jobs=16, random_state=42)
+clf = sklearn.ensemble.RandomForestClassifier(n_estimators=n_trees, max_depth=max_depth, min_samples_leaf=3, n_jobs=n_jobs, random_state=42)
 
 for pathpair in cache_paths:
     print pathpair
     out_fname = pathpair[0][:-4] + "{}trees_{}deep".format(n_trees,max_depth) + '_predictions.csv'
     predict(pathpair, out_fname, clf, settings)
 
+
+n_trees = 1000
+max_depth = 12
+
+settings = neukrill_net.utils.Settings('settings.json')
+clf = sklearn.ensemble.RandomForestClassifier(n_estimators=n_trees, max_depth=max_depth, min_samples_leaf=3, n_jobs=n_jobs, random_state=42)
+
+print "{} trees, {} deep, (n_jobs={})".format(n_trees,max_depth,n_jobs)
+
+for pathpair in cache_paths:
+    print pathpair
+    out_fname = pathpair[0][:-4] + "{}trees_{}deep".format(n_trees,max_depth) + '_predictions.csv'
+    predict(pathpair, out_fname, clf, settings)
+
+
+n_trees = 1000
+max_depth = 13
+
+settings = neukrill_net.utils.Settings('settings.json')
+clf = sklearn.ensemble.RandomForestClassifier(n_estimators=n_trees, max_depth=max_depth, min_samples_leaf=3, n_jobs=n_jobs, random_state=42)
+
+print "{} trees, {} deep, (n_jobs={})".format(n_trees,max_depth,n_jobs)
+
+for pathpair in cache_paths:
+    print pathpair
+    out_fname = pathpair[0][:-4] + "{}trees_{}deep".format(n_trees,max_depth) + '_predictions.csv'
+    predict(pathpair, out_fname, clf, settings)
+
+
+n_trees = 1000
+max_depth = 14
+
+settings = neukrill_net.utils.Settings('settings.json')
+clf = sklearn.ensemble.RandomForestClassifier(n_estimators=n_trees, max_depth=max_depth, min_samples_leaf=3, n_jobs=n_jobs, random_state=42)
+
+print "{} trees, {} deep, (n_jobs={})".format(n_trees,max_depth,n_jobs)
+
+for pathpair in cache_paths:
+    print pathpair
+    out_fname = pathpair[0][:-4] + "{}trees_{}deep".format(n_trees,max_depth) + '_predictions.csv'
+    predict(pathpair, out_fname, clf, settings)

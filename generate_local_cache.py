@@ -47,7 +47,7 @@ kprf_base = sklearn.ensemble.RandomForestClassifier(n_estimators=1000, max_depth
 hlf_list = []
 for index,detector in enumerate(detector_list):
     hlf_list += [neukrill_net.highlevelfeatures.KeypointEnsembleClassifier(detector, describer_list[index], kprf_base,
-                                                                     return_num_kp=True, n_jobs=16, verbosity=1, summary_method='vote')]
+                                                                     return_num_kp=True, n_jobs=0, verbosity=1, summary_method='vote')]
 
 hlf = neukrill_net.highlevelfeatures.MultiHighLevelFeature(hlf_list)
 
@@ -56,7 +56,7 @@ hlf = neukrill_net.highlevelfeatures.MultiHighLevelFeature(hlf_list)
 print "Partitioning the training data"
 
 # Remove the data which is going to be held out
-li_test = neukrill_net.utils.train_test_split_bool(image_fnames, 'test', train_split=0.8, classes=settings.classes)
+li_test = neukrill_net.utils.train_test_split_bool(settings.image_fnames, 'test', train_split=0.8, classes=settings.classes)
 li_nottest = np.logical_not(li_test)
 indices_nottest = np.where(li_nottest)[0]
 
