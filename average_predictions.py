@@ -11,11 +11,18 @@ import neukrill_net.utils
 import numpy as np
 import json
 
-def combine_csvs(csv_paths, verbose=False):
+def combine_csvs(csv_paths, weights=None, verbose=False):
     """
     Takes two or more submission csv names and combines them by averaging the 
     predictions in each. Returns this array of combined predictions.
     """
+    # check if we're using weights
+    if weights:
+        # check weights sum to 1
+        assert sum(weights) > 0.99999 and sum(weights) < 0.99999
+    else:
+        # make uniform weights
+        weights = 1./len(csv_paths)
 
     # load each csv as an array, filling empty 3d array
     predictions = np.zeros((len(csv_paths),130400,121))
@@ -31,7 +38,10 @@ def combine_csvs(csv_paths, verbose=False):
     # average the arrays along the first axis
     if verbose:
         print("Averaging predictions...")
-    predictions = np.mean(predictions, axis=0)
+    # apply weights and sum
+    for i in range(len(csv_paths)):
+        predictions[i,:] = weights[i]*predictions[i,:]
+    predictions = np.sum(predictions, axis=0)
     return predictions
 
 if __name__ == "__main__":
