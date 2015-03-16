@@ -51,13 +51,13 @@ def check_score(cache_path, clf, settings, train_split=0.8):
     return nll
 
 
-cache_paths = ['/disk/data1/s1145806/cached_hlf_train_data_raw_ranged.pkl',
-               '/disk/data1/s1145806/cached_hlf_train3_data_raw_ranged.pkl',
-               '/disk/data1/s1145806/cached_hlf_train6_data_raw_ranged.pkl',
-               '/disk/data1/s1145806/cached_hlf_train10_data_raw_ranged.pkl',
-               '/disk/data1/s1145806/cached_hlf_train15_data_raw_ranged.pkl',
-               '/disk/data1/s1145806/cached_hlf_train15alt_data_raw_ranged.pkl',
-               '/disk/data1/s1145806/cached_hlf_train30_data_raw_ranged.pkl']
+cache_paths = ['/disk/data1/s1145806/cached_hlf_train_data_raw.pkl',
+               '/disk/data1/s1145806/cached_hlf_train3_data_raw.pkl',
+               '/disk/data1/s1145806/cached_hlf_train6_data_raw.pkl',
+               '/disk/data1/s1145806/cached_hlf_train10_data_raw.pkl',
+               '/disk/data1/s1145806/cached_hlf_train15_data_raw.pkl',
+               '/disk/data1/s1145806/cached_hlf_train15alt_data_raw.pkl',
+               '/disk/data1/s1145806/cached_hlf_train30_data_raw.pkl']
 
 settings = neukrill_net.utils.Settings('settings.json')
 clf = sklearn.ensemble.RandomForestClassifier(n_estimators=1000, max_depth=25, min_samples_leaf=3, n_jobs=16, random_state=42)
