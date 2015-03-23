@@ -2665,11 +2665,71 @@ L777.6 57.6" style="fill:none;stroke:#000000;stroke-dasharray:1.000000,3.000000;
       </g>
      </g>
     </g>
+    <g id="text_40">
+     <!-- Number of examples -->
+     <defs>
+      <path id="BitstreamVeraSans-Roman-20"/>
+      <path d="
+M9.8125 72.9062
+L23.0938 72.9062
+L55.4219 11.9219
+L55.4219 72.9062
+L64.9844 72.9062
+L64.9844 0
+L51.7031 0
+L19.3906 60.9844
+L19.3906 0
+L9.8125 0
+z
+" id="BitstreamVeraSans-Roman-4e"/>
+      <path d="
+M54.8906 54.6875
+L35.1094 28.0781
+L55.9062 0
+L45.3125 0
+L29.3906 21.4844
+L13.4844 0
+L2.875 0
+L24.125 28.6094
+L4.6875 54.6875
+L15.2812 54.6875
+L29.7812 35.2031
+L44.2812 54.6875
+z
+" id="BitstreamVeraSans-Roman-78"/>
+     </defs>
+     <g transform="translate(85.3484375 332.7671875)rotate(-90.0)scale(0.1 -0.1)">
+      <use xlink:href="#BitstreamVeraSans-Roman-4e"/>
+      <use x="74.8046875" xlink:href="#BitstreamVeraSans-Roman-75"/>
+      <use x="138.18359375" xlink:href="#BitstreamVeraSans-Roman-6d"/>
+      <use x="235.595703125" xlink:href="#BitstreamVeraSans-Roman-62"/>
+      <use x="299.072265625" xlink:href="#BitstreamVeraSans-Roman-65"/>
+      <use x="360.595703125" xlink:href="#BitstreamVeraSans-Roman-72"/>
+      <use x="401.708984375" xlink:href="#BitstreamVeraSans-Roman-20"/>
+      <use x="433.49609375" xlink:href="#BitstreamVeraSans-Roman-6f"/>
+      <use x="494.677734375" xlink:href="#BitstreamVeraSans-Roman-66"/>
+      <use x="529.8828125" xlink:href="#BitstreamVeraSans-Roman-20"/>
+      <use x="561.669921875" xlink:href="#BitstreamVeraSans-Roman-65"/>
+      <use x="621.443359375" xlink:href="#BitstreamVeraSans-Roman-78"/>
+      <use x="680.623046875" xlink:href="#BitstreamVeraSans-Roman-61"/>
+      <use x="741.90234375" xlink:href="#BitstreamVeraSans-Roman-6d"/>
+      <use x="839.314453125" xlink:href="#BitstreamVeraSans-Roman-70"/>
+      <use x="902.791015625" xlink:href="#BitstreamVeraSans-Roman-6c"/>
+      <use x="930.57421875" xlink:href="#BitstreamVeraSans-Roman-65"/>
+      <use x="992.09765625" xlink:href="#BitstreamVeraSans-Roman-73"/>
+     </g>
+    </g>
    </g>
-   <g id="text_40">
+   <g id="text_41">
     <!-- Classes with less than 50 examples. -->
     <defs>
-     <path id="BitstreamVeraSans-Roman-20"/>
+     <path d="
+M10.6875 12.4062
+L21 12.4062
+L21 0
+L10.6875 0
+z
+" id="BitstreamVeraSans-Roman-2e"/>
      <path d="
 M64.4062 67.2812
 L64.4062 56.8906
@@ -2690,28 +2750,6 @@ Q5.60938 53.9531 15.125 64.0781
 Q24.6562 74.2188 41.2188 74.2188
 Q47.75 74.2188 53.5312 72.4844
 Q59.3281 70.75 64.4062 67.2812" id="BitstreamVeraSans-Roman-43"/>
-     <path d="
-M54.8906 54.6875
-L35.1094 28.0781
-L55.9062 0
-L45.3125 0
-L29.3906 21.4844
-L13.4844 0
-L2.875 0
-L24.125 28.6094
-L4.6875 54.6875
-L15.2812 54.6875
-L29.7812 35.2031
-L44.2812 54.6875
-z
-" id="BitstreamVeraSans-Roman-78"/>
-     <path d="
-M10.6875 12.4062
-L21 12.4062
-L21 0
-L10.6875 0
-z
-" id="BitstreamVeraSans-Roman-2e"/>
     </defs>
     <g transform="translate(334.843125 52.6)scale(0.12 -0.12)">
      <use xlink:href="#BitstreamVeraSans-Roman-43"/>
