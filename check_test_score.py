@@ -100,6 +100,10 @@ def make_predictions(run_settings_path, verbose=False, augment=1):
 
     # find augmentation factor
     af = run_settings.get("augmentation_factor",1)
+    # override augmentation factor for augment keyarg
+    # unfortunately, this is what we've been reduced to
+    if augment > 1:
+        af = 1
     if af > 1:
         if verbose:
             print("Collapsing predictions...")
@@ -124,6 +128,7 @@ def make_predictions(run_settings_path, verbose=False, augment=1):
     # if these labels happen to have superclasses in them we better take them out
     labels = labels[:,:n_classes]
 
+
     return y,labels
 
 def check_score(labels, run_settings, y_arrays, verbose=False):
@@ -142,13 +147,20 @@ def check_score(labels, run_settings, y_arrays, verbose=False):
 
         if verbose:
             print("Combined:")
+
         # calculate score
         logloss = sklearn.metrics.log_loss(labels,predictions)
         print("Log loss: {0}".format(logloss))
     else:
-        # calculate score
-        logloss = sklearn.metrics.log_loss(labels,y_arrays[0])
-        print("Log loss: {0}".format(logloss))
+        predictions = y_arrays[0]
+    # dump the predictions 
+    with open(os.path.join("/disk/scratch/neuroglycerin/dump/"
+                           "recent_check_test_score.pkl"), "wb") as f:
+        import pickle
+        pickle.dump(predictions,f)
+
+    logloss = sklearn.metrics.log_loss(labels,predictions)
+    print("Log loss: {0}".format(logloss))
     return logloss
 
 if __name__=='__main__':
