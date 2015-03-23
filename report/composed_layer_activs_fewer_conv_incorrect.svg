@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1052.3622"
+   height="744.09448"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="composed_layer_activs.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="594.48188"
+     inkscape:cy="359.65385"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="690"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-308.2677)">
+    <image
+       xlink:href="./layer_activs_incorrect/input.png"
+       width="132"
+       height="132"
+       id="image3364"
+       x="354.26343"
+       y="317.1795" />
+    <image
+       xlink:href="./layer_activs_incorrect/layer_1.png"
+       width="760"
+       height="264"
+       id="image3375"
+       x="40.263416"
+       y="453.83463" />
+    <image
+       xlink:href="./layer_activs_incorrect/layer_2.png"
+       width="376"
+       height="136"
+       id="image3386"
+       x="232.26341"
+       y="722.48975" />
+    <image
+       xlink:href="./layer_activs_incorrect/layer_3.png"
+       width="184"
+       height="72"
+       id="image3397"
+       x="328.26343"
+       y="863.14484" />
+    <image
+       xlink:href="./layer_activs_incorrect/layer_4.png"
+       width="272"
+       height="48"
+       id="image3408"
+       x="284.26343"
+       y="939.79999" />
+    <image
+       xlink:href="./layer_activs_incorrect/layer_5.png"
+       width="272"
+       height="48"
+       id="image3419"
+       x="284.26343"
+       y="992.45508" />
+    <image
+       xlink:href="./layer_activs_incorrect/layer_6_1.png"
+       width="100"
+       height="703"
+       id="image3430"
+       x="807.75287"
+       y="320.66931" />
+    <image
+       xlink:href="./layer_activs_incorrect/layer_6_2.png"
+       width="100"
+       height="240"
+       id="image3441"
+       x="907.758"
+       y="320.66931" />
+    <image
+       xlink:href="./layer_activs_incorrect/layer_6_3.png"
+       width="100"
+       height="117"
+       id="image3452"
+       x="907.758"
+       y="583.41931" />
+    <image
+       xlink:href="./layer_activs_incorrect/layer_6_4.png"
+       width="100"
+       height="84"
+       id="image3463"
+       x="907.758"
+       y="723.16931" />
+    <image
+       xlink:href="./layer_activs_incorrect/layer_6_5.png"
+       width="100"
+       height="87"
+       id="image3474"
+       x="907.758"
+       y="829.91931" />
+    <image
+       xlink:href="./layer_activs_incorrect/layer_6_6.png"
+       width="100"
+       height="84"
+       id="image3485"
+       x="907.758"
+       y="939.66931" />
+  </g>
+</svg>
