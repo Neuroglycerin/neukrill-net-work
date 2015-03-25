@@ -240,9 +240,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.24748737"
-     inkscape:cx="1942.6708"
-     inkscape:cy="1659.4705"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="3538.0769"
+     inkscape:cy="828.49864"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -5737,7 +5737,7 @@ RU5ErkJggg==
        style="stroke-linecap:butt;stroke-linejoin:round" />
     <g
        id="g376914"
-       transform="translate(8.8571603,-45.714173)"
+       transform="matrix(1.1084938,0,0,1.1084938,-189.77923,-10.152762)"
        style="stroke-linecap:butt;stroke-linejoin:round">
       <image
          style="stroke-linecap:butt;stroke-linejoin:round"
@@ -6038,7 +6038,7 @@ AMAgf+tZ7CqLAACYCBgAAMBEwAAAACYBa/wELtJ21XIAAAAASUVORK5CYII=
        sodipodi:nodetypes="cc" />
     <g
        id="g10"
-       transform="matrix(0.78470545,0,0,0.78470545,2209.1098,-726.57249)"
+       transform="matrix(1.0258024,0,0,1.0258024,1845.1323,-463.32127)"
        style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round">
       <g
          id="g12"
@@ -39459,8 +39459,8 @@ AMAgf+tZ7CqLAACYCBgAAMBEwAAAACYBa/wELtJ21XIAAAAASUVORK5CYII=
          style="font-size:13.75px;font-style:normal;font-weight:400;fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1;font-family:Ubuntu" />
     </g>
     <image
-       y="-467.63776"
-       x="3388.5889"
+       y="-161.91193"
+       x="3448.5889"
        id="image376733"
        xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAbAAAAEgCAYAAADVKCZpAAAABHNCSVQICAgIfAhkiAAAIABJREFU
 eJzt3XlwFGX+BvCnEdRFlKBLEhTXwYOVI8cgRSzW4AQMCBgXxCsqJkB0lyq1BOTQKpex5AdRlEPc
@@ -39662,7 +39662,7 @@ uMiltLRUavsRmYFfp0KUZI4dO4ZzzjkHx48fx7XXXotVq1YhOzvb7lhEHY5HYERJ5t5778XevXtx
        width="771.41125"
        style="stroke-linecap:butt;stroke-linejoin:round" />
     <g
-       transform="translate(3113.7366,-1676.8173)"
+       transform="matrix(1.2059623,0,0,1.2059623,2919.8991,-1529.3313)"
        id="layer1-7"
        inkscape:label="Layer 1"
        style="stroke-linecap:butt;stroke-linejoin:round">
@@ -39778,14 +39778,15 @@ uMiltLRUavsRmYFfp0KUZI4dO4ZzzjkHx48fx7XXXotVq1YhOzvb7lhEHY5HYERJ5t5778XevXtx
     <flowRoot
        xml:space="preserve"
        id="flowRoot376862"
-       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-size:24px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;text-anchor:start;text-align:justify"
        transform="translate(0,-1927.5589)"><flowRegion
          id="flowRegion376864"><rect
            id="rect376866"
-           width="1520"
-           height="202.85715"
+           width="765.71429"
+           height="160"
            x="74.285713"
-           y="459.92114" /></flowRegion><flowPara
+           y="459.92114"
+           style="font-size:24px;text-align:justify;text-anchor:start" /></flowRegion><flowPara
          id="flowPara376868">The data was approximately 30,000 labeled and 20,000 unlabeled images of plankton, classified into 121 different species. Immediate problems were the unbalanced distribution of classes shown in figure 2 and the varying sizes of the images, shown in figure 3.</flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot376928"
@@ -39812,15 +39813,16 @@ uMiltLRUavsRmYFfp0KUZI4dO4ZzzjkHx48fx7XXXotVq1YhOzvb7lhEHY5HYERJ5t5778XevXtx
          id="flowPara376954">Data Augmentation</flowPara><flowPara
          id="flowPara376956" /></flowRoot>    <flowRoot
        transform="translate(0,-1041.6093)"
-       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-size:24px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;text-anchor:start;text-align:justify"
        id="flowRoot376958"
        xml:space="preserve"><flowRegion
          id="flowRegion376960"><rect
            y="459.92114"
            x="74.285713"
-           height="614.05042"
-           width="705.71429"
-           id="rect376962" /></flowRegion><flowPara
+           height="534.05042"
+           width="665.71429"
+           id="rect376962"
+           style="font-size:24px;text-align:justify;text-anchor:start" /></flowRegion><flowPara
          id="flowPara376964">Augmenting the data was used for regularisation when training. The full selection applied, at different times included: Rotation (0-360 uniform), Reflection (Bernoulli), Translation (Gaussian in x and y), Scale (Gaussian), Stretch (Gaussian in x and y), Shear (Gaussian). Examples of the potentially infinite augmented images are shown in Figure 4.</flowPara><flowPara
          id="flowPara376968" /></flowRoot>    <g
        id="g10-4"
@@ -40427,37 +40429,37 @@ uMiltLRUavsRmYFfp0KUZI4dO4ZzzjkHx48fx7XXXotVq1YhOzvb7lhEHY5HYERJ5t5778XevXtx
            style="font-size:56px" /></flowRegion><flowPara
          id="flowPara378355">Model: Convolutional Neural Networks</flowPara></flowRoot>    <flowRoot
        transform="translate(1725.7188,-1927.5589)"
-       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-size:24px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;text-anchor:start;text-align:justify"
        id="flowRoot378903"
        xml:space="preserve"><flowRegion
          id="flowRegion378905"><rect
            y="459.92114"
            x="74.285713"
            height="480"
-           width="1319.9955"
-           id="rect378907" /></flowRegion><flowPara
+           width="999.99548"
+           id="rect378907"
+           style="font-size:24px;text-align:justify;text-anchor:start" /></flowRegion><flowPara
          id="flowPara378909">For image classification tasks, convolutional networks are the state of the art. Our initial structure was based on the original AlexNet paper (<flowSpan
-   style="font-weight:bold;-inkscape-font-specification:Sans Bold"
+   style="font-weight:bold;-inkscape-font-specification:Sans Bold;font-size:24px;text-anchor:start;text-align:justify"
    id="flowSpan378919">citation here?</flowSpan>). After experimenting with many proposed changes, including siamese networks, deeper networks and pooling strategies the final network with the best performance had only an extra convolutional layer. This structure is shown in figure 5.</flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot378911"
-       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-size:24px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;text-anchor:start;text-align:justify"
        transform="translate(-410.1602,-2142.828)"><flowRegion
          id="flowRegion378913"><rect
            id="rect378915"
-           width="878.73163"
+           width="598.73163"
            height="775.2691"
            x="1771.4286"
-           y="2299.9211" /></flowRegion><flowPara
+           y="2299.9211"
+           style="font-size:24px;text-align:justify;text-anchor:start" /></flowRegion><flowPara
          id="flowPara379254">Supplying the network features derived from heuristics in computer vision was expected to push the performance of the network past that of other teams. Unfortunately, this was not the case, and the network performed better without. The winning team, however, did integrate these features into their network succesfully.</flowPara><flowPara
          id="flowPara379262" /><flowPara
          id="flowPara379264">Features used included: Haralick features, Grey-level co-occurence, Contour moments, Hu moments, Grey-level intensity histogram, Parameter-free threshold adjacency statistics, ORB, BRISK and MSER.</flowPara></flowRoot>    <g
-       id="g378929"
-       transform="translate(-144.72461,0)"
-       style="stroke-linecap:butt;stroke-linejoin:round">
+       id="g379573">
       <g
          style="stroke-linecap:butt;stroke-linejoin:round"
-         transform="matrix(1.29551,0,0,1.29551,-514.05045,473.88323)"
+         transform="matrix(1.29551,0,0,1.29551,-658.77506,473.88323)"
          id="g378631">
         <path
            style="fill:none;stroke:#ff0000;stroke-width:0.48366457;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:1.93465834, 1.93465834;stroke-dashoffset:0"
@@ -41708,28 +41710,28 @@ uMiltLRUavsRmYFfp0KUZI4dO4ZzzjkHx48fx7XXXotVq1YhOzvb7lhEHY5HYERJ5t5778XevXtx
              id="path6543-9-0"
              style="fill:#caa0a0;fill-opacity:1;fill-rule:evenodd;stroke:#b50000;stroke-width:0.96732914px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1"
              inkscape:box3dsidetype="11"
-             d="m 2200.7629,-1067.0974 5.2624,4.6338 0,11.0243 -5.2624,-4.6338 z"
+             d="m 2200.763,-1067.0974 5.2623,4.6338 0,11.0243 -5.2623,-4.6338 z"
              points="26.390674,417.33521 26.390674,428.35951 21.128305,423.72569 21.128305,412.70139 " />
           <path
              sodipodi:type="inkscape:box3dside"
              id="path6533-3-1"
              style="fill:#caa0a0;fill-opacity:1;fill-rule:evenodd;stroke:#b50000;stroke-width:0.96732914px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1"
              inkscape:box3dsidetype="6"
-             d="m 2192.577,-1067.0974 0,11.0243 8.1859,0 0,-11.0243 z"
+             d="m 2192.577,-1067.0974 0,11.0243 8.186,0 0,-11.0243 z"
              points="12.942382,423.72569 21.128305,423.72569 21.128305,412.70139 12.942382,412.70139 " />
           <path
              sodipodi:type="inkscape:box3dside"
              id="path6541-2-4"
              style="fill:#caa0a0;fill-opacity:1;fill-rule:evenodd;stroke:#b50000;stroke-width:0.96732914px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1"
              inkscape:box3dsidetype="13"
-             d="m 2192.577,-1056.0731 5.2624,4.6338 8.1859,0 -5.2624,-4.6338 z"
+             d="m 2192.577,-1056.0731 5.2624,4.6338 8.1859,0 -5.2623,-4.6338 z"
              points="18.204752,428.35951 26.390674,428.35951 21.128305,423.72569 12.942382,423.72569 " />
           <path
              sodipodi:type="inkscape:box3dside"
              id="path6535-5-0"
              style="fill:#caa0a0;fill-opacity:1;fill-rule:evenodd;stroke:#b50000;stroke-width:0.96732914px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1"
              inkscape:box3dsidetype="5"
-             d="m 2192.577,-1067.0974 5.2624,4.6338 8.1859,0 -5.2624,-4.6338 z"
+             d="m 2192.577,-1067.0974 5.2624,4.6338 8.1859,0 -5.2623,-4.6338 z"
              points="18.204752,417.33521 26.390674,417.33521 21.128305,412.70139 12.942382,412.70139 " />
           <path
              sodipodi:type="inkscape:box3dside"
@@ -42085,28 +42087,28 @@ uMiltLRUavsRmYFfp0KUZI4dO4ZzzjkHx48fx7XXXotVq1YhOzvb7lhEHY5HYERJ5t5778XevXtx
              id="path5535-9-0-9-2-2-1"
              style="fill:#dbe3db;fill-opacity:0.96862745;fill-rule:evenodd;stroke:#000000;stroke-width:0.96732914px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1"
              inkscape:box3dsidetype="11"
-             d="m 2412.8701,-1100.43 24.4524,21.5316 0,52.042 -24.4524,-21.5317 z"
+             d="m 2412.8702,-1100.43 24.4523,21.5316 0,52.042 -24.4523,-21.5317 z"
              points="257.68787,400.90037 257.68787,452.94231 233.23555,431.41062 233.23555,379.36869 " />
           <path
              sodipodi:type="inkscape:box3dside"
              id="path5525-7-5-0-5-0-1"
              style="fill:#dbe3db;fill-opacity:0.96862745;fill-rule:evenodd;stroke:#000000;stroke-width:0.96732914px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1"
              inkscape:box3dsidetype="6"
-             d="m 2383.0367,-1100.43 0,52.0419 29.8334,0 0,-52.0419 z"
+             d="m 2383.0367,-1100.43 0,52.0419 29.8335,0 0,-52.0419 z"
              points="203.40214,431.41062 233.23555,431.41062 233.23555,379.36869 203.40214,379.36869 " />
           <path
              sodipodi:type="inkscape:box3dside"
              id="path5533-70-4-0-4-2-0"
              style="fill:#dbe3db;fill-opacity:0.96862745;fill-rule:evenodd;stroke:#000000;stroke-width:0.96732914px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1"
              inkscape:box3dsidetype="13"
-             d="m 2383.0367,-1048.3881 24.4524,21.5317 29.8334,0 -24.4524,-21.5317 z"
+             d="m 2383.0367,-1048.3881 24.4524,21.5317 29.8334,0 -24.4523,-21.5317 z"
              points="227.85446,452.94231 257.68787,452.94231 233.23555,431.41062 203.40214,431.41062 " />
           <path
              sodipodi:type="inkscape:box3dside"
              id="path5527-9-8-2-7-2-5"
              style="fill:#dbe3db;fill-opacity:0.96862745;fill-rule:evenodd;stroke:#000000;stroke-width:0.96732914px;stroke-linecap:butt;stroke-linejoin:round;stroke-opacity:1"
              inkscape:box3dsidetype="5"
-             d="m 2383.0367,-1100.43 24.4524,21.5316 29.8334,0 -24.4524,-21.5316 z"
+             d="m 2383.0367,-1100.43 24.4524,21.5316 29.8334,0 -24.4523,-21.5316 z"
              points="227.85446,400.90037 257.68787,400.90037 233.23555,379.36869 203.40214,379.36869 " />
           <path
              sodipodi:type="inkscape:box3dside"
@@ -42359,7 +42361,7 @@ uMiltLRUavsRmYFfp0KUZI4dO4ZzzjkHx48fx7XXXotVq1YhOzvb7lhEHY5HYERJ5t5778XevXtx
              sodipodi:role="line">Pool</tspan></text>
       </g>
       <flowRoot
-         transform="translate(1734.7148,-1681.5897)"
+         transform="translate(1589.9902,-1681.5897)"
          style="font-size:28px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
          id="flowRoot378921"
          xml:space="preserve"><flowRegion
@@ -42386,20 +42388,21 @@ uMiltLRUavsRmYFfp0KUZI4dO4ZzzjkHx48fx7XXXotVq1YhOzvb7lhEHY5HYERJ5t5778XevXtx
          id="flowPara379214">Class Hierarchy</flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot379218"
-       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-size:24px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;text-anchor:start;text-align:justify"
        transform="translate(1725.7188,-967.41397)"><flowRegion
          id="flowRegion379220"><rect
            id="rect379222"
            width="539.99548"
            height="614.05042"
            x="74.285713"
-           y="459.92114" /></flowRegion><flowPara
+           y="459.92114"
+           style="font-size:24px;text-anchor:start;text-align:justify" /></flowRegion><flowPara
          id="flowPara379224">The classes have an intrinsic hierarchy which could be useful to improve training speed, and the information in error signals. Using the different levels in figure 6 a series of 1-of-k vectors could be created to supply to six softmax output layers in parallel.</flowPara><flowPara
          id="flowPara379226" /></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot379230"
        style="font-size:28px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       transform="translate(2127.6563,-754.49205)"><flowRegion
+       transform="translate(1906.9043,-194.49205)"><flowRegion
          id="flowRegion379232"><rect
            id="rect379234"
            width="800.00861"
@@ -42407,7 +42410,7 @@ uMiltLRUavsRmYFfp0KUZI4dO4ZzzjkHx48fx7XXXotVq1YhOzvb7lhEHY5HYERJ5t5778XevXtx
            x="232.33508"
            y="1020.2252"
            style="font-size:28px" /></flowRegion><flowPara
-         id="flowPara379236">Figure 6: Class hierarchy used for encoding the classes to create a hierarchical convolutional network.</flowPara></flowRoot>    <flowRoot
+         id="flowPara379236">Figure 6: Class hierarchy used for encoding the classes to create a hierarchical targets.</flowPara></flowRoot>    <flowRoot
        transform="translate(1282.5742,-380.81509)"
        style="font-size:56px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        id="flowRoot379238"
@@ -42419,5 +42422,50 @@ uMiltLRUavsRmYFfp0KUZI4dO4ZzzjkHx48fx7XXXotVq1YhOzvb7lhEHY5HYERJ5t5778XevXtx
            width="788.82367"
            id="rect379242"
            style="font-size:56px" /></flowRegion><flowPara
-         id="flowPara379244">Computer Vision</flowPara></flowRoot>  </g>
+         id="flowPara379244">Computer Vision</flowPara></flowRoot>    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 3080,2859.9211 0,-1200 -160,0 0,-1239.99996"
+       id="path379266"
+       inkscape:connector-curvature="0"
+       transform="translate(0,-1927.5589)"
+       sodipodi:nodetypes="cc" />
+    <flowRoot
+       transform="translate(1197.3477,-1978.4674)"
+       style="font-size:56px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       id="flowRoot379268"
+       xml:space="preserve"><flowRegion
+         id="flowRegion379270"><rect
+           style="font-size:56px"
+           y="414.20685"
+           x="1797.1428"
+           height="125.71429"
+           width="1082.8572"
+           id="rect379272" /></flowRegion><flowPara
+         id="flowPara379274">Output: Results</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot379276"
+       style="font-size:24px;font-style:normal;font-weight:normal;text-align:justify;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       transform="translate(2925.7189,-1927.5589)"><flowRegion
+         id="flowRegion379278"><rect
+           style="font-size:24px;text-align:justify;text-anchor:start"
+           id="rect379280"
+           width="999.99548"
+           height="480"
+           x="74.285713"
+           y="459.92114" /></flowRegion><flowPara
+         id="flowPara379282">An ensemble of three networks, two with the same architecture but different training schedules and one hierarchically trained model with a different architectrure were used to make the predictions that produced the best submission. The weighted average was estimated by stochastic gradient descent in the same manner as the models were trained, but performed on our holdout set. </flowPara><flowPara
+         id="flowPara379286" /><flowPara
+         id="flowPara379288">Figure 7 shows the network correctly classifying an example image, showing the activations in various layers to demonstrate the effects of the different kernels learned. It is also able to classify the plankton into the correct superclasses, as shown on the right.</flowPara></flowRoot>    <flowRoot
+       transform="translate(2867.6563,-1275.7655)"
+       style="font-size:28px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       id="flowRoot379565"
+       xml:space="preserve"><flowRegion
+         id="flowRegion379567"><rect
+           style="font-size:28px"
+           y="1020.2252"
+           x="232.33508"
+           height="73.726723"
+           width="1095.3094"
+           id="rect379569" /></flowRegion><flowPara
+         id="flowPara379571">Figure 7: example activations and classification of a plankton image by the hierarchically trained convolutional network.</flowPara></flowRoot>  </g>
 </svg>
